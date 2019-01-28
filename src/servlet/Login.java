@@ -28,6 +28,7 @@ public class Login extends HttpServlet {
 			response.sendRedirect("Register.jsp");
 		} else{
 			System.out.print("Login success"); // Link-redirection
+			response.sendRedirect("CustomerHomepage.jsp");
 		}
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

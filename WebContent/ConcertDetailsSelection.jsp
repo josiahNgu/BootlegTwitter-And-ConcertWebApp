@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Concert Detail</title>
-<link rel="stylesheet" href="./style/styles.css">
+<link rel="stylesheet" href="style/styles.css">
 
 </head>
 <link rel="stylesheet"
