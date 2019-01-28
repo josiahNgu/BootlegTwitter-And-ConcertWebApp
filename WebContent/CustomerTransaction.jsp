@@ -6,8 +6,7 @@
 <meta charset="UTF-8">
 <title>Transcation</title>
 <link rel="stylesheet" href="`style/styles.css">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- import Bootstrap  -->
 <link rel="stylesheet"
@@ -15,7 +14,10 @@
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
 	crossorigin="anonymous">
 <!--import fontawesome -->
-<script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
+<script defer
+	src="https://use.fontawesome.com/releases/v5.6.3/js/all.js"
+	integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1"
+	crossorigin="anonymous"></script>
 
 
 </head>
@@ -31,8 +33,24 @@
 		</nav>
 	</div>
 	<div class="container" style="padding: 5vh 0vh;">
+		<h4 style="padding: 3vh 0px">Summary</h4>
 		<div class="row">
-			<div class="col-sm-8 col-lg-8">Summary</div>
+			<div class="col-sm-8">
+				<div class="d-flex">
+					<div class="col-sm-4">
+						<h6>Rennie Harris Puremovement</h6>
+					</div>
+					<div class="col-sm-4">
+						<h6>Lied Center</h6>
+					</div>
+					<div class="col-sm-4">
+						<h6>1 tickets</h6>
+						<h6>&#x24;22.50</h6>
+					</div>
+				</div>
+			</div>
+
+
 			<div class="col-sm-4 col-lg-4 shadow-lg p-3 mb-5 rounded"
 				style="background-color: #3d3d3d; color: white;">
 				<h4>Card Details</h4>
@@ -112,9 +130,14 @@
 				</form>
 			</div>
 		</div>
-		<i class="fa fa-arrow-left"></i><a
-			href="ViewAndCheckoutShoppingCart.jsp"> Continue Shopping</a>
-		</i>
+		<div class="row col-sm-8">
+			<div class="col-sm-8">
+				<i class="fa fa-arrow-left"></i><a href="ViewAndCheckoutShoppingCart.jsp"> Continue Shopping</a>
+			</div>
+			<div class="col-sm-4 justify-content-end">
+				<h6>Subtotal: &#x24;22.50</h6>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

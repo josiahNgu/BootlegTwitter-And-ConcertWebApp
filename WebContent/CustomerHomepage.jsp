@@ -31,7 +31,7 @@
     <option value="Lied Center">Lied Center</option>    
     </select>
   </div>
-	<a href="ConcertSearchResult.jsp"> <input type="button"class="btn btn-success" value="Search" />
+	<a href="ConcertSearchResult.jsp"> <input type="button"class="btn btn-dark" value="Search" />
 	</a>
 	</form>
 		</div>

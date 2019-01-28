@@ -16,10 +16,9 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
 	integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
 	crossorigin="anonymous"></script>
-<body style="background-color: #3d3d3d">
+<body style="background-color: #084d6a">
 	<div class="container col-sm-3">
-		<div
-			class="d-flex justify-content-center shadow p-3 mb-5 bg-white rounded ">
+		<div class="d-flex justify-content-center shadow p-3 mb-5 bg-white rounded ">
 			<form name="loginForm" action=Login method="post">
 				<div class="form-group ">
 					User Name <br> <input class="form-control"

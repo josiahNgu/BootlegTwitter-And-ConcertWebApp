@@ -49,7 +49,7 @@
 						<td><img src="pics/rennieHarris.jpg"
 							alt="Rennie Harris Puremovement" height="150" width="150"></td>
 						<td><a href="ConcertDetailsSelection.jsp"> <input
-								type="button" class="btn btn-info" value="Details" />
+								type="button" class="btn btn-dark" value="Details" />
 						</a></td>
 				</tbody>
 			</table>
