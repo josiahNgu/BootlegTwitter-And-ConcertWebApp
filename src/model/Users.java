@@ -1,4 +1,4 @@
-package lecture464.model;
+package model;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
