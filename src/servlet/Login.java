@@ -1,4 +1,4 @@
-package lecture464.servlet;
+package servlet;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lecture464.model.Users;
+import model.Users;
 
 /**
  * Servlet implementation class Login
