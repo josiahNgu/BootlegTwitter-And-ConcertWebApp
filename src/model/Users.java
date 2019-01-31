@@ -1,11 +1,10 @@
-package model;
+package lecture464.model;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
-
 
 
 public class Users {
@@ -41,7 +40,6 @@ public class Users {
 			p.load(fis);
 			p.setProperty(aUser.getUserName(), aUser.getPassword());
 			p.store(new FileOutputStream(propFilePath), null);
-			System.out.println(aUser.getPassword());
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -62,18 +60,41 @@ public class Users {
 	}
 	
 	// validateUser
-	public boolean validateUser(String user, String propFilePath) throws IOException {
+
+	public boolean validateUser(String userName, String password, String propFilePath) {
 		Properties p = new Properties();
+
 		FileInputStream fis = null;
-		fis = new FileInputStream(propFilePath);
-		p.load(fis);
-		if(!p.containsKey(user) ) {
+
+		try {
+			fis = new FileInputStream(propFilePath);
+
+			p.load(fis);
+
+			// Check whether the username exists or not
+			if (!p.containsKey(userName)) {
+				// Link-redirection
+				fis.close();
+				return false;
+			} else { // Check whether the password matches or not
+				String pword = p.getProperty(userName);
+				if (!pword.equals(password)) {
+					fis.close();
+					return false; // Link-redirection
+				} else {
+					fis.close();
+					return true; // Link-redirection
+				}
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return false;
 		}
-		return true;
 	}
 	// removeUser
-
 	
 	
 }
