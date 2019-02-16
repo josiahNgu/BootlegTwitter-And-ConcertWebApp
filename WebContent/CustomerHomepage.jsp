@@ -42,7 +42,6 @@
 				<input class="form-control" type="date" placeholder="date" required>
 				<input type="submit" class="btn btn-dark" value="Search" />
 			</form>
-			<p>THis is a stest</p>
 		</div>
 
 
