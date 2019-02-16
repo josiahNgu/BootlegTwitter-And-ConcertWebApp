@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Users;
+import mysql.classes.UsersDB;
 
 /**
  * Servlet implementation class Register
@@ -34,15 +35,21 @@ public class Register extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password1");
-		ServletContext sc = this.getServletContext();
-		String propFilePath = sc.getRealPath("/WEB-INF/users.properties");
+		
 		Users aUser = new Users(userName, password);
-		if(! propFilePath.contains(userName)) {
-			aUser.registerUser(aUser, propFilePath);
+		
+		UsersDB aUserDB = new UsersDB();
+		
+		boolean userExists = false;
+		
+		userExists = aUserDB.validateUserByUsername(userName);
+		
+		if(!userExists) {
+			aUserDB.registerUser(aUser);
 			response.sendRedirect("Login.jsp");
 		} else {
 			out.println("<script type=\"text/javascript\">");
-			out.println("alert('User existed.');");
+			out.println("alert('User already exist.');");
 			out.println("location='Register.jsp';");
 			out.println("</script>");
 		}

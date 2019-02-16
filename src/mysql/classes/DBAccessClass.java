@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.Users;
+
 
 public class DBAccessClass {	
 	Connection conn = null;
@@ -66,13 +68,13 @@ public class DBAccessClass {
 		}
 		return results;
 	}
-	
+
 	public ArrayList<String> searchPerformance(String search){
 		String sql="Select * FROM concert";
 		ArrayList<String> results = new ArrayList<String>();
 		try {
 			ps = conn.prepareStatement(sql);	
-//			ps.setString(1, search);
+			//			ps.setString(1, search);
 			ResultSet rs = ps.executeQuery();
 
 			//Extract data from result set
@@ -86,6 +88,117 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public void displayAllUsers() {
+		String SQL = "SELECT * from users";
+		Statement stat;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+
+			while (rs.next()){
+				System.out.println(rs.getString(1) + " " + rs.getString(2) +  " " + rs.getString(3)
+				+ " " + rs.getString(4) + " " + rs.getString(5));
+			}
+
+			stat.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Users returnUserByUsername(String aUserName) {
+		String SQL = "SELECT * from users";
+		Statement stat;
+
+		Users aUser = new Users();
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+
+			while (rs.next()){
+				if(aUserName.equals( rs.getString("Username") )) {
+					aUser.setUserName(rs.getString("Username"));
+					aUser.setPassword(rs.getString("Password"));
+				} 
+			}
+
+			stat.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return aUser;
+	}
+	public boolean validateUser(String username,String password) {
+		boolean passwordMatches = false;
+		String SQL = "SELECT * from users where Username =\"" + username + "\"";
+		Statement stat;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+
+			while (rs.next()){	
+				if(password.equals( rs.getString("Password") )) {
+					passwordMatches = true;
+				}    
+			}
+
+			stat.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return passwordMatches;
+	}
+	
+	public boolean findUserByUsername(String aUserName) {
+		boolean userExists = false;
+		String SQL = "SELECT * from users";
+		Statement stat;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+
+			while (rs.next()){	
+				if(aUserName.equals( rs.getString("Username") )) {
+					userExists = true;
+				}    
+			}
+
+			stat.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return userExists;
+	}
+	
+	public void addSingleUser(Users aUser) {
+		try {
+			stmt = conn.createStatement();
+			String sql;
+
+			String userName = aUser.getUserName();
+			String password = aUser.getPassword();
+
+
+			sql = "INSERT INTO users (Username, Password)" +
+					"VALUES ('" + userName +
+					"', '" + password + "')";
+			stmt.executeUpdate(sql);
+
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

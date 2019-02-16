@@ -1,11 +1,5 @@
 package model;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Properties;
-
 
 public class Users {
 	
@@ -29,8 +23,11 @@ public class Users {
 		this.userName = userName;
 		this.password = password;
 	}
+	public Users() {
+		super();
+	}
 	
-	public void registerUser(Users aUser, String propFilePath) {
+/*	public void registerUser(Users aUser, String propFilePath) {
 		
 		Properties p = new Properties();
 		FileInputStream fis = null;
@@ -93,7 +90,7 @@ public class Users {
 			e.printStackTrace();
 			return false;
 		}
-	}
+	}*/
 	// removeUser
 	
 	
