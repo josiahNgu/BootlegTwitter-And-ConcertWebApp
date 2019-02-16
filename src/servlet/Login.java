@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import model.Users;
 import mysql.classes.UsersDB;
+import mysql.classes.VenueDB;
 
 /**
  * Servlet implementation class Login
@@ -30,6 +32,10 @@ public class Login extends HttpServlet {
 		
 		UsersDB aUserDB = new UsersDB();
 		
+		VenueDB venueDB = new VenueDB();
+		ArrayList<String> venue = venueDB.getVenue();
+
+
 		userExists = aUserDB.validateUserByUsername(userName);
 		userPasswordMatches = aUserDB.validateUser(userName,password);
 		
@@ -38,7 +44,8 @@ public class Login extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 		    session.setAttribute("userBean", aUser);
-		    
+		    // add venue to session
+			session.setAttribute("venue", venue);
 		    String address = "CustomerHomepage.jsp";
 		    RequestDispatcher dispatcher =
 		      request.getRequestDispatcher(address);
