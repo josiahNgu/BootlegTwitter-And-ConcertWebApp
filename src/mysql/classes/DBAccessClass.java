@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.Shows;
 import model.Users;
 
 
@@ -50,7 +51,7 @@ public class DBAccessClass {
 		}
 	}
 	public ArrayList<String> getVenue() {
-		String sql = "SELECT * FROM venue";
+		String sql = "SELECT distinct VenueName from venue";
 		ArrayList<String> results = new ArrayList<String>();
 		try {
 			ps = conn.prepareStatement(sql);			  
@@ -59,7 +60,7 @@ public class DBAccessClass {
 			//Extract data from result set
 			while(rs.next()){
 				//Retrieve by column name
-				results.add(rs.getString("Name"));
+				results.add(rs.getString("VenueName"));
 			}
 
 		} catch (SQLException e) {
@@ -69,9 +70,11 @@ public class DBAccessClass {
 		return results;
 	}
 
-	public ArrayList<String> searchPerformance(String search){
-		String sql="Select * FROM concert";
-		ArrayList<String> results = new ArrayList<String>();
+	public ArrayList<Shows> searchPerformance(String search){
+		String sql="select performance.StartTime, performance.EndTime,concert.MovieName,concert.Thumbnail,concert.Rating,venue.VenueName "
+				+ "from performance inner join concert on performance.concertID = concert.ID inner join venue"
+				+ " on performance.venueID = venue.id";
+		ArrayList<Shows> results = new ArrayList<Shows>();
 		try {
 			ps = conn.prepareStatement(sql);	
 			//			ps.setString(1, search);
@@ -80,14 +83,17 @@ public class DBAccessClass {
 			//Extract data from result set
 			while(rs.next()){
 				//Retrieve by column name
-				results.add(rs.getString("Name"));
+				Shows newShow = new Shows(rs.getString("StartTIme"),rs.getString("EndTime"),rs.getString("MovieName"),
+						rs.getString("VenueName"), rs.getString("Thumbnail"),rs.getString("Rating")
+						);
+				results.add(newShow);
 			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return results;
 	}
 
 	public void displayAllUsers() {

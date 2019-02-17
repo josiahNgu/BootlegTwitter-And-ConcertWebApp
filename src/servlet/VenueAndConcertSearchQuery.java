@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Shows;
 import mysql.classes.ConcertsDB;
 
 /**
@@ -35,8 +36,8 @@ public class VenueAndConcertSearchQuery extends HttpServlet {
 		HttpSession session = request.getSession();
 		String search = request.getParameter("search");
 		ConcertsDB show = new ConcertsDB();
-		ArrayList<String> showResult = show.searchResult(search);
-		System.out.println(showResult);
+		ArrayList<Shows> showResult = show.searchResult(search);
+		session.setAttribute("showResult", showResult);
 		String address = "ConcertSearchResult.jsp";
 		RequestDispatcher dispatcher =
 				request.getRequestDispatcher(address);

@@ -45,6 +45,7 @@ public class Login extends HttpServlet {
 			HttpSession session = request.getSession();
 		    session.setAttribute("userBean", aUser);
 		    // add venue to session
+		    System.out.print(venue);
 			session.setAttribute("venue", venue);
 		    String address = "CustomerHomepage.jsp";
 		    RequestDispatcher dispatcher =

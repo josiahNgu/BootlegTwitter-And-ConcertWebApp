@@ -14,6 +14,7 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<a class="navbar-brand" href="CustomerHomepage.jsp">Home</a>
 			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link">${userBean.userName}</a></li>
 				<li class="nav-item"><a class="nav-link" href="ViewOrders.jsp">View Orders</a></li>
 				<li class="nav-item"><a class="nav-link" href="Login.jsp">Logout</a></li>
 			</ul>
