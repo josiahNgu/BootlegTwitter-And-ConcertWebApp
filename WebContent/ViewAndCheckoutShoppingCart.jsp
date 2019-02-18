@@ -2,8 +2,10 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script> 
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <head>
 <link rel="stylesheet" href="./style/styles.css">
 <meta charset="UTF-8">
@@ -39,7 +41,7 @@
 				</div>
 				<div class="col-sm-2">
 					<h6>1 tickets</h6>
-					<h6>&#x24;22.50</h6>
+					<h6>at &#x24;22.50</h6>
 				</div>
 				<div class="col-sm-1">
 					<button type="button" class="close" aria-label="Close">
@@ -48,7 +50,7 @@
 				</div>
 			</div>
 			<div class="row justify-content-end" style="padding: 5vh 0vh;">
-				<h6>Subtotal: &#x24;22.50</h6>
+				<h6>Subtotal: </h6>
 			</div>
 			<div class="row justify-content-end" style="padding-top: 1vh">
 				<a href="CustomerTransaction.jsp"> <input type="button"
