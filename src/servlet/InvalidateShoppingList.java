@@ -14,16 +14,16 @@ import javax.servlet.http.HttpSession;
 import model.Shows;
 
 /**
- * Servlet implementation class UpdateShoppingCart
+ * Servlet implementation class InvalidateShoppingList
  */
-@WebServlet("/UpdateShoppingCart")
-public class UpdateShoppingCart extends HttpServlet {
+@WebServlet("/InvalidateShoppingList")
+public class InvalidateShoppingList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public UpdateShoppingCart() {
+	public InvalidateShoppingList() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -33,26 +33,14 @@ public class UpdateShoppingCart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String numTickets = request.getParameter("numOfTickets");
-		Shows selectedShow = (Shows) session.getAttribute("detailResult");
-		Shows addShow = new Shows(selectedShow.getStartTime(),selectedShow.getEndTime(),selectedShow.getMovieName(),selectedShow.getVenue()
-				,selectedShow.getThumbnail(),selectedShow.getRating(),selectedShow.getDescription(),selectedShow.getSeatLeft(),selectedShow.getPpSeat()
-				,numTickets);
-		int subtotal = Integer.parseInt(request.getParameter("ticketPrice")) * Integer.parseInt(request.getParameter("numOfTickets"));
-		System.out.print(subtotal);
-		ArrayList<Shows> shoppingList = (ArrayList<Shows>)session.getAttribute("shoppingList");
-		if(shoppingList == null) {
-			shoppingList = new ArrayList<Shows>();
-			session.setAttribute("shoppingList", shoppingList);
-		}
-		shoppingList.add(addShow);
+		ArrayList<Shows> currentList = (ArrayList<Shows>) session.getAttribute("shoppingList");
+		String index = request.getParameter("index");
+		currentList.remove(Integer.parseInt(index));
 		String address = "ViewAndCheckoutShoppingCart.jsp";
 		RequestDispatcher dispatcher =
 				request.getRequestDispatcher(address);
 		dispatcher.forward(request, response);
-		
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

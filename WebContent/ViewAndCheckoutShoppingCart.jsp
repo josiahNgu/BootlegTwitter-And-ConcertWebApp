@@ -30,7 +30,7 @@
 				<h4>Shopping Cart</h4>
 			</div>
 			<div class="row">
-				<c:forEach var="show" items="${shoppingList}">
+				<c:forEach var="show" items="${shoppingList}" varStatus="loop">
 					<div class="col-sm-4 shoppingCartPicture" style="padding:5px;">
 						<img alt="${show.movieName}" height="150" width="150"
 							src="${show.thumbnail}">
@@ -46,9 +46,12 @@
 						<h6>at &#x24;${show.ppSeat}</h6>
 					</div>
 					<div class="col-sm-1">
-						<button type="button" class="close" aria-label="Close">
+					<form action="InvalidateShoppingList" method="post">
+						<input type="hidden" name="index" value="${loop.index}">
+						<button type="submit" class="close" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
+						</form>
 					</div>
 				</c:forEach>
 
