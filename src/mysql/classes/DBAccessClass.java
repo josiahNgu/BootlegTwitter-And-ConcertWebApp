@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import model.CreditCards;
 import model.Shows;
 import model.Users;
+import model.Orders;
 
 
 public class DBAccessClass {	
@@ -43,7 +44,7 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void closeConnection(){
 		try {
 			conn.close();
@@ -51,6 +52,32 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 	}
+	
+	public ArrayList<Orders> getOrders(int userId) {
+		String SQL = "SELECT * from orders where CustomerId = "+userId;
+		Statement stat;
+
+		ArrayList<Orders> results = new ArrayList<Orders>();
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+			//int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity
+
+			while (rs.next()){
+				Orders anOrder = new Orders(rs.getInt("Id"),rs.getInt("TotalCost"),rs.getString("OrderDate"),rs.getString("BillingAddress"),1);
+				results.add(anOrder);
+			}
+
+			stat.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return results;
+	}
+
+	
 	public ArrayList<String> getVenue() {
 		String sql = "SELECT distinct VenueName from venue";
 		ArrayList<String> results = new ArrayList<String>();
@@ -183,6 +210,7 @@ public class DBAccessClass {
 
 			while (rs.next()){
 				if(aUserName.equals( rs.getString("Username") )) {
+					aUser.setUserId(rs.getInt("Id"));
 					aUser.setUserName(rs.getString("Username"));
 					aUser.setPassword(rs.getString("Password"));
 				} 

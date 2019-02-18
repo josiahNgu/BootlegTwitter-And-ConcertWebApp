@@ -40,6 +40,7 @@ public class Login extends HttpServlet {
 		userPasswordMatches = aUserDB.validateUser(userName,password);
 		
 		if(userExists && userPasswordMatches) {
+			//this now returns userId as well
 			aUser = aUserDB.getUser(userName);
 			
 			HttpSession session = request.getSession();

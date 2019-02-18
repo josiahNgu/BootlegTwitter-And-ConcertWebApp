@@ -4,6 +4,8 @@
 <html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script> 
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+
 <head>
 <meta charset="UTF-8">
 <title>View Orders</title>
@@ -31,14 +33,15 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>107145</td>
-						<td>$48.00</td>
-						<td>20/1/2019 3:57:44 PM</td>
-						<td><a href="ManageOrder.jsp"> <input
-								type="button" class="btn btn-dark" value="View" />
-						</a></td>
-					</tr>
+					<c:forEach var="order" items="${orderResult}">
+						<tr>
+							<td>${order.orderNumber}</td>
+							<td>${order.orderTotal}</td>
+							<td>${order.orderDate}</td>
+							<td><a href="ManageOrder.jsp"> <input
+								type="button" class="btn btn-dark" value="View" /></a></td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
