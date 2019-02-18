@@ -83,7 +83,7 @@ public class DBAccessClass {
 			//Extract data from result set
 			while(rs.next()){
 				//Retrieve by column name
-				Shows newShow = new Shows(rs.getString("StartTIme"),rs.getString("EndTime"),rs.getString("MovieName"),
+				Shows newShow = new Shows(rs.getString("StartTime"),rs.getString("EndTime"),rs.getString("MovieName"),
 						rs.getString("VenueName"), rs.getString("Thumbnail"),rs.getString("Rating")
 						);
 				results.add(newShow);
