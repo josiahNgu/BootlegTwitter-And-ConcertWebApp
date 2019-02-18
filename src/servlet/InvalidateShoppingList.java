@@ -36,6 +36,7 @@ public class InvalidateShoppingList extends HttpServlet {
 		ArrayList<Shows> currentList = (ArrayList<Shows>) session.getAttribute("shoppingList");
 		String index = request.getParameter("index");
 		currentList.remove(Integer.parseInt(index));
+		session.setAttribute("shoppingList", currentList);
 		String address = "ViewAndCheckoutShoppingCart.jsp";
 		RequestDispatcher dispatcher =
 				request.getRequestDispatcher(address);
