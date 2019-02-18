@@ -47,6 +47,7 @@
 							<option value="4">4</option>
 							<option value="5">5</option>
 						</select>
+						<input type="hidden" name="ticketPrice" value="${detailResult.ppSeat}">
 						<button type="submit" class="btn btn-danger w-50">Add
 							To Cart</button>
 						</form>

@@ -71,51 +71,79 @@ public class DBAccessClass {
 	}
 
 	public ArrayList<Shows> searchPerformance(String search){
-		String sql="select performance.StartTime, performance.EndTime,concert.MovieName,concert.Thumbnail,concert.Rating,venue.VenueName "
-				+ "from performance inner join concert on performance.concertID = concert.ID inner join venue"
-				+ " on performance.venueID = venue.id";
+		String sql="select performance.StartTime, performance.EndTime,performance.seatLeft,concert.MovieName,concert.Thumbnail,"
+				+ "concert.Rating,venue.VenueName, TicketVenuePrices.TicketPrice"
+				+" from performance inner join concert on performance.concertID = concert.ID inner join venue"
+				+ " on performance.venueID = venue.id inner join TicketVenuePrices on TicketVenuePrices.performanceID=performance.ID"
+				+ " where concert.MovieName=?";
+		
+		String sql1="select performance.StartTime, performance.EndTime,performance.seatLeft,concert.MovieName,concert.Thumbnail,"
+				+ "concert.Rating,venue.VenueName, TicketVenuePrices.TicketPrice "
+				+"from performance inner join concert on performance.concertID = concert.ID inner join venue "
+				+ "on performance.venueID = venue.id inner join TicketVenuePrices on TicketVenuePrices.performanceID=performance.ID";
 		ArrayList<Shows> results = new ArrayList<Shows>();
 		try {
 			ps = conn.prepareStatement(sql);	
-			//			ps.setString(1, search);
+			ps.setString(1, search);
 			ResultSet rs = ps.executeQuery();
 
 			//Extract data from result set
 			while(rs.next()){
 				//Retrieve by column name
 				Shows newShow = new Shows(rs.getString("StartTime"),rs.getString("EndTime"),rs.getString("MovieName"),
-						rs.getString("VenueName"), rs.getString("Thumbnail"),rs.getString("Rating")
+						rs.getString("VenueName"), rs.getString("Thumbnail"),rs.getString("Rating"),rs.getString("seatLeft"),
+						rs.getString("TicketPrice")
 						);
 				results.add(newShow);
 			}
-
-		} catch (SQLException e) {
+		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(results.size()< 1) {
+			try {
+				ps = conn.prepareStatement(sql1);	
+				ResultSet rs = ps.executeQuery();
+
+				//Extract data from result set
+				while(rs.next()){
+					//Retrieve by column name
+					Shows newShow = new Shows(rs.getString("StartTime"),rs.getString("EndTime"),rs.getString("MovieName"),
+							rs.getString("VenueName"), rs.getString("Thumbnail"),rs.getString("Rating"),rs.getString("seatLeft"),
+							rs.getString("TicketPrice")
+							);
+					results.add(newShow);
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return results;
 	}
-	public Shows detailSearch(String performanceName) {
-		String sql ="select performance.StartTime, performance.EndTime, performance.SeatLeft, concert.MovieName,concert.Thumbnail,"+
-				"concert.Description,concert.Rating,venue.VenueName,TicketVenuePrices.TicketPrice,TicketTypes.SeatName from performance " +
-				" inner join concert on performance.concertID = concert.ID  inner join TicketVenuePrices on TicketVenuePrices.performanceID" +
-				"= performance.ID inner join venue on performance.venueID = venue.id inner join TicketTypes on TicketVenuePrices.ticketTypeID "
-				+ "= TicketTypes.id where concert.MovieName=?";
+	public Shows detailSearch(String performanceName, String venueName) {
+		String sql ="select performance.StartTime, performance.EndTime, performance.SeatLeft, concert.MovieName ,concert.Thumbnail,concert.Description," 
+				+ " concert.Rating,venue.VenueName,TicketVenuePrices.TicketPrice,TicketTypes.SeatName from performance inner join concert on"
+				+ " performance.concertID = concert.ID  inner join TicketVenuePrices on TicketVenuePrices.performanceID = performance.ID"
+				+ " inner join venue on performance.venueID = venue.id inner join TicketTypes on TicketVenuePrices.ticketTypeID = TicketTypes.id"
+				+ " where concert.MovieName=? and venue.venueName=?";
 		Shows details = new Shows();
 		try {
 			ps = conn.prepareStatement(sql);	
 			ps.setString(1, performanceName);
+			ps.setString(2, venueName);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
-				 details.setStartTime(rs.getString("StartTime"));
-				 details.setEndTime(rs.getString("EndTime"));
-				 details.setMovieName(rs.getString("MovieName"));
-				 details.setVenue(rs.getString("VenueName"));
-				 details.setThumbnail(rs.getString("Thumbnail"));
-				 details.setRating(rs.getString("Rating"));
-				 details.setDescription(rs.getString("Description"));
-				 details.setSeatLeft(rs.getString("SeatLeft"));
-				 details.setPpSeat(rs.getString("TicketPrice"));
+				details.setStartTime(rs.getString("StartTime"));
+				details.setEndTime(rs.getString("EndTime"));
+				details.setMovieName(rs.getString("MovieName"));
+				details.setVenue(rs.getString("VenueName"));
+				details.setThumbnail(rs.getString("Thumbnail"));
+				details.setRating(rs.getString("Rating"));
+				details.setDescription(rs.getString("Description"));
+				details.setSeatLeft(rs.getString("SeatLeft"));
+				details.setPpSeat(rs.getString("TicketPrice"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -34,8 +34,9 @@ public class ConcertSearchResult extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String movieName = request.getParameter("detailButton");
+		String venueName = request.getParameter("venueName");
 		ConcertsDB detailSearch = new ConcertsDB();
-		Shows details = detailSearch.detailResult(movieName);
+		Shows details = detailSearch.detailResult(movieName,venueName);
 		session.setAttribute("detailResult", details);
 		String address = "ConcertDetailsSelection.jsp";
 		RequestDispatcher dispatcher =

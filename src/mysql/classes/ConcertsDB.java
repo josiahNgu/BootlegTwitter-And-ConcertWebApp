@@ -2,8 +2,6 @@ package mysql.classes;
 
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpSession;
-
 import model.Shows;
 
 public class ConcertsDB {
@@ -14,11 +12,11 @@ public class ConcertsDB {
        	db.closeConnection();
 		return searchResult;
 	}
-	public Shows detailResult(String performanceName) {
+	public Shows detailResult(String performanceName,String venueID) {
 		DBAccessClass db = new DBAccessClass();
 		db.connectMeIn();
 		Shows searchResult = new Shows();
-		searchResult = db.detailSearch(performanceName);
+		searchResult = db.detailSearch(performanceName,venueID);
 		db.closeConnection();
 		return searchResult;
 	}

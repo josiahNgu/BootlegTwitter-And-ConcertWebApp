@@ -45,14 +45,15 @@
 							<td>${show.movieName}</td>
 							<td>${show.venue}</td>
 							<td>${show.startTime}</td>
-							<td>30</td>
-							<td>$12</td>
+							<td>${show.seatLeft}</td>
+							<td>&dollar;${show.ppSeat}</td>
 							<!-- <td>No</td> -->
 							<td><img src=${show.thumbnail}
 								alt=${show.movieName} height="150"
 								width="150"></td>
 							<td>
 							<form action="ConcertSearchResult" method="post">
+							<input type="hidden" name="venueName" value="${show.venue}">
 							<button type="submit" name="detailButton" value="${show.movieName}" class="btn btn-dark"> Details</button>
 							</form>
 							</td>

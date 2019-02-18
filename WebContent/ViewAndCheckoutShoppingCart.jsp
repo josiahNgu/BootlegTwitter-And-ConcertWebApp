@@ -6,6 +6,8 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+	
 <head>
 <link rel="stylesheet" href="./style/styles.css">
 <meta charset="UTF-8">
@@ -28,29 +30,31 @@
 				<h4>Shopping Cart</h4>
 			</div>
 			<div class="row">
-				<div class="col-sm-4 shoppingCartPicture">
-					<img alt="concertImage" height="150" width="150"
-						src="./pics/rennieHarris.jpg">
-				</div>
-				<div class="col-sm-3">
-					<h6>Rennie Harris Puremovement</h6>
-				</div>
-				<div class="col-sm-2">
-					<h6>9:30 am</h6>
-					<h6>08/11/19</h6>
-				</div>
-				<div class="col-sm-2">
-					<h6>1 tickets</h6>
-					<h6>at &#x24;22.50</h6>
-				</div>
-				<div class="col-sm-1">
-					<button type="button" class="close" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
+				<c:forEach var="show" items="${shoppingList}">
+					<div class="col-sm-4 shoppingCartPicture" style="padding:5px;">
+						<img alt="${show.movieName}" height="150" width="150"
+							src="${show.thumbnail}">
+					</div>
+					<div class="col-sm-3">
+						<h6>${show.movieName}</h6>
+					</div>
+					<div class="col-sm-2">
+					<h6>${show.startTime}</h6>
+					</div>
+					<div class="col-sm-2">
+						<h6>${show.numOfreqSeat} tickets</h6>
+						<h6>at &#x24;${show.ppSeat}</h6>
+					</div>
+					<div class="col-sm-1">
+						<button type="button" class="close" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</c:forEach>
+
 			</div>
 			<div class="row justify-content-end" style="padding: 5vh 0vh;">
-				<h6>Subtotal: </h6>
+				<h6>Subtotal:</h6>
 			</div>
 			<div class="row justify-content-end" style="padding-top: 1vh">
 				<a href="CustomerTransaction.jsp"> <input type="button"
