@@ -14,6 +14,9 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" >
+
+	
 
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 
@@ -129,8 +132,7 @@
 		</div>
 		<div class="row col-sm-8">
 			<div class="col-sm-8">
-				<i class="fa fa-arrow-left"></i><a
-					href="ViewAndCheckoutShoppingCart.jsp"> Continue Shopping</a>
+				<i class="fa fa-arrow-left"></i><a href="ViewAndCheckoutShoppingCart.jsp"> Continue Shopping</a>
 			</div>
 			<div class="col-sm-4 justify-content-end">
 				<h6>Subtotal: &#x24;22.50</h6>
