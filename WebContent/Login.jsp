@@ -24,7 +24,7 @@
 					<button type="submit" value ="Login" class="btn btn-block btn-info">Login</button>
 				</div>
 				<div>
-					Are you a New User?<a href="Register.jsp"> Register Here </a> <br>
+					 New User?<a href="Register.jsp"> Register Here </a> <br>
 				</div>
 			</form>
 		</div>

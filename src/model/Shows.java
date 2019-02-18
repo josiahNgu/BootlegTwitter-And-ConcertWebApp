@@ -1,7 +1,31 @@
 package model;
 
 public class Shows {
-	private String startTime, endTime,movieName,venue,thumbnail,rating ="nil";
+	private String startTime, endTime,movieName,venue,thumbnail,rating,description,openingAct,seatLeft,ppSeat ="nil";
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getOpeningAct() {
+		return openingAct;
+	}
+	public void setOpeningAct(String openingAct) {
+		this.openingAct = openingAct;
+	}
+	public String getSeatLeft() {
+		return seatLeft;
+	}
+	public void setSeatLeft(String seatLeft) {
+		this.seatLeft = seatLeft;
+	}
+	public String getPpSeat() {
+		return ppSeat;
+	}
+	public void setPpSeat(String ppSeat) {
+		this.ppSeat = ppSeat;
+	}
 	public Shows() {};
 	public Shows(String startTime, String endTime, String movieName, String venue, String thumbnail, String rating) {
 		setStartTime(startTime);
@@ -11,6 +35,18 @@ public class Shows {
 		setThumbnail(thumbnail);
 		setRating(rating);
 
+	}
+	public Shows(String startTime, String endTime, String movieName, String venue, String thumbnail, String rating,String description,
+		String seatLeft,String ppSeat) {
+		setStartTime(startTime);
+		setEndTime(endTime);
+		setMovieName(movieName);
+		setVenue(venue);
+		setThumbnail(thumbnail);
+		setRating(rating);
+		setDescription(description);
+		setSeatLeft(seatLeft);
+		setPpSeat(ppSeat);
 	}
 	public String getStartTime() {
 		return startTime;

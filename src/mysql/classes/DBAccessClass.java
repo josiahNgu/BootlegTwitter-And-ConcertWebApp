@@ -95,6 +95,34 @@ public class DBAccessClass {
 		}
 		return results;
 	}
+	public Shows detailSearch(String performanceName) {
+		String sql ="select performance.StartTime, performance.EndTime, performance.SeatLeft, concert.MovieName,concert.Thumbnail,"+
+				"concert.Description,concert.Rating,venue.VenueName,TicketVenuePrices.TicketPrice,TicketTypes.SeatName from performance " +
+				" inner join concert on performance.concertID = concert.ID  inner join TicketVenuePrices on TicketVenuePrices.performanceID" +
+				"= performance.ID inner join venue on performance.venueID = venue.id inner join TicketTypes on TicketVenuePrices.ticketTypeID "
+				+ "= TicketTypes.id where concert.MovieName=?";
+		Shows details = new Shows();
+		try {
+			ps = conn.prepareStatement(sql);	
+			ps.setString(1, performanceName);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				 details.setStartTime(rs.getString("StartTime"));
+				 details.setEndTime(rs.getString("EndTime"));
+				 details.setMovieName(rs.getString("MovieName"));
+				 details.setVenue(rs.getString("VenueName"));
+				 details.setThumbnail(rs.getString("Thumbnail"));
+				 details.setRating(rs.getString("Rating"));
+				 details.setDescription(rs.getString("Description"));
+				 details.setSeatLeft(rs.getString("SeatLeft"));
+				 details.setPpSeat(rs.getString("TicketPrice"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return details;
+	}
 
 	public void displayAllUsers() {
 		String SQL = "SELECT * from users";
@@ -114,7 +142,7 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Users returnUserByUsername(String aUserName) {
 		String SQL = "SELECT * from users";
 		Statement stat;
@@ -161,7 +189,7 @@ public class DBAccessClass {
 
 		return passwordMatches;
 	}
-	
+
 	public boolean findUserByUsername(String aUserName) {
 		boolean userExists = false;
 		String SQL = "SELECT * from users";
@@ -184,7 +212,7 @@ public class DBAccessClass {
 
 		return userExists;
 	}
-	
+
 	public void addSingleUser(Users aUser) {
 		try {
 			stmt = conn.createStatement();

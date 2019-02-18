@@ -34,7 +34,7 @@
 						<th scope="col">Start Time</th>
 						<th scope="col">Seat Remaining</th>
 						<th scope="col">Price</th>
-						<th scope="col">Opening Acts</th>
+						<!-- <th scope="col">Opening Acts</th> -->
 						<th scope="col">Thumbnail</th>
 						<th scope="col">More Info</th>
 					</tr>
@@ -43,18 +43,19 @@
 					<c:forEach var="show" items="${showResult}">
 						<tr>
 							<td>${show.movieName}</td>
-							<td>${show.venue }</td>
+							<td>${show.venue}</td>
 							<td>${show.startTime}</td>
 							<td>30</td>
 							<td>$12</td>
-							<td>No</td>
-							<td><img src=${show.thumbnail
-								}
-								alt="Rennie Harris Puremovement" height="150"
+							<!-- <td>No</td> -->
+							<td><img src=${show.thumbnail}
+								alt=${show.movieName} height="150"
 								width="150"></td>
-							<td><a href="ConcertDetailsSelection.jsp"> <input
-									type="button" class="btn btn-dark" value="Details" />
-							</a></td>
+							<td>
+							<form action="ConcertSearchResult" method="post">
+							<button type="submit" name="detailButton" value="${show.movieName}" class="btn btn-dark"> Details</button>
+							</form>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>

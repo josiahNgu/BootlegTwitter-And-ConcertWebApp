@@ -25,23 +25,16 @@
 		<div style="padding-bottom: 3vh;"></div>
 		<div class="row" style="border: black 1px solid; padding: 5vh;">
 			<div class="d-flex col-xs-12 row ">
-				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-					<img src="pics/rennieHarris.jpg" alt="Rennie Harris Puremovement">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<img class="img-fluid" src=${detailResult.thumbnail} alt=${detailResult.movieName}>
 				</div>
-				<div
-					class="col-xs-12 col-sm-12 col-md-6 col-lg-8 d-flex flex-column">
-					<h3>The King &amp; I</h3>
-					<p>Two worlds collide in this “breathtaking and exquisite” (The
-						New York Times) musical, based on the 2015 Tony Award®-winning
-						Lincoln Center Theater production. One of Rodgers & Hammerstein’s
-						finest works, THE KING AND I boasts a score that features such
-						beloved classics as “Getting To Know You,” “I Whistle a Happy
-						Tune,” “Hello Young Lovers,” “Shall We Dance” and “Something
-						Wonderful.”</p>
-					<p>The performance will begin at 8:30 pm and there is only 10
-						seats left. Purchase a ticket at $25 pax</p>
-					<a href="ViewAndCheckoutShoppingCart.jsp"> <input type="button"
-			class="btn btn-dark w-25" value="Add to Cart"/>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 d-flex flex-column">
+					<h3>${detailResult.movieName}</h3>
+					<p></p>
+					<p>The performance will begin at ${detailResult.startTime}  and ends at ${detailResult.endTime}.
+					   There is only ${detailResult.seatLeft} seats left. Purchase a ticket at &dollar;${detailResult.ppSeat} pax now</p>
+					
+					<a href="ViewAndCheckoutShoppingCart.jsp"> <input type="button" class="btn btn-dark w-25" value="Add to Cart"/>
 		</a>
 				</div>
 			</div>
