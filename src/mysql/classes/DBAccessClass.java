@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.CreditCards;
 import model.Shows;
 import model.Users;
 
@@ -261,6 +262,22 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 
+	}
+	public void creditCards(CreditCards newCard) {
+		String sql = "insert into creditcards (CardHolderName,CreditCardNumber,Balance,CardType,UserId,CVV,ExpirationDate)values"
+				+ "(?,?,?,?,?,?,?)";
+		String cardHolderName = newCard.getFirstName().concat(newCard.getLastName());
+		try {
+			ps = conn.prepareStatement(sql);	
+			ps.setString(1, newCard.getFirstName());
+			
+			ResultSet rs = ps.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 	}
 
 }

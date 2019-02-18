@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.CreditCards;
+import mysql.classes.CreditCardsDB;
+
 /**
  * Servlet implementation class CustomerTransactionConfirmation
  */
@@ -34,7 +37,8 @@ public class CustomerTransactionConfirmation extends HttpServlet {
 		String expiryYear = request.getParameter("expiryYear");
 		String cvc = request.getParameter("cvc");
 		String billingAddress = request.getParameter("billingAddress");
-
+		CreditCards userCard = new CreditCards(firstName,lastName,cardNumber,cardType,expiryMonth,expiryYear,cvc,billingAddress,"1");
+		CreditCardsDB card = new CreditCardsDB();
 	}
 
 	/**

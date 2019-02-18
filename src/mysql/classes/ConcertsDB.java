@@ -20,4 +20,5 @@ public class ConcertsDB {
 		db.closeConnection();
 		return searchResult;
 	}
+	
 }
