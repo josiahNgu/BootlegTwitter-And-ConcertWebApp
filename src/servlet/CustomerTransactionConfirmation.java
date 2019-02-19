@@ -37,6 +37,7 @@ public class CustomerTransactionConfirmation extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("confirmOrder",session.getAttribute("shoppingList"));
 		session.removeAttribute("shoppingList");
+		session.setAttribute("subtotal", 0);
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String cardNumber = request.getParameter("cardNumber");

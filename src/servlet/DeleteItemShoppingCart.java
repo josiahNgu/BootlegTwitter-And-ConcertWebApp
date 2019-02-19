@@ -36,6 +36,11 @@ public class DeleteItemShoppingCart extends HttpServlet {
 		ArrayList<Shows> currentList = (ArrayList<Shows>) session.getAttribute("shoppingList");
 		String index = request.getParameter("index");
 		currentList.remove(Integer.parseInt(index));
+		int subtotal = 0;
+		for(int i =0;i<currentList.size();i++) {
+			subtotal += currentList.get(i).getOrderCost();
+		}
+		session.setAttribute("subtotal", subtotal);
 		session.setAttribute("shoppingList", currentList);
 		String address = "ViewAndCheckoutShoppingCart.jsp";
 		RequestDispatcher dispatcher =
