@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Review;
 import model.Shows;
 import mysql.classes.ConcertsDB;
+import mysql.classes.ReviewDB;
 
 /**
  * Servlet implementation class ConcertSearchResult
@@ -36,8 +39,14 @@ public class ConcertSearchResult extends HttpServlet {
 		String movieName = request.getParameter("detailButton");
 		String venueName = request.getParameter("venueName");
 		ConcertsDB detailSearch = new ConcertsDB();
+		ReviewDB getComment = new ReviewDB();
 		Shows details = detailSearch.detailResult(movieName,venueName);
+		//add comment section
+		ArrayList<Review> allComment = getComment.getReview(movieName); 
+		
+		session.removeAttribute("comments");
 		session.setAttribute("detailResult", details);
+		session.setAttribute("comments", allComment);
 		String address = "ConcertDetailsSelection.jsp";
 		RequestDispatcher dispatcher =
 				request.getRequestDispatcher(address);

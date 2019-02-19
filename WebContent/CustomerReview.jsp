@@ -31,7 +31,8 @@
 				<div class="form-group">
 				<label>Comment</label>
 				<textarea class="form-control w-50" style="border:2px solid #BD3D3A;" rows="2" name="comment"></textarea>
-				<button type="submit" class="btn btn-danger" style="margin-top:10px;">Submit</button>
+				<a href="ConcertDetailsSelection.jsp"> <input class="btn btn-danger w-25" style="margin-top:10px;" value="Cancel"/></a>
+				<button type="submit" class="btn btn-success w-25" style="margin-top:10px;">Submit</button>
 				
 				</div>
 			

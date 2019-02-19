@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.Review;
 import model.CreditCards;
 import model.Shows;
 import model.Users;
@@ -44,7 +45,7 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void closeConnection(){
 		try {
 			conn.close();
@@ -52,7 +53,7 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<Orders> getOrders(int userId) {
 		String SQL = "SELECT * from orders where CustomerId = "+userId;
 		Statement stat;
@@ -77,7 +78,7 @@ public class DBAccessClass {
 		return results;
 	}
 
-	
+
 	public ArrayList<String> getVenue() {
 		String sql = "SELECT distinct VenueName from venue";
 		ArrayList<String> results = new ArrayList<String>();
@@ -104,7 +105,7 @@ public class DBAccessClass {
 				+" from performance inner join concert on performance.concertID = concert.ID inner join venue"
 				+ " on performance.venueID = venue.id inner join TicketVenuePrices on TicketVenuePrices.performanceID=performance.ID"
 				+ " where concert.MovieName=?";
-		
+
 		String sql1="select performance.StartTime, performance.EndTime,performance.seatLeft,concert.MovieName,concert.Thumbnail,"
 				+ "concert.Rating,venue.VenueName, TicketVenuePrices.TicketPrice "
 				+"from performance inner join concert on performance.concertID = concert.ID inner join venue "
@@ -298,7 +299,7 @@ public class DBAccessClass {
 		String expirationDate = newCard.getExpiryYear() + "-" + newCard.getExpiryMonth()+"-00";
 		System.out.print(expirationDate);
 		try {
-		    PreparedStatement prepareStmt = conn.prepareStatement(sql);
+			PreparedStatement prepareStmt = conn.prepareStatement(sql);
 			stmt = conn.createStatement();
 			prepareStmt.setString(1, cardHolderName);
 			prepareStmt.setString(2, newCard.getCardNumber());
@@ -313,7 +314,44 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 
-		
+
+	}
+	public void addUserComment(String comment,String userId, String concertId, String currentDate, String rating) {
+		String sql = "insert into customerreviews(concertID,userID,ReviewDate,Rating,Review)values(?,?,?,?,?)";
+		try {
+			PreparedStatement prepareStmt = conn.prepareStatement(sql);
+			stmt = conn.createStatement();
+			prepareStmt.setString(1, concertId);
+			prepareStmt.setString(2, userId);
+			prepareStmt.setString(3, currentDate);
+			prepareStmt.setString(4, rating);
+			prepareStmt.setString(5, comment);
+			prepareStmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public ArrayList<Review> getReview(String movieName) {
+		String sql = "select customerreviews.Review,customerreviews.Rating,customerreviews.ReviewDate,"
+				+ "users.Username from customerreviews inner join users on customerreviews.userId = users.id inner join concert on concert.id = customerreviews.concertID" 
+				+ " where concert.movieName=?";
+		ArrayList<Review> results = new ArrayList<Review>();
+		try {
+			ps = conn.prepareStatement(sql);	
+			ps.setString(1, movieName);
+			ResultSet rs = ps.executeQuery();
+			//Extract data from result set
+			while(rs.next()){
+				//Retrieve by column name
+				Review newComment = new Review(rs.getString("userName"),rs.getString("rating"),rs.getString("Review"),rs.getString("ReviewDate"));
+				results.add(newComment);
+			}
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
 	}
 
 }
