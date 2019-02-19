@@ -295,9 +295,17 @@ public class DBAccessClass {
 		String sql = "insert into creditcards (CardHolderName,CreditCardNumber,Balance,CardType,UserId,CVV,ExpirationDate)values"
 				+ "(?,?,?,?,?,?,?)";
 		String cardHolderName = newCard.getFirstName().concat(newCard.getLastName());
+		String expirationDate = newCard.getExpirtYear() + "-" + newCard.getExpiryMonth();
 		try {
 			ps = conn.prepareStatement(sql);	
-			ps.setString(1, newCard.getFirstName());
+			ps.setString(1, cardHolderName);
+			ps.setString(2, newCard.getFirstName());
+			ps.setString(3, newCard.getCardNumber());
+			ps.setString(4, "5000");
+			ps.setString(5, newCard.getCardType());
+			ps.setString(6, newCard.getUserId());
+			ps.setString(7, newCard.getExpirtYear());
+
 			
 			ResultSet rs = ps.executeQuery();
 		} catch (SQLException e) {

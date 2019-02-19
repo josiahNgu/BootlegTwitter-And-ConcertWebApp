@@ -23,7 +23,7 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link">${userBean.userName}</a></li>
-				<li class="nav-item"><a class="nav-link" href="ViewOrders">Order</a></li>
+				<li class="nav-item"><a class="nav-link" href="ViewOrders.jsp">Order</a></li>
 				<li class="nav-item"><a class="nav-link" href="Login.jsp">Logout</a></li>
 			</ul>
 		</nav>
