@@ -1,7 +1,7 @@
 package model;
 
 public class CreditCards {
-	private String firstName,lastName,cardNumber,cardType,expiryMonth,expirtYear,cvc,billingAddress,userId = "nil";
+	private String firstName,lastName,cardNumber,cardType,expiryMonth,expiryYear,cvc,billingAddress,userId = "nil";
 
 	public CreditCards() {}
 	
@@ -13,7 +13,7 @@ public class CreditCards {
 		this.cardNumber = cardNumber;
 		this.cardType = cardType;
 		this.expiryMonth = expiryMonth;
-		this.expirtYear = expirtYear;
+		this.expiryYear = expirtYear;
 		this.cvc = cvc;
 		this.billingAddress = billingAddress;
 		this.userId = userId;
@@ -69,12 +69,12 @@ public class CreditCards {
 		this.expiryMonth = expiryMonth;
 	}
 
-	public String getExpirtYear() {
-		return expirtYear;
+	public String getExpiryYear() {
+		return expiryYear;
 	}
 
-	public void setExpirtYear(String expirtYear) {
-		this.expirtYear = expirtYear;
+	public void setExpiryYear(String expirtYear) {
+		this.expiryYear = expirtYear;
 	}
 
 	public String getCvc() {

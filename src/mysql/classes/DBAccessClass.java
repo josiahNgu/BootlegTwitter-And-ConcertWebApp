@@ -295,19 +295,19 @@ public class DBAccessClass {
 		String sql = "insert into creditcards (CardHolderName,CreditCardNumber,Balance,CardType,UserId,CVV,ExpirationDate)values"
 				+ "(?,?,?,?,?,?,?)";
 		String cardHolderName = newCard.getFirstName().concat(newCard.getLastName());
-		String expirationDate = newCard.getExpirtYear() + "-" + newCard.getExpiryMonth();
+		String expirationDate = newCard.getExpiryYear() + "-" + newCard.getExpiryMonth()+"-00";
+		System.out.print(expirationDate);
 		try {
-			ps = conn.prepareStatement(sql);	
-			ps.setString(1, cardHolderName);
-			ps.setString(2, newCard.getFirstName());
-			ps.setString(3, newCard.getCardNumber());
-			ps.setString(4, "5000");
-			ps.setString(5, newCard.getCardType());
-			ps.setString(6, newCard.getUserId());
-			ps.setString(7, newCard.getExpirtYear());
-
-			
-			ResultSet rs = ps.executeQuery();
+		    PreparedStatement prepareStmt = conn.prepareStatement(sql);
+			stmt = conn.createStatement();
+			prepareStmt.setString(1, cardHolderName);
+			prepareStmt.setString(2, newCard.getCardNumber());
+			prepareStmt.setString(3, "5000");
+			prepareStmt.setString(4, newCard.getCardType());
+			prepareStmt.setString(5, newCard.getUserId());
+			prepareStmt.setString(6, newCard.getCvc());
+			prepareStmt.setString(7, expirationDate);
+			prepareStmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

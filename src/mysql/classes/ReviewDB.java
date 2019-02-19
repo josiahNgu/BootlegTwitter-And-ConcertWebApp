@@ -1,4 +1,4 @@
-package servlet;
+package mysql.classes;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class InvalidateShoppingList
+ * Servlet implementation class ReviewDB
  */
-@WebServlet("/InvalidateShoppingList")
-public class InvalidateShoppingList extends HttpServlet {
+@WebServlet("/ReviewDB")
+public class ReviewDB extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InvalidateShoppingList() {
+    public ReviewDB() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,8 @@ public class InvalidateShoppingList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

@@ -2,6 +2,7 @@ package model;
 
 public class Shows {
 	private String startTime, endTime,movieName,venue,thumbnail,rating,description,openingAct,seatLeft,ppSeat,numOfreqSeat ="nil";
+	private int orderCost = 0;
 
 	public Shows() {};
 	public Shows(String startTime, String endTime, String movieName, String venue, String thumbnail, String rating,String seatLeft,
@@ -17,7 +18,7 @@ public class Shows {
 
 	}
 	public Shows(String startTime, String endTime, String movieName, String venue, String thumbnail, String rating,String description,
-		String seatLeft,String ppSeat) {
+			String seatLeft,String ppSeat) {
 		setStartTime(startTime);
 		setEndTime(endTime);
 		setMovieName(movieName);
@@ -29,18 +30,27 @@ public class Shows {
 		setPpSeat(ppSeat);
 	}
 	public Shows(String startTime, String endTime, String movieName, String venue, String thumbnail, String rating,String description,
-			String seatLeft,String ppSeat, String numOfreqSeat) {
-			setStartTime(startTime);
-			setEndTime(endTime);
-			setMovieName(movieName);
-			setVenue(venue);
-			setThumbnail(thumbnail);
-			setRating(rating);
-			setDescription(description);
-			setSeatLeft(seatLeft);
-			setPpSeat(ppSeat);
-			setNumOfreqSeat(numOfreqSeat);
-		}
+			String seatLeft,String ppSeat, String numOfreqSeat,int orderCost) {
+		setStartTime(startTime);
+		setEndTime(endTime);
+		setMovieName(movieName);
+		setVenue(venue);
+		setThumbnail(thumbnail);
+		setRating(rating);
+		setDescription(description);
+		setSeatLeft(seatLeft);
+		setPpSeat(ppSeat);
+		setNumOfreqSeat(numOfreqSeat);
+		setOrderCost(orderCost);
+	}
+
+
+	public int getOrderCost() {
+		return orderCost;
+	}
+	public void setOrderCost(int orderCost) {
+		this.orderCost = orderCost;
+	}
 	public String getStartTime() {
 		return startTime;
 	}

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Transcation</title>
-<link rel="stylesheet" href="`style/styles.css">
+<link rel="stylesheet" href="styles/styles.css">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -29,7 +29,8 @@
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link">${userBean.userName}</a></li>
 				<li class="nav-item"><a class="nav-link" href="ViewOrders.jsp">Order</a></li>
-				<li class="nav-item"><a class="nav-link" href="Login.jsp">Logout</a></li>
+				<li class="nav-item"><a class="nav-link" href="ViewAndCheckoutShoppingCart.jsp">Cart</a></li>
+				<li class="nav-item"><form action=Logout method="post"><input type="submit" class="btn btn-secondary" value="logout" /></form></li>
 			</ul>
 		</nav>
 	</div>
@@ -51,39 +52,42 @@
 							</div>
 						</div>
 					</c:forEach>
+			<div class="col-sm-10 d-flex justify-content-end" style="padding:5vh;">
+				<h6>Subtotal: &#x24;${subtotal}</h6>
+			</div>
 			</div>
 
 
 			<div class="col-sm-4 col-lg-4 shadow-lg p-3 mb-5 rounded"
 				style="background-color: #3d3d3d; color: white;">
 				<h4>Card Details</h4>
-				<form>
+				<form action="CustomerTransactionConfirmation" method="post">
 					<div class="form-group">
-						<label for="firstName">First Name</label> <input type="text"
-							class="form-control" placeholder="first name">
+						<label for="firstName">First Name</label> 
+						<input type="text" name ="firstName" class="form-control" placeholder="first name">
 					</div>
 					<div class="form-group">
 						<label for="lastName">Last Name</label> <input type="text"
-							class="form-control" placeholder="last name">
+							name="lastName" class="form-control" placeholder="last name">
 						<div class="form-group">
 							<label for="cardType">Card Type</label> <select
-								class="form-control" id="cardType">
+								class="form-control" name="cardType">
 								<option>Visa</option>
 								<option>MasterCard</option>
 								<option>Discover</option>
 							</select>
 						</div>
 						<div class="form-group" id="cardNumberField">
-							<label for="cardNumber">Card Number</label> <input type="number"
-								class="form-control" id="cardNumber">
+							<label for="cardNumber">Card Number</label> 
+							<input type="number"
+								class="form-control" name="cardNumber">
 						</div>
 						<div class="form-group">
 							<label for="expirationDate">Expiration date</label>
 							<div class="row justify-content-center">
 								<div class="col-sm-6">
-									<select class="form-control" name="expiry-month"
+									<select class="form-control" name="expiryMonth"
 										id="expiry-month">
-										<option>Month</option>
 										<option value="01">Jan (01)</option>
 										<option value="02">Feb (02)</option>
 										<option value="03">Mar (03)</option>
@@ -99,34 +103,29 @@
 									</select>
 								</div>
 								<div class="col-sm-6">
-									<select class="form-control" name="expiry-year">
-										<option>Year</option>
-										<option value="19">2019</option>
-										<option value="20">2020</option>
-										<option value="21">2021</option>
-										<option value="22">2022</option>
-										<option value="23">2023</option>
+									<select class="form-control" name="expiryYear">
+										<option value="2019">2019</option>
+										<option value="2020">2020</option>
+										<option value="2021">2021</option>
+										<option value="2022">2022</option>
+										<option value="2023">2023</option>
 									</select>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="cvc">CVC Number</label> <input type="password"
-								class="form-control" id="cvc" placeholder="XXX">
+								class="form-control" name="cvc" placeholder="XXX">
 						</div>
 						<div class="form-group">
 							<label for="billingAddress">Billing Address</label> <input
-								type="text" class="form-control" placeholder="billing address">
+								type="text" class="form-control" name ="billingAddress" placeholder="Billing Address">
 						</div>
 						<div class="form-group">
 							<label for="shippingAddress">Shipping Address</label> <input
-								type="text" class="form-control" placeholder="shipping address">
+								type="text" class="form-control" name="shippingAddress" placeholder="shipping address">
 						</div>
-						<!-- 					<div class="form-group">
-						<button type="submit" value="" class="btn btn-primary w-100">Comfirm</button>
-					</div> -->
-						<a href="CustomerTransactionConfirmation.jsp"> <input
-							type="button" class="btn btn-primary w-100" value="Confirm" />
+						<input type="submit" class="btn btn-primary w-100" value="Confirm" />
 				</form>
 			</div>
 		</div>
@@ -134,9 +133,7 @@
 			<div class="col-sm-8">
 				<i class="fa fa-arrow-left"></i><a href="ViewAndCheckoutShoppingCart.jsp"> Continue Shopping</a>
 			</div>
-			<div class="col-sm-4 justify-content-end">
-				<h6>Subtotal: &#x24;22.50</h6>
-			</div>
+
 		</div>
 	</div>
 </body>

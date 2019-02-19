@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class InvalidateShoppingList
+ * Servlet implementation class CustomerReview
  */
-@WebServlet("/InvalidateShoppingList")
-public class InvalidateShoppingList extends HttpServlet {
+@WebServlet("/CustomerReview")
+public class CustomerReview extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InvalidateShoppingList() {
+    public CustomerReview() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,8 @@ public class InvalidateShoppingList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		String comment = request.getParameter("comment");
+		System.out.print(comment);
 	}
 
 	/**

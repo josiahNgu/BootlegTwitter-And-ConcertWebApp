@@ -46,7 +46,7 @@
 						<h6>at &#x24;${show.ppSeat}</h6>
 					</div>
 					<div class="col-sm-1">
-					<form action="InvalidateShoppingList" method="post">
+					<form action="DeleteItemShoppingCart" method="post">
 						<input type="hidden" name="index" value="${loop.index}">
 						<button type="submit" class="close" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
