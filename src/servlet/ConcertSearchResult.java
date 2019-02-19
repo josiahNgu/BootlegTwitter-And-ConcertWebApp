@@ -43,7 +43,6 @@ public class ConcertSearchResult extends HttpServlet {
 		Shows details = detailSearch.detailResult(movieName,venueName);
 		//add comment section
 		ArrayList<Review> allComment = getComment.getReview(movieName); 
-		
 		session.removeAttribute("comments");
 		session.setAttribute("detailResult", details);
 		session.setAttribute("comments", allComment);

@@ -29,14 +29,25 @@
 		<div class="container col-lg-6">
 			<form action=CustomerReview method="post">
 				<div class="form-group">
-				<label>Comment</label>
-				<textarea class="form-control w-50" style="border:2px solid #BD3D3A;" rows="2" name="comment"></textarea>
-				<a href="ConcertDetailsSelection.jsp"> <input class="btn btn-danger w-25" style="margin-top:10px;" value="Cancel"/></a>
-				<button type="submit" class="btn btn-success w-25" style="margin-top:10px;">Submit</button>
-				
+					<label>Comment</label> <br>
+					<textarea class="w-50" style="border: 2px solid #BD3D3A;" rows="2" name="comment"></textarea>
 				</div>
-			
-			
+				<div class="form-group">
+					<label>Rating</label> 
+					<select class="w-50 form-control " style="border: 2px solid #BD3D3A;" name="rating">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				</div>
+
+				<a href="ConcertDetailsSelection.jsp"> <input
+					class="btn btn-danger w-25" style="margin-top: 10px;"
+					value="Cancel" /></a>
+				<button type="submit" class="btn btn-success w-25"
+					style="margin-top: 10px;">Submit</button>
 			</form>
 		</div>
 	</div>

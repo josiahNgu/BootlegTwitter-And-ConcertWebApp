@@ -314,8 +314,8 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 
-
 	}
+	
 	public void addUserComment(String comment,String userId, String concertId, String currentDate, String rating) {
 		String sql = "insert into customerreviews(concertID,userID,ReviewDate,Rating,Review)values(?,?,?,?,?)";
 		try {
@@ -352,6 +352,26 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 		return results;
+	}
+	public String getMovieId(String movieName) {
+		String sql = "select id from concert where movieName =?";
+		String result ="nil";
+		try {
+			ps = conn.prepareStatement(sql);	
+			ps.setString(1, movieName);
+			ResultSet rs = ps.executeQuery();
+			//Extract data from result set
+			while(rs.next()){
+				//Retrieve by column name
+				result = rs.getString("id");
+			}
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return result;
 	}
 
 }

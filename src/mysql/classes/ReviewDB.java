@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import model.Review;
 
 public class ReviewDB {
+
 	public void addReview(String comment,String userId, String movieName, String currentDate,String rating) {
 		DBAccessClass db = new DBAccessClass();
        	db.connectMeIn();
@@ -17,5 +18,13 @@ public class ReviewDB {
        	ArrayList<Review>searchResult = db.getReview(movieName);
        	db.closeConnection();
 		return searchResult;	
+	}
+	public String getMovieId(String movieName) {
+		DBAccessClass db = new DBAccessClass();
+       	db.connectMeIn();
+       	String searchResult = db.getMovieId(movieName);
+       	db.closeConnection();
+		return searchResult;	
+		
 	}
 }
