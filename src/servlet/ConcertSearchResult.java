@@ -42,10 +42,21 @@ public class ConcertSearchResult extends HttpServlet {
 		ReviewDB getComment = new ReviewDB();
 		Shows details = detailSearch.detailResult(movieName,venueName);
 		//add comment section
-		ArrayList<Review> allComment = getComment.getReview(movieName); 
+		ArrayList<Review> allComment = getComment.getReview(movieName);
+		int rating =0;
+		int overallRating =0;
+		for(int i = 0 ;i<allComment.size();i++) {
+			 rating += Integer.parseInt(allComment.get(i).getRating());
+			
+		}
+		overallRating = rating/allComment.size();
+		System.out.print(overallRating);
+		session.removeAttribute("overallRating");
+		session.setAttribute("overallRating", overallRating);
 		session.removeAttribute("comments");
 		session.setAttribute("detailResult", details);
 		session.setAttribute("comments", allComment);
+		
 		String address = "ConcertDetailsSelection.jsp";
 		RequestDispatcher dispatcher =
 				request.getRequestDispatcher(address);

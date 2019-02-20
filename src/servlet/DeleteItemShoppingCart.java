@@ -40,6 +40,9 @@ public class DeleteItemShoppingCart extends HttpServlet {
 		for(int i =0;i<currentList.size();i++) {
 			subtotal += currentList.get(i).getOrderCost();
 		}
+		if(subtotal == 0 ) {
+			session.removeAttribute("seatNumberError");
+		}
 		session.setAttribute("subtotal", subtotal);
 		session.setAttribute("shoppingList", currentList);
 		String address = "ViewAndCheckoutShoppingCart.jsp";

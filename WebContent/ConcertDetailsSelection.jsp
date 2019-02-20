@@ -5,14 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Concert Detail</title>
-</head>
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-<link rel="stylesheet" href="styles/styles.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	<link href="/styles/styles.css" rel="stylesheet" type="text/css">
+	
+</head>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+
+
 <body">
 	<div>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -20,8 +23,11 @@
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link">${userBean.userName}</a></li>
 				<li class="nav-item"><a class="nav-link" href="ViewOrders.jsp">Order</a></li>
-				<li class="nav-item"><a class="nav-link" href="ViewAndCheckoutShoppingCart.jsp">Cart</a></li>
-				<li class="nav-item"><form action=Logout method="post"><input type="submit" class="btn btn-secondary" value="logout" /></form></li>
+				<li class="nav-item"><a class="nav-link"
+					href="ViewAndCheckoutShoppingCart.jsp">Cart</a></li>
+				<li class="nav-item"><form action=Logout method="post">
+						<input type="submit" class="btn btn-secondary" value="logout" />
+					</form></li>
 			</ul>
 		</nav>
 	</div>
@@ -66,33 +72,31 @@
 	</div>
 	<div class="commentSection">
 		<hr>
-			<a href="CustomerReview.jsp"> <input type="button"
-				class="btn btn-dark" value="Add comment" />
-			</a>
-			<!-- 		<div class="row" style="padding: 5vh;">
+		<a href="CustomerReview.jsp"> <input type="button"
+			class="btn btn-dark" value="Add comment" />
+		</a>
+		<!-- 		<div class="row" style="padding: 5vh;">
 			<div class="star-ratings-sprite">
 				<span style="width: 80%" class="star-ratings-sprite-rating"></span>
 			</div> -->
 
-			<div class="col-lg-12 ">
-				<c:forEach var="comments" items="${comments}">
+		<div class="col-lg-12 ">
+			<c:forEach var="comments" items="${comments}">
 				<div>
 					<div class="col-lg-6">
-							<div class="star-ratings-sprite">
-								<span style="width: 80%" class="star-ratings-sprite-rating"></span>
-							</div>
+						<span class="stars-40 stars-container">★★★★★</span>
 						<div class="col-lg-6 col">
 							<h4>${comments.userName}</h4>
 							<p>${comments.date}</p>
 						</div>
 					</div>
-						<div class="col-lg-6">
-							<p>${comments.comment}</p>
-						</div>
+					<div class="col-lg-6">
+						<p>${comments.comment}</p>
+					</div>
 				</div>
-				</c:forEach>
-			</div>
+			</c:forEach>
 		</div>
+	</div>
 	</div>
 </body>
 </html>
