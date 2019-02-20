@@ -1,7 +1,8 @@
 package model;
 
 public class Shows {
-	private String startTime, endTime,movieName,venue,thumbnail,rating,description,openingAct,seatLeft,ppSeat,numOfreqSeat ="nil";
+	private String startTime, endTime,movieName,venue,thumbnail,rating,description,openingAct,seatLeft,ppSeat,numOfreqSeat,performanceId ="nil";
+
 	private int orderCost = 0;
 
 	public Shows() {};
@@ -18,7 +19,7 @@ public class Shows {
 
 	}
 	public Shows(String startTime, String endTime, String movieName, String venue, String thumbnail, String rating,String description,
-			String seatLeft,String ppSeat) {
+			String seatLeft,String ppSeat,String performanceId) {
 		setStartTime(startTime);
 		setEndTime(endTime);
 		setMovieName(movieName);
@@ -28,9 +29,10 @@ public class Shows {
 		setDescription(description);
 		setSeatLeft(seatLeft);
 		setPpSeat(ppSeat);
+		setPerformanceId(performanceId);
 	}
 	public Shows(String startTime, String endTime, String movieName, String venue, String thumbnail, String rating,String description,
-			String seatLeft,String ppSeat, String numOfreqSeat,int orderCost) {
+			String seatLeft,String ppSeat, String numOfreqSeat,int orderCost,String performanceId) {
 		setStartTime(startTime);
 		setEndTime(endTime);
 		setMovieName(movieName);
@@ -42,8 +44,14 @@ public class Shows {
 		setPpSeat(ppSeat);
 		setNumOfreqSeat(numOfreqSeat);
 		setOrderCost(orderCost);
+		setPerformanceId(performanceId);
 	}
-
+	public String getPerformanceId() {
+		return performanceId;
+	}
+	public void setPerformanceId(String performanceId) {
+		this.performanceId = performanceId;
+	}
 
 	public int getOrderCost() {
 		return orderCost;

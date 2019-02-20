@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 
 import model.CreditCards;
 import model.Shows;
@@ -23,14 +26,14 @@ import mysql.classes.TransactionDB;
 @WebServlet("/CustomerTransactionConfirmation")
 public class CustomerTransactionConfirmation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CustomerTransactionConfirmation() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public CustomerTransactionConfirmation() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,8 +41,8 @@ public class CustomerTransactionConfirmation extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.setAttribute("confirmOrder",session.getAttribute("shoppingList"));
-		session.removeAttribute("shoppingList");
-//		isubtotal = request.getAttribute("subtotal");
+		ArrayList<Shows> shoppingList = (ArrayList<Shows>)session.getAttribute("shoppingList");
+		session.removeAttribute("orderNumber");
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String cardNumber = request.getParameter("cardNumber");
@@ -49,19 +52,64 @@ public class CustomerTransactionConfirmation extends HttpServlet {
 		String cvc = request.getParameter("cvc");
 		String billingAddress = request.getParameter("billingAddress");
 		Users currentUser = (Users) session.getAttribute("userBean");
-		String userId = Integer.toString(currentUser.getUserId());
-		CreditCards userCard = new CreditCards(firstName,lastName,cardNumber,cardType,expiryMonth,expiryYear,cvc,billingAddress,userId);
-		System.out.print(expiryYear);
-		
-		Random r = new Random( System.currentTimeMillis() );
-	    int orderNumber = 10000 + r.nextInt(20000);
+		String customerId = Integer.toString(currentUser.getUserId());
+		CreditCards userCard = new CreditCards(firstName,lastName,cardNumber,cardType,expiryMonth,expiryYear,cvc,billingAddress,customerId);
+		int subtotal = 0;
+		for(int i =0;i<shoppingList.size();i++) {
+			subtotal += shoppingList.get(i).getOrderCost();
+		}
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		LocalDate currentDate = LocalDate.now();
+		String date = dtf.format(currentDate);
 		TransactionDB transaction = new TransactionDB();
-//		transaction.CreditCards(userCard);
-//		System.out.print(orderNumber+ " "+subtotal);
-//		transaction.addOrder(orderNumber, customerId, totalCost, orderDate, billingAddress, creditcard);
-//		transaction.addOrderItems(orderNumber, performanceId, quantity);
+		Random r = new Random( System.currentTimeMillis() );
+		int orderNumber = 10000 + r.nextInt(20000);
+		String totalCost = Integer.toString(subtotal);
+		Boolean newCard = true;
+		newCard = transaction.cardExisted(cardNumber);
+		System.out.print(newCard);
+		String remainingBalance = transaction.creditCardsValid(cardNumber, subtotal);
+		System.out.print(remainingBalance);
 		
-		session.setAttribute("subtotal", 0);
+		//set session Attribute for alert details
+		session.removeAttribute("orderNumber");
+		session.removeAttribute("transactionAlertColor");
+		session.removeAttribute("transactionAlertContent");
+		String transactionAlertHeader = "Success!";
+		String transactionAlertColor ="alert-success";
+		String transactionOrderNumber ="";
+		String transactionAlertContent="was placed successfully!";
+		
+		if(newCard) {
+			transaction.CreditCards(userCard);
+			transaction.addOrder(Integer.toString(orderNumber), customerId, totalCost, date, billingAddress, userCard.getCardNumber());
+			for(int i =0;i<shoppingList.size();i++) {
+				transaction.addOrderItems(Integer.toString(orderNumber),shoppingList.get(i).getPerformanceId(), shoppingList.get(i).getNumOfreqSeat());
+			}
+		}
+		else if(Double.parseDouble(remainingBalance)>0 && newCard == false) {
+		//give balance to delete
+			transaction.updateBalance(userCard.getCardNumber(),remainingBalance);
+			transaction.addOrder(Integer.toString(orderNumber), customerId, totalCost, date, billingAddress, userCard.getCardNumber());
+			for(int i =0;i<shoppingList.size();i++) {
+				transaction.addOrderItems(Integer.toString(orderNumber),shoppingList.get(i).getPerformanceId(), shoppingList.get(i).getNumOfreqSeat());
+			}
+			transactionOrderNumber = "#" + Integer.toString(orderNumber);
+		} else {
+			System.out.println("Not enough fund" + "subtotal: " + subtotal);
+			transactionAlertColor ="alert-danger";
+			transactionAlertContent="An Error has occured while processing your order. Please try again later.";
+			transactionAlertHeader = "Order Not Placed!";
+			session.setAttribute("confirmOrder", "");
+
+		}
+		System.out.println(orderNumber);
+		session.setAttribute("orderNumber", transactionOrderNumber);
+		session.setAttribute("transactionAlertColor", transactionAlertColor);
+		session.setAttribute("transactionAlertHeader", transactionAlertHeader);
+		session.setAttribute("transactionAlertContent", transactionAlertContent);
+		session.removeAttribute("shoppingList");
+		session.removeAttribute("subtotal");
 		String address = "CustomerTransactionConfirmation.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(address);
 		dispatcher.forward(request, response);	

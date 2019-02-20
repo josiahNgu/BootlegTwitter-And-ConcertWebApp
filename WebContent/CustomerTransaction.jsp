@@ -79,8 +79,7 @@
 						</div>
 						<div class="form-group" id="cardNumberField">
 							<label for="cardNumber">Card Number</label> 
-							<input type="number"
-								class="form-control" name="cardNumber">
+							<input type="number" class="form-control" name="cardNumber">
 						</div>
 						<div class="form-group">
 							<label for="expirationDate">Expiration date</label>

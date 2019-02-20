@@ -1,7 +1,7 @@
 package model;
 
 public class CreditCards {
-	private String firstName,lastName,cardNumber,cardType,expiryMonth,expiryYear,cvc,billingAddress,userId = "nil";
+	private String firstName,lastName,cardNumber,cardType,expiryMonth,expiryYear,cvc,billingAddress,userId,balance = "nil";
 
 	public CreditCards() {}
 	
@@ -18,8 +18,20 @@ public class CreditCards {
 		this.billingAddress = billingAddress;
 		this.userId = userId;
 	}
+public CreditCards(String cardNumber, String cardBalance) {
+	super();
+	this.cardNumber = cardNumber;
+	this.balance = cardBalance;
+}
 
 
+	public String getBalance() {
+	return balance;
+}
+
+public void setBalance(String balance) {
+	this.balance = balance;
+}
 
 	public String getUserId() {
 		return userId;

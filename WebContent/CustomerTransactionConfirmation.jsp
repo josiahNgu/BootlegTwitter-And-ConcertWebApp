@@ -28,15 +28,15 @@
 			</ul>
 		</nav>
 	</div>
-	<div class="alert alert-success container" role="alert">
-		<h4 class="alert-heading">Success!</h4>
+	<div class="alert ${transactionAlertColor} container" role="alert">
+		<h4 class="alert-heading">${transactionAlertHeader}</h4>
 
 		<p class="mb-0">
-			Your order for <br/>
+			 ${orderNumber}<br/>
  			<c:forEach var="shoppingList" items="${confirmOrder}">
   				 ${shoppingList.movieName} at ${shoppingList.venue} for ${shoppingList.numOfreqSeat} seat at $${shoppingList.ppSeat} per ticket <br/>
    			</c:forEach> 
-			was placed successfully!
+			${transactionAlertContent}
 		</p>
 	</div>
 </body>

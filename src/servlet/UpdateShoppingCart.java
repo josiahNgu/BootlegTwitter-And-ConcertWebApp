@@ -38,7 +38,7 @@ public class UpdateShoppingCart extends HttpServlet {
 		int orderCost = Integer.parseInt(numTickets) * Integer.parseInt(selectedShow.getPpSeat());
 		Shows addShow = new Shows(selectedShow.getStartTime(),selectedShow.getEndTime(),selectedShow.getMovieName(),selectedShow.getVenue()
 				,selectedShow.getThumbnail(),selectedShow.getRating(),selectedShow.getDescription(),selectedShow.getSeatLeft(),selectedShow.getPpSeat()
-				,numTickets,orderCost);
+				,numTickets,orderCost,selectedShow.getPerformanceId());
 		ArrayList<Shows> shoppingList = (ArrayList<Shows>)session.getAttribute("shoppingList");
 		if(shoppingList == null) {
 			shoppingList = new ArrayList<Shows>();

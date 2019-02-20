@@ -5,9 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Concert Detail</title>
-<link rel="stylesheet" href="styles/styles.css">
 </head>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<link rel="stylesheet" href="styles/styles.css">
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">

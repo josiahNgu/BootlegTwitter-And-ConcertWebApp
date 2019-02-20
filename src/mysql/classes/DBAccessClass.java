@@ -141,13 +141,13 @@ public class DBAccessClass {
 	}
 
 	public ArrayList<Shows> searchPerformance(String search){
-		String sql="select performance.StartTime, performance.EndTime,performance.seatLeft,concert.MovieName,concert.Thumbnail,"
+		String sql="select performance.StartTime, performance.EndTime,performance.seatLeft,performance.id,concert.description,concert.MovieName,concert.Thumbnail,"
 				+ "concert.Rating,venue.VenueName, TicketVenuePrices.TicketPrice"
 				+" from performance inner join concert on performance.concertID = concert.ID inner join venue"
 				+ " on performance.venueID = venue.id inner join TicketVenuePrices on TicketVenuePrices.performanceID=performance.ID"
 				+ " where concert.MovieName=?";
 
-		String sql1="select performance.StartTime, performance.EndTime,performance.seatLeft,concert.MovieName,concert.Thumbnail,"
+		String sql1="select performance.StartTime, performance.EndTime,performance.seatLeft,performance.id,concert.MovieName,concert.Thumbnail,"
 				+ "concert.Rating,venue.VenueName, TicketVenuePrices.TicketPrice "
 				+"from performance inner join concert on performance.concertID = concert.ID inner join venue "
 				+ "on performance.venueID = venue.id inner join TicketVenuePrices on TicketVenuePrices.performanceID=performance.ID";
@@ -161,8 +161,8 @@ public class DBAccessClass {
 			while(rs.next()){
 				//Retrieve by column name
 				Shows newShow = new Shows(rs.getString("StartTime"),rs.getString("EndTime"),rs.getString("MovieName"),
-						rs.getString("VenueName"), rs.getString("Thumbnail"),rs.getString("Rating"),rs.getString("seatLeft"),
-						rs.getString("TicketPrice")
+						rs.getString("VenueName"), rs.getString("Thumbnail"),rs.getString("Rating"),rs.getString("Description"),rs.getString("seatLeft"),
+						rs.getString("TicketPrice"),rs.getString("id")
 						);
 				results.add(newShow);
 			}
@@ -193,7 +193,7 @@ public class DBAccessClass {
 		return results;
 	}
 	public Shows detailSearch(String performanceName, String venueName) {
-		String sql ="select performance.StartTime, performance.EndTime, performance.SeatLeft, concert.MovieName ,concert.Thumbnail,concert.Description," 
+		String sql ="select performance.StartTime, performance.EndTime, performance.SeatLeft,concert.MovieName ,performance.id,concert.Thumbnail,concert.Description," 
 				+ " concert.Rating,venue.VenueName,TicketVenuePrices.TicketPrice,TicketTypes.SeatName from performance inner join concert on"
 				+ " performance.concertID = concert.ID  inner join TicketVenuePrices on TicketVenuePrices.performanceID = performance.ID"
 				+ " inner join venue on performance.venueID = venue.id inner join TicketTypes on TicketVenuePrices.ticketTypeID = TicketTypes.id"
@@ -214,6 +214,7 @@ public class DBAccessClass {
 				details.setDescription(rs.getString("Description"));
 				details.setSeatLeft(rs.getString("SeatLeft"));
 				details.setPpSeat(rs.getString("TicketPrice"));
+				details.setPerformanceId(rs.getString("id"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -355,6 +356,37 @@ public class DBAccessClass {
 		}
 
 	}
+	public void updateCreditCardBalance(String  cardNumber,String balance) {
+		String sql = "update creditcards set Balance = ?  where CreditCardNumber = ? ";
+		try {
+			PreparedStatement prepareStmt = conn.prepareStatement(sql);
+			prepareStmt.setString(1, balance);
+			prepareStmt.setString(2, cardNumber);
+			prepareStmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public CreditCards creditCardDetails(String cardNumber) {
+		String sql ="select CreditCardNumber,Balance from creditcards where CreditCardNumber=?";	
+		CreditCards cards = new CreditCards();
+		try {
+			ps = conn.prepareStatement(sql);	
+			ps.setString(1, cardNumber);
+			ResultSet rs = ps.executeQuery();
+			//Extract data from result set
+			while(rs.next()){
+				//Retrieve by column name
+				cards = new CreditCards(rs.getString("CreditCardNumber"),rs.getString("Balance"));
+			}
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cards;
+	}
 
 	public void addUserComment(String comment,String userId, String concertId, String currentDate, String rating) {
 		String sql = "insert into customerreviews(concertID,userID,ReviewDate,Rating,Review)values(?,?,?,?,?)";
@@ -439,7 +471,7 @@ public class DBAccessClass {
 
 	//update seat #
 	//same bug as haveTickets
-	public void updateSeat(String updateNumber,String performaceId) {
+	public void updateSeat(String updateNumber,String performaceId,String type) {
 		String sql ="update performance set SeatLeft = SeatLeft + ? where performance.Id =?";
 		try {
 			PreparedStatement prepareStmt = conn.prepareStatement(sql);
@@ -462,6 +494,7 @@ public class DBAccessClass {
 			prepareStmt.setString(4, orderDate);
 			prepareStmt.setString(5, billingAddress);
 			prepareStmt.setString(6, creditcard);
+			prepareStmt.executeUpdate();
 
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -475,12 +508,12 @@ public class DBAccessClass {
 			prepareStmt.setString(1, orderId);
 			prepareStmt.setString(2, performanceId);
 			prepareStmt.setString(3, quantity);
+			prepareStmt.executeUpdate();
 
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 }
 
