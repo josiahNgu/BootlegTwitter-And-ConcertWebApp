@@ -11,6 +11,7 @@ public class Orders {
 	private String venueName;
 	private String showTime;
 	private int itemTotalPrice;
+	private int orderItemId;
 	
 	/*
 	 * required data: 
@@ -28,7 +29,7 @@ public class Orders {
 	}
 	
 	public Orders(int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity, int ticketPrice,
-			String movieName, String venueName, String showTime, int itemTotalPrice) {
+			String movieName, String venueName, String showTime, int itemTotalPrice, int orderItemId) {
 		super();
 		this.orderNumber = orderNumber;
 		this.orderTotal = orderTotal;
@@ -40,6 +41,7 @@ public class Orders {
 		this.venueName = venueName;
 		this.showTime = showTime;
 		this.itemTotalPrice = itemTotalPrice;
+		this.orderItemId = orderItemId;
 	}
 
 	public Orders() {
@@ -114,6 +116,14 @@ public class Orders {
 
 	public void setTicketPrice(int ticketPrice) {
 		this.ticketPrice = ticketPrice;
+	}
+	
+	public int getOrderItemId() {
+		return orderItemId;
+	}
+
+	public void setOrderItemId(int orderItemId) {
+		this.orderItemId = orderItemId;
 	}
 
 }
