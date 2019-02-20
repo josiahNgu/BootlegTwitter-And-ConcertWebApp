@@ -15,16 +15,16 @@ import model.Orders;
 import mysql.classes.OrdersDB;
 
 /**
- * Servlet implementation class ManageOrder
+ * Servlet implementation class CancelOrder
  */
-@WebServlet("/ManageOrder")
-public class ManageOrder extends HttpServlet {
+@WebServlet("/CancelOrder")
+public class CancelOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManageOrder() {
+    public CancelOrder() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,26 +33,24 @@ public class ManageOrder extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		String orderNum = request.getParameter("orderNumber");
+		//HttpSession session = request.getSession();
+		String orderItemNum = request.getParameter("orderItemId");
 		
 		OrdersDB aOrderDB = new OrdersDB();
 		
-		if(orderNum != null) {
-			int orderId = Integer.parseInt(orderNum);
+		if(orderItemNum != null) {
+			int orderItemId = Integer.parseInt(orderItemNum);
 
-			ArrayList<Orders> orderResult = aOrderDB.editOrders(orderId);
-			session.setAttribute("manageOrder", orderResult);
-			String address = "ManageOrder.jsp";
+			Orders result = aOrderDB.cancelOrderInfo(orderItemId);
+			request.setAttribute("cancelOrderInfo", result);
+			String address = "CancelOrder.jsp";
 			RequestDispatcher dispatcher =
 					request.getRequestDispatcher(address);
 			dispatcher.forward(request, response);	
 
 		}else {
-			System.err.println("orderId not found!");
+			System.err.println("orderItemId not found!");
 		}
-		
 	}
 
 	/**

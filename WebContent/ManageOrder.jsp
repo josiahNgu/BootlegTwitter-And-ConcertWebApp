@@ -49,11 +49,11 @@
 							<td>${order.showTime}</td>
 							<td>
 							<form action="ManageOrder">
-								<button type="submit" class="btn btn-dark" value=${order.orderNumber} name="orderNumber">Manage</button>
+								<button type="submit" class="btn btn-dark" value=${order.orderNumber} name="orderNumber">View</button>
 							</form>	
 							<br />
-							<form action="ManageOrder">
-								<button type="submit" class="btn btn-dark" value=${order.orderNumber} name="orderNumber">Manage</button>
+							<form action="CancelOrder">
+								<button type="submit" class="btn btn-dark" value=${order.orderItemId} name="orderItemId">Cancel</button>
 							</form>	
 							</td>
 						</tr>
