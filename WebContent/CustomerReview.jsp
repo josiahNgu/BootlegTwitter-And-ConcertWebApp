@@ -30,16 +30,17 @@
 			<form action=CustomerReview method="post">
 				<div class="form-group">
 					<label>Comment</label> <br>
-					<textarea class="w-50" style="border: 2px solid #BD3D3A;" rows="2" name="comment"></textarea>
+					<textarea class="w-50" style="border: 2px solid  #D5AE41;" rows="2"
+						name="comment"></textarea>
 				</div>
 				<div class="form-group">
-					<label>Rating</label> 
-					<select class="w-50 form-control " style="border: 2px solid #BD3D3A;" name="rating">
-						<option value="1">1</option>
+					<label>Rating</label> <select class="w-50 form-control "
+						style="border: 2px solid  #D5AE41;" name="rating">
+						<option value="5">5</option>
+						<option value="4">4</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
+						<option value="1">1</option>
 					</select>
 				</div>
 

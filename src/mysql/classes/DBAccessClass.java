@@ -300,7 +300,6 @@ public class DBAccessClass {
 		System.out.print(expirationDate);
 		try {
 			PreparedStatement prepareStmt = conn.prepareStatement(sql);
-			stmt = conn.createStatement();
 			prepareStmt.setString(1, cardHolderName);
 			prepareStmt.setString(2, newCard.getCardNumber());
 			prepareStmt.setString(3, "5000");
@@ -315,12 +314,11 @@ public class DBAccessClass {
 		}
 
 	}
-	
+
 	public void addUserComment(String comment,String userId, String concertId, String currentDate, String rating) {
 		String sql = "insert into customerreviews(concertID,userID,ReviewDate,Rating,Review)values(?,?,?,?,?)";
 		try {
 			PreparedStatement prepareStmt = conn.prepareStatement(sql);
-			stmt = conn.createStatement();
 			prepareStmt.setString(1, concertId);
 			prepareStmt.setString(2, userId);
 			prepareStmt.setString(3, currentDate);
@@ -369,9 +367,78 @@ public class DBAccessClass {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
+
 		return result;
+	}
+	//need to fix to catch if there is two same concerts but diff time or venue
+	public boolean haveTickets(String concertId, int requestedSeat) {
+		boolean seatLeft = false;
+		String sql = "select performance.SeatLeft from concert  join performance on performance.concertID = concert.id "
+				+ "where concert.id=?";
+		Statement stat;
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(sql);
+
+			while (rs.next()){	
+				if(Integer.parseInt(rs.getString("SeatLeft")) > requestedSeat) {
+					seatLeft= true;
+				}
+			}
+
+			stat.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return seatLeft;
+	}
+
+	//update seat #
+	//same bug as haveTickets
+	public void updateSeat(String updateNumber,String performaceId) {
+		String sql ="update performance set SeatLeft = SeatLeft + ? where performance.Id =?";
+		try {
+			PreparedStatement prepareStmt = conn.prepareStatement(sql);
+			prepareStmt.setString(1, updateNumber);
+			prepareStmt.setString(2, performaceId);
+			prepareStmt.executeUpdate();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertToOrders(String orderNumber, String customerId, String totalCost, String orderDate, String billingAddress,String creditcard) {
+		String sql ="insert into orders(Id,CustomerId,TotalCost,OrderDate,BillingAddress,CreditCardNumber)values(?,?,?,?,?,?)";
+		try {
+			PreparedStatement prepareStmt = conn.prepareStatement(sql);
+			prepareStmt.setString(1, orderNumber);
+			prepareStmt.setString(2, customerId);
+			prepareStmt.setString(3, totalCost);
+			prepareStmt.setString(4, orderDate);
+			prepareStmt.setString(5, billingAddress);
+			prepareStmt.setString(6, creditcard);
+
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void insertToOrderItems(String orderId, String performanceId, String quantity) {
+		String sql = "insert into orderitems(OrderId,PerformanceID,Quantity)values(?,?,?)";
+		try {
+			PreparedStatement prepareStmt = conn.prepareStatement(sql);
+			prepareStmt.setString(1, orderId);
+			prepareStmt.setString(2, performanceId);
+			prepareStmt.setString(3, quantity);
+
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
