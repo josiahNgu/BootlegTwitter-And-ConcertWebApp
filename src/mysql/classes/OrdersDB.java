@@ -2,6 +2,7 @@ package mysql.classes;
 
 import java.util.ArrayList;
 
+import model.CreditCards;
 import model.Orders;
 
 public class OrdersDB {
@@ -37,6 +38,13 @@ public class OrdersDB {
 		DBAccessClass db = new DBAccessClass();
        	db.connectMeIn();
        	Orders result = db.cancelOrder(orderItemId);
+       	
+       	//update card balance here
+       	String cardNumber = result.getCreditCardNumber();
+       	CreditCards card =db.creditCardDetails(cardNumber);
+       	double balance = (double) result.getItemTotalPrice() + Double.parseDouble(card.getBalance());
+       	System.out.println("card balance: "+balance);
+       	db.updateCreditCardBalance(cardNumber, Double.toString(balance));
        	db.closeConnection();
        	
        	return result;

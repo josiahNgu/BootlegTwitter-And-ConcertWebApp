@@ -57,19 +57,22 @@ public class DBAccessClass {
 	public Orders cancelOrder (int orderItemId) {
 		String update = "update orderitems set isCancelled = 1 where Id = " + orderItemId;
 		
-		String SQL = "select orders.Id, orders.TotalCost, orders.OrderDate, orders.BillingAddress, orderitems.Quantity, performance.StartTime, concert.MovieName, venue.VenueName, TicketVenuePrices.TicketPrice, orderitems.Id as orderItemId from orders" + 
+		String SQL = "select orders.Id, orders.TotalCost, orders.OrderDate, orders.BillingAddress, orders.CreditCardNumber, orderitems.Quantity, performance.StartTime, concert.MovieName, venue.VenueName, TicketVenuePrices.TicketPrice, orderitems.Id as orderItemId from orders" + 
 				"	join orderitems on orders.Id = orderitems.OrderId" + 
 				"	join performance on orderitems.PerformanceID = performance.Id" + 
 				"   join concert on performance.concertID = concert.Id" + 
 				"   join venue on performance.venueID = venue.Id" + 
 				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orderitems.Id =" + orderItemId;
 		
+		
 		Statement stat;
 		Orders result = new Orders();
 		
+		
 		try {
 			stat = conn.createStatement();
-			stat.executeQuery(update);
+			//use execute update for update
+			stat.executeUpdate(update);
 			//int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity, int ticketprice
 			//String movieName, String venueName, String showTime, int itemTotalPrice
 			
@@ -80,16 +83,60 @@ public class DBAccessClass {
 				int ticketPrice = rs.getInt("TicketPrice");
 				int itemTotal = quantity * ticketPrice;
 				result = new Orders(rs.getInt("Id"),rs.getInt("TotalCost"),rs.getString("OrderDate"),rs.getString("BillingAddress"),
-						quantity,ticketPrice,rs.getString("MovieName"),rs.getString("VenueName"),rs.getString("StartTime"),itemTotal,rs.getInt("orderItemId"));
+						quantity,ticketPrice,rs.getString("MovieName"),rs.getString("VenueName"),rs.getString("StartTime"),itemTotal,rs.getInt("orderItemId"),rs.getString("CreditCardNumber"));
 				
 			}
+			
+			/*
+			 * This part onwards is recalculating the sum of the order
+			 */
 
+			int orderId = result.getOrderNumber();
+			String SQL2 = "select orders.Id, orders.TotalCost, orders.OrderDate, orders.BillingAddress, orderitems.Quantity, orderitems.Id as orderItemId, orderitems.isCancelled, performance.StartTime, concert.MovieName, venue.VenueName, TicketVenuePrices.TicketPrice from orders" + 
+					"	join orderitems on orders.Id = orderitems.OrderId" + 
+					"	join performance on orderitems.PerformanceID = performance.Id" + 
+					"   join concert on performance.concertID = concert.Id" + 
+					"   join venue on performance.venueID = venue.Id" + 
+					"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orders.Id ="+orderId;
+			
+			
+			if(orderId == 0) {
+				System.err.println("error getting orderId");
+			}
+			
+			ResultSet rs2 = stat.executeQuery(SQL2);
+			
+			ArrayList<Orders> results = new ArrayList<Orders>();
+			
+			while (rs2.next()){
+				//only get orders that aren't cancelled
+				if(rs2.getInt("isCancelled") == 0) {
+					int quantity = rs2.getInt("Quantity");
+					int ticketPrice = rs2.getInt("TicketPrice");
+					int itemTotal = quantity * ticketPrice;
+					Orders anOrder = new Orders(rs2.getInt("Id"),rs2.getInt("TotalCost"),rs2.getString("OrderDate"),rs2.getString("BillingAddress"),
+							quantity,ticketPrice,rs2.getString("MovieName"),rs2.getString("VenueName"),rs2.getString("StartTime"),itemTotal,rs2.getInt("orderItemId"));
+					results.add(anOrder);
+				}
+			}
+			
+			int totalCost = 0;
+			//add each item's total
+			for(Orders order: results){
+				totalCost = totalCost + order.getItemTotalPrice();
+				
+			}
+			
+			//update TotalCost for that order
+			String SQL3 = "update orders set TotalCost = "+totalCost+" where Id = " +orderId;
+			
+			stat.executeUpdate(SQL3);
+			
 			stat.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		
 		return result;
 	}
@@ -119,7 +166,7 @@ public class DBAccessClass {
 						quantity,ticketPrice,rs.getString("MovieName"),rs.getString("VenueName"),rs.getString("StartTime"),itemTotal,rs.getInt("orderItemId"));
 				
 			}
-
+		
 			stat.close();
 
 		} catch (SQLException e) {

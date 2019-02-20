@@ -37,8 +37,11 @@
 							Ticket quantity: ${cancelOrderInfo.quantity}<br /> Total price: $${cancelOrderInfo.itemTotalPrice}<br /> Venue name:
 							${cancelOrderInfo.venueName}<br /> Showtime: ${cancelOrderInfo.showTime}<br />
 						<div class="btn-toolbar row">
-							<a class="btn btn-danger" href="CancellationConfirmation.jsp">Confirm
-								Cancellation</a> &nbsp; <a class="btn btn-dark"
+							<form action="CancelOrder">
+								<button type="submit" class="btn btn-dark" value=${cancelOrderInfo.orderItemId} name="orderItemId">Cancel</button>
+							</form>	
+							&nbsp; 
+							<a class="btn btn-dark"
 								href="CustomerHomepage.jsp">Discard Cancellation</a>
 						</div>
 						<br />

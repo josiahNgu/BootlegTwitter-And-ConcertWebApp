@@ -12,6 +12,7 @@ public class Orders {
 	private String showTime;
 	private int itemTotalPrice;
 	private int orderItemId;
+	private String creditCardNumber;
 	
 	/*
 	 * required data: 
@@ -27,7 +28,7 @@ public class Orders {
 		this.orderDate = orderDate;
 		this.billingAddress = billingAddress;
 	}
-	
+
 	public Orders(int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity, int ticketPrice,
 			String movieName, String venueName, String showTime, int itemTotalPrice, int orderItemId) {
 		super();
@@ -42,6 +43,24 @@ public class Orders {
 		this.showTime = showTime;
 		this.itemTotalPrice = itemTotalPrice;
 		this.orderItemId = orderItemId;
+	}
+
+	public Orders(int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity,
+			int ticketPrice, String movieName, String venueName, String showTime, int itemTotalPrice, int orderItemId,
+			String creditCardNumber) {
+		super();
+		this.orderNumber = orderNumber;
+		this.orderTotal = orderTotal;
+		this.orderDate = orderDate;
+		this.billingAddress = billingAddress;
+		this.quantity = quantity;
+		this.ticketPrice = ticketPrice;
+		this.movieName = movieName;
+		this.venueName = venueName;
+		this.showTime = showTime;
+		this.itemTotalPrice = itemTotalPrice;
+		this.orderItemId = orderItemId;
+		this.creditCardNumber = creditCardNumber;
 	}
 
 	public Orders() {
@@ -124,6 +143,14 @@ public class Orders {
 
 	public void setOrderItemId(int orderItemId) {
 		this.orderItemId = orderItemId;
+	}
+	
+	public String getCreditCardNumber() {
+		return creditCardNumber;
+	}
+
+	public void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
 	}
 
 }
