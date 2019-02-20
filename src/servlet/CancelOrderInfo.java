@@ -18,13 +18,13 @@ import mysql.classes.OrdersDB;
  * Servlet implementation class CancelOrder
  */
 @WebServlet("/CancelOrder")
-public class CancelOrder extends HttpServlet {
+public class CancelOrderInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CancelOrder() {
+    public CancelOrderInfo() {
         super();
         // TODO Auto-generated constructor stub
     }

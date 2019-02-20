@@ -32,5 +32,14 @@ public class OrdersDB {
        	
        	return result;
 	}
+	
+	public Orders cancelOrder (int orderItemId) {
+		DBAccessClass db = new DBAccessClass();
+       	db.connectMeIn();
+       	Orders result = db.cancelOrder(orderItemId);
+       	db.closeConnection();
+       	
+       	return result;
+	}
 
 }

@@ -52,7 +52,7 @@
 								<button type="submit" class="btn btn-dark" value=${order.orderNumber} name="orderNumber">View</button>
 							</form>	
 							<br />
-							<form action="CancelOrder">
+							<form action="CancelOrderInfo">
 								<button type="submit" class="btn btn-dark" value=${order.orderItemId} name="orderItemId">Cancel</button>
 							</form>	
 							</td>
