@@ -25,7 +25,7 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link">${userBean.userName}</a></li>
-				<li class="nav-item"><a class="nav-link" href="ViewOrders">Order</a></li>
+				<li class="nav-item"><a class="nav-link" href="ViewOrders">Orders</a></li>
 				<li class="nav-item"><a class="nav-link" href="ViewAndCheckoutShoppingCart.jsp">Cart</a></li>
 				<li class="nav-item"><form action=Logout method="post"><input type="submit" class="btn btn-secondary" value="logout" /></form></li>
 			</ul>

@@ -14,5 +14,14 @@ public class OrdersDB {
        	
        	return results;
 	}
+	
+	public ArrayList<Orders> editOrders(int orderId) {
+		DBAccessClass db = new DBAccessClass();
+       	db.connectMeIn();
+       	ArrayList<Orders> results = db.editOrders(orderId);
+       	db.closeConnection();
+       	
+       	return results;
+	}
 
 }

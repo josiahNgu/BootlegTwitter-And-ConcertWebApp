@@ -4,6 +4,9 @@
 <html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script> 
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+
+
 <head>
 <meta charset="UTF-8">
 <title>Manage Orders</title>
@@ -21,27 +24,49 @@
 		</nav>
 	</div>
 	<div class="container" style="padding: 5vh 0vh;">
-		<h4 style="padding: 3vh 0px">Order Number: 107145</h4>
+		<h4 style="padding: 3vh 0px">Order Number: ${manageOrder[0].orderNumber}</h4>
+		
+		<div class="container">
+		<div>
+			<table class="table table-bordered table-hover">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">Band Name</th>
+						<th scope="col">Quantity</th>
+						<th scope="col">Total price</th>
+						<th scope="col">Venue</th>
+						<th scope="col">Showtime</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="order" items="${manageOrder}">
+						<tr>
+							<td>${order.movieName}</td>
+							<td>${order.quantity}</td>
+							<td>${order.itemTotalPrice}</td>
+							<td>${order.venueName}</td>
+							<td>${order.showTime}</td>
+							<td>
+							<form action="ManageOrder">
+								<button type="submit" class="btn btn-dark" value=${order.orderNumber} name="orderNumber">Manage</button>
+							</form>	
+							<br />
+							<form action="ManageOrder">
+								<button type="submit" class="btn btn-dark" value=${order.orderNumber} name="orderNumber">Manage</button>
+							</form>	
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+		
 		<div class="row">
-			<div class="col-sm-8">
-				<div class="d-flex">
-					<div class="col-sm-4">
-						<h6>Rennie Harris Puremovement</h6><br />
-						<p>Ticket quantity: 4<br />
-						Total price: $48.00<br />
-						Venue name: Lied Center<br />
-						Showtime: 9:30am 25/1/2019<br />
-						<div class="btn-toolbar row">
-						<a class="btn btn-dark" href="ConcertDetailsSelection.jsp">View</a>
-						&nbsp;
-						<a class="btn btn-light" href="CancelOrder.jsp">Cancel</a>
-						</div><br />						
-					</div>
-				</div>
-			</div>
 			<div class ="col-sm-8">
-				<h5>Order Total: $48.00</h5><br />
-				<h5>Ordered Date: 20/1/2019 3:57:44 PM</h5><br />
+				<h5>Order Total: $${manageOrder[0].orderTotal}</h5><br />
+				<h5>Ordered Date: ${manageOrder[0].orderDate}</h5><br />
 				
 			</div>
 		</div>

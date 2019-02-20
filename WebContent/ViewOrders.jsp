@@ -38,8 +38,11 @@
 							<td>${order.orderNumber}</td>
 							<td>${order.orderTotal}</td>
 							<td>${order.orderDate}</td>
-							<td><a href="ManageOrder.jsp"> <input
-								type="button" class="btn btn-dark" value="View" /></a></td>
+							<td>
+							<form action="ManageOrder">
+								<button type="submit" class="btn btn-dark" value=${order.orderNumber} name="orderNumber">View</button>
+							</form>	
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -53,6 +53,47 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 	}
+	
+	public ArrayList<Orders> editOrders (int orderId){
+		/*
+		 * required data: 
+		 * orderNumber,movieName,quantity,Total price,Venue name,Showtime/Date,orderTotal,OrderDate
+		 */
+		
+		String SQL = "select orders.Id, orders.TotalCost, orders.OrderDate, orders.BillingAddress, orderitems.Quantity, performance.StartTime, concert.MovieName, venue.VenueName, TicketVenuePrices.TicketPrice from orders" + 
+				"	join orderitems on orders.Id = orderitems.OrderId" + 
+				"	join performance on orderitems.PerformanceID = performance.Id" + 
+				"   join concert on performance.concertID = concert.Id" + 
+				"   join venue on performance.venueID = venue.Id" + 
+				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orders.Id ="+orderId;
+		Statement stat;
+		
+		ArrayList<Orders> results = new ArrayList<Orders>();
+		
+		try {
+			stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(SQL);
+			//int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity, int ticketprice
+			//String movieName, String venueName, String showTime, int itemTotalPrice
+
+			while (rs.next()){
+				int quantity = rs.getInt("Quantity");
+				int ticketPrice = rs.getInt("TicketPrice");
+				int itemTotal = quantity * ticketPrice;
+				Orders anOrder = new Orders(rs.getInt("Id"),rs.getInt("TotalCost"),rs.getString("OrderDate"),rs.getString("BillingAddress"),
+						quantity,ticketPrice,rs.getString("MovieName"),rs.getString("VenueName"),rs.getString("StartTime"),itemTotal);
+				results.add(anOrder);
+			}
+
+			stat.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return results;
+		
+	}
 
 	public ArrayList<Orders> getOrders(int userId) {
 		String SQL = "SELECT * from orders where CustomerId = "+userId;
@@ -65,7 +106,7 @@ public class DBAccessClass {
 			//int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity
 
 			while (rs.next()){
-				Orders anOrder = new Orders(rs.getInt("Id"),rs.getInt("TotalCost"),rs.getString("OrderDate"),rs.getString("BillingAddress"),1);
+				Orders anOrder = new Orders(rs.getInt("Id"),rs.getInt("TotalCost"),rs.getString("OrderDate"),rs.getString("BillingAddress"));
 				results.add(anOrder);
 			}
 
