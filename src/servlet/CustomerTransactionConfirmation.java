@@ -85,6 +85,11 @@ public class CustomerTransactionConfirmation extends HttpServlet {
 			transaction.addOrder(Integer.toString(orderNumber), customerId, totalCost, date, billingAddress, userCard.getCardNumber());
 			for(int i =0;i<shoppingList.size();i++) {
 				transaction.addOrderItems(Integer.toString(orderNumber),shoppingList.get(i).getPerformanceId(), shoppingList.get(i).getNumOfreqSeat());
+				String seatNumber = transaction.getSeat(shoppingList.get(i).getPerformanceId());
+				int updateNumber = Integer.parseInt(seatNumber)- Integer.parseInt(shoppingList.get(i).getNumOfreqSeat());
+				String updateSeat = Integer.toString(updateNumber);
+				System.out.println("seatNumber " + seatNumber + "update Seat number " + updateSeat + "performanceId " + shoppingList.get(i).getPerformanceId());
+				transaction.decreaseSeat(updateSeat, shoppingList.get(i).getPerformanceId());
 			}
 		}
 		else if(Double.parseDouble(remainingBalance)>0 && newCard == false) {
@@ -93,6 +98,11 @@ public class CustomerTransactionConfirmation extends HttpServlet {
 			transaction.addOrder(Integer.toString(orderNumber), customerId, totalCost, date, billingAddress, userCard.getCardNumber());
 			for(int i =0;i<shoppingList.size();i++) {
 				transaction.addOrderItems(Integer.toString(orderNumber),shoppingList.get(i).getPerformanceId(), shoppingList.get(i).getNumOfreqSeat());
+				String seatNumber = transaction.getSeat(shoppingList.get(i).getPerformanceId());
+				int updateNumber = Integer.parseInt(seatNumber)- Integer.parseInt(shoppingList.get(i).getNumOfreqSeat());
+				String updateSeat = Integer.toString(updateNumber);
+				System.out.print("update Seat " + updateSeat + "performanceId " + shoppingList.get(i).getPerformanceId());
+				transaction.decreaseSeat(updateSeat, shoppingList.get(i).getPerformanceId());
 			}
 			transactionOrderNumber = "#" + Integer.toString(orderNumber);
 		} else {

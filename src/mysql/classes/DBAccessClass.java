@@ -503,21 +503,6 @@ public class DBAccessClass {
 
 		return seatLeft;
 	}
-
-	//update seat #
-	//same bug as haveTickets
-	public void updateSeat(String updateNumber,String performaceId,String type) {
-		String sql ="update performance set SeatLeft = SeatLeft + ? where performance.Id =?";
-		try {
-			PreparedStatement prepareStmt = conn.prepareStatement(sql);
-			prepareStmt.setString(1, updateNumber);
-			prepareStmt.setString(2, performaceId);
-			prepareStmt.executeUpdate();
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	public void insertToOrders(String orderNumber, String customerId, String totalCost, String orderDate, String billingAddress,String creditcard) {
 		String sql ="insert into orders(Id,CustomerId,TotalCost,OrderDate,BillingAddress,CreditCardNumber)values(?,?,?,?,?,?)";
@@ -549,6 +534,37 @@ public class DBAccessClass {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public void decreaseSeat(String updateNumber,String performanceId) {
+		String sql = "update performance set SeatLeft = ? where performance.Id = ?";
+		try {
+			PreparedStatement prepareStmt = conn.prepareStatement(sql);
+			prepareStmt.setString(1, updateNumber);
+			prepareStmt.setString(2, performanceId);
+			prepareStmt.executeUpdate();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public String seatLeft(String performanceId) {
+		String sql = "select SeatLeft from performance where performance.Id =?";
+		String seatLeft ="0";
+		try {
+			ps = conn.prepareStatement(sql);	
+			ps.setString(1, performanceId);
+			ResultSet rs = ps.executeQuery();
+			//Extract data from result set
+			while(rs.next()){
+				//Retrieve by column name
+				seatLeft = rs.getString("SeatLeft");
+			}
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return seatLeft;
+		
 	}
 }
 

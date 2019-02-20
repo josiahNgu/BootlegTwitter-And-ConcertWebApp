@@ -53,4 +53,19 @@ public class TransactionDB {
 		}
 		return false;
 	}
+	public void decreaseSeat(String updateNumber ,String performanceId) {
+		DBAccessClass db = new DBAccessClass();
+		db.connectMeIn();
+		db.decreaseSeat(updateNumber, performanceId);
+		db.closeConnection();
+
+	}
+	public String getSeat(String performanceId) {
+		DBAccessClass db = new DBAccessClass();
+		String seatLeft = "0";
+		db.connectMeIn();
+		seatLeft = db.seatLeft(performanceId);
+		db.closeConnection();
+		return seatLeft;
+	}
 }
