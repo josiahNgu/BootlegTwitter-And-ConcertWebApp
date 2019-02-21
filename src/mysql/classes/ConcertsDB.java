@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import model.Shows;
 
 public class ConcertsDB {
-	public ArrayList<Shows> searchResult(String search) {
+	public ArrayList<Shows> searchResult(String search,String venue) {
 		DBAccessClass db = new DBAccessClass();
        	db.connectMeIn();
-       	ArrayList<Shows> searchResult = db.searchPerformance(search);
+       	ArrayList<Shows> searchResult = db.searchPerformance(search,venue);
        	db.closeConnection();
 		return searchResult;
 	}

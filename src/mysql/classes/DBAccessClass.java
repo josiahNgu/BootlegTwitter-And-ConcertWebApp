@@ -53,29 +53,29 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Orders cancelOrder (int orderItemId) {
 		String update = "update orderitems set isCancelled = 1 where Id = " + orderItemId;
-		
+
 		String SQL = "select orders.Id, orders.TotalCost, orders.OrderDate, orders.BillingAddress, orders.CreditCardNumber, orderitems.Quantity, performance.StartTime, performance.Id as performanceId, concert.MovieName, venue.VenueName, TicketVenuePrices.TicketPrice, orderitems.Id as orderItemId from orders" + 
 				"	join orderitems on orders.Id = orderitems.OrderId" + 
 				"	join performance on orderitems.PerformanceID = performance.Id" + 
 				"   join concert on performance.concertID = concert.Id" + 
 				"   join venue on performance.venueID = venue.Id" + 
 				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orderitems.Id =" + orderItemId;
-		
-		
+
+
 		Statement stat;
 		Orders result = new Orders();
-		
-		
+
+
 		try {
 			stat = conn.createStatement();
 			//use execute update for update
 			stat.executeUpdate(update);
 			//int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity, int ticketprice
 			//String movieName, String venueName, String showTime, int itemTotalPrice
-			
+
 			ResultSet rs = stat.executeQuery(SQL);
 
 			while (rs.next()){
@@ -85,9 +85,9 @@ public class DBAccessClass {
 				result = new Orders(rs.getInt("Id"),rs.getInt("TotalCost"),rs.getString("OrderDate"),rs.getString("BillingAddress"),
 						quantity,ticketPrice,rs.getString("MovieName"),rs.getString("VenueName"),rs.getString("StartTime"),itemTotal,
 						rs.getInt("orderItemId"),rs.getString("CreditCardNumber"),rs.getInt("performanceId"));
-				
+
 			}
-			
+
 			/*
 			 * This part onwards is recalculating the sum of the order
 			 */
@@ -99,16 +99,16 @@ public class DBAccessClass {
 					"   join concert on performance.concertID = concert.Id" + 
 					"   join venue on performance.venueID = venue.Id" + 
 					"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orders.Id ="+orderId;
-			
-			
+
+
 			if(orderId == 0) {
 				System.err.println("error getting orderId");
 			}
-			
+
 			ResultSet rs2 = stat.executeQuery(SQL2);
-			
+
 			ArrayList<Orders> results = new ArrayList<Orders>();
-			
+
 			while (rs2.next()){
 				//only get orders that aren't cancelled
 				if(rs2.getInt("isCancelled") == 0) {
@@ -120,30 +120,30 @@ public class DBAccessClass {
 					results.add(anOrder);
 				}
 			}
-			
+
 			int totalCost = 0;
 			//add each item's total
 			for(Orders order: results){
 				totalCost = totalCost + order.getItemTotalPrice();
-				
+
 			}
-			
+
 			//update TotalCost for that order
 			String SQL3 = "update orders set TotalCost = "+totalCost+" where Id = " +orderId;
-			
+
 			stat.executeUpdate(SQL3);
-			
+
 			stat.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
-	
+
 	public Orders cancelOrderInfo (int orderItemId) {
-		
+
 		String SQL = "select orders.Id, orders.TotalCost, orders.OrderDate, orders.BillingAddress, orderitems.Quantity, performance.StartTime, concert.MovieName, venue.VenueName, TicketVenuePrices.TicketPrice, orderitems.Id as orderItemId from orders" + 
 				"	join orderitems on orders.Id = orderitems.OrderId" + 
 				"	join performance on orderitems.PerformanceID = performance.Id" + 
@@ -152,7 +152,7 @@ public class DBAccessClass {
 				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orderitems.Id =" + orderItemId;
 		Statement stat;
 		Orders result = new Orders();
-		
+
 		try {
 			stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(SQL);
@@ -165,24 +165,24 @@ public class DBAccessClass {
 				int itemTotal = quantity * ticketPrice;
 				result = new Orders(rs.getInt("Id"),rs.getInt("TotalCost"),rs.getString("OrderDate"),rs.getString("BillingAddress"),
 						quantity,ticketPrice,rs.getString("MovieName"),rs.getString("VenueName"),rs.getString("StartTime"),itemTotal,rs.getInt("orderItemId"));
-				
+
 			}
-		
+
 			stat.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
-	
+
 	public ArrayList<Orders> editOrders (int orderId){
 		/*
 		 * required data: 
 		 * orderNumber,movieName,quantity,Total price,Venue name,Showtime/Date,orderTotal,OrderDate
 		 */
-		
+
 		String SQL = "select orders.Id, orders.TotalCost, orders.OrderDate, orders.BillingAddress, orderitems.Quantity, orderitems.Id as orderItemId, orderitems.isCancelled, performance.StartTime, concert.MovieName, venue.VenueName, TicketVenuePrices.TicketPrice from orders" + 
 				"	join orderitems on orders.Id = orderitems.OrderId" + 
 				"	join performance on orderitems.PerformanceID = performance.Id" + 
@@ -190,9 +190,9 @@ public class DBAccessClass {
 				"   join venue on performance.venueID = venue.Id" + 
 				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orders.Id ="+orderId;
 		Statement stat;
-		
+
 		ArrayList<Orders> results = new ArrayList<Orders>();
-		
+
 		try {
 			stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(SQL);
@@ -216,9 +216,9 @@ public class DBAccessClass {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return results;
-		
+
 	}
 
 	public ArrayList<Orders> getOrders(int userId) {
@@ -266,14 +266,22 @@ public class DBAccessClass {
 		return results;
 	}
 
-	public ArrayList<Shows> searchPerformance(String search){
-		String sql="select performance.StartTime, performance.EndTime,performance.seatLeft,performance.id,concert.description,concert.MovieName,concert.Thumbnail,"
+	public ArrayList<Shows> searchPerformance(String search, String venue){
+
+
+		String sql = "select performance.StartTime, performance.EndTime, performance.SeatLeft,performance.id, concert.MovieName ,concert.Thumbnail,concert.Description,"
+				+ " concert.Rating,venue.VenueName,TicketVenuePrices.TicketPrice,TicketTypes.SeatName from performance inner join concert on "
+				+ " performance.concertID = concert.ID  inner join TicketVenuePrices on TicketVenuePrices.performanceID = performance.ID"
+				+ " inner join venue on performance.venueID = venue.id inner join TicketTypes on TicketVenuePrices.ticketTypeID = TicketTypes.id"
+				+ " where concert.MovieName=? and venue.venueName = ?";
+		
+		String sql1="select performance.StartTime, performance.EndTime,performance.seatLeft,performance.id,concert.description,concert.MovieName,concert.Thumbnail,"
 				+ "concert.Rating,venue.VenueName, TicketVenuePrices.TicketPrice"
 				+" from performance inner join concert on performance.concertID = concert.ID inner join venue"
 				+ " on performance.venueID = venue.id inner join TicketVenuePrices on TicketVenuePrices.performanceID=performance.ID"
 				+ " where concert.MovieName=?";
 
-		String sql1="select performance.StartTime, performance.EndTime,performance.seatLeft,performance.id,concert.MovieName,concert.Thumbnail,"
+		String sql2="select performance.StartTime, performance.EndTime,performance.seatLeft,performance.id,concert.MovieName,concert.Thumbnail,"
 				+ "concert.Rating,venue.VenueName, TicketVenuePrices.TicketPrice "
 				+"from performance inner join concert on performance.concertID = concert.ID inner join venue "
 				+ "on performance.venueID = venue.id inner join TicketVenuePrices on TicketVenuePrices.performanceID=performance.ID";
@@ -281,6 +289,8 @@ public class DBAccessClass {
 		try {
 			ps = conn.prepareStatement(sql);	
 			ps.setString(1, search);
+			ps.setString(2, venue);
+
 			ResultSet rs = ps.executeQuery();
 
 			//Extract data from result set
@@ -299,6 +309,7 @@ public class DBAccessClass {
 		if(results.size()< 1) {
 			try {
 				ps = conn.prepareStatement(sql1);	
+				ps.setString(1, search);
 				ResultSet rs = ps.executeQuery();
 
 				//Extract data from result set
@@ -306,7 +317,27 @@ public class DBAccessClass {
 					//Retrieve by column name
 					Shows newShow = new Shows(rs.getString("StartTime"),rs.getString("EndTime"),rs.getString("MovieName"),
 							rs.getString("VenueName"), rs.getString("Thumbnail"),rs.getString("Rating"),rs.getString("seatLeft"),
-							rs.getString("TicketPrice")
+							rs.getString("TicketPrice"),rs.getString("id")
+							);
+					results.add(newShow);
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(results.size()< 1) {
+			try {
+				ps = conn.prepareStatement(sql2);	
+				ResultSet rs = ps.executeQuery();
+
+				//Extract data from result set
+				while(rs.next()){
+					//Retrieve by column name
+					Shows newShow = new Shows(rs.getString("StartTime"),rs.getString("EndTime"),rs.getString("MovieName"),
+							rs.getString("VenueName"), rs.getString("Thumbnail"),rs.getString("Rating"),rs.getString("seatLeft"),
+							rs.getString("TicketPrice"),rs.getString("id")
 							);
 					results.add(newShow);
 				}
@@ -594,7 +625,7 @@ public class DBAccessClass {
 
 		return seatLeft;
 	}
-	
+
 	public void insertToOrders(String orderNumber, String customerId, String totalCost, String orderDate, String billingAddress,String creditcard) {
 		String sql ="insert into orders(Id,CustomerId,TotalCost,OrderDate,BillingAddress,CreditCardNumber)values(?,?,?,?,?,?)";
 		try {
@@ -638,7 +669,7 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void addSeat(String updateNumber,String performanceId) {
 		String sql = "update performance set SeatLeft = SeatLeft + ? where performance.Id = ?";
 		try {
@@ -651,7 +682,7 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String seatLeft(String performanceId) {
 		String sql = "select SeatLeft from performance where performance.Id =?";
 		String seatLeft ="0";
@@ -669,7 +700,7 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 		return seatLeft;
-		
+
 	}
 }
 

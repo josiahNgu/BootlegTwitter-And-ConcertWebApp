@@ -7,7 +7,7 @@ public class Shows {
 
 	public Shows() {};
 	public Shows(String startTime, String endTime, String movieName, String venue, String thumbnail, String rating,String seatLeft,
-			String ppSeat) {
+			String ppSeat,String performanceId) {
 		setStartTime(startTime);
 		setEndTime(endTime);
 		setMovieName(movieName);
@@ -16,6 +16,7 @@ public class Shows {
 		setRating(rating);
 		setSeatLeft(seatLeft);
 		setPpSeat(ppSeat);
+		setPerformanceId(performanceId);
 
 	}
 	public Shows(String startTime, String endTime, String movieName, String venue, String thumbnail, String rating,String description,

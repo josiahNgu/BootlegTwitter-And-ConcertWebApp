@@ -44,12 +44,14 @@ public class ConcertSearchResult extends HttpServlet {
 		//add comment section
 		ArrayList<Review> allComment = getComment.getReview(movieName);
 		int rating =0;
-		int overallRating =0;
+		int overallR =0;
 		for(int i = 0 ;i<allComment.size();i++) {
 			 rating += Integer.parseInt(allComment.get(i).getRating());
+			 System.out.println(allComment.get(i).getRating());
 			
 		}
-		overallRating = rating/allComment.size();
+		overallR = (rating/allComment.size())*10;
+		String overallRating = "stars-".concat(Integer.toString(overallR));
 		System.out.print(overallRating);
 		session.removeAttribute("overallRating");
 		session.setAttribute("overallRating", overallRating);

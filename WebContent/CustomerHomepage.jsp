@@ -36,11 +36,10 @@
 				<input class="form-control" type="search" placeholder="Search"
 					aria-label="Search" name="search" required />
 				<div class="dropdown mr-1">
-					<select class="custom-select">
+					<select class="custom-select" name="venue">
 						<c:forEach var="venue" items="${venue}">
-							<option value=${venue}>${venue}</option>
+							<option value="${venue}">${venue}</option>
 						</c:forEach>
-						<!-- <option>Lied Center</option> -->
 					</select> 
 				</div>
 				<input class="form-control" required type="date" placeholder="date" >

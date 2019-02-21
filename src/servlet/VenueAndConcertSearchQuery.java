@@ -35,8 +35,10 @@ public class VenueAndConcertSearchQuery extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String search = request.getParameter("search");
+		String venue = request.getParameter("venue");
+		System.out.print(venue);
 		ConcertsDB show = new ConcertsDB();
-		ArrayList<Shows> showResult = show.searchResult(search);
+		ArrayList<Shows> showResult = show.searchResult(search,venue);
 		session.setAttribute("showResult", showResult);
 		String address = "ConcertSearchResult.jsp";
 		RequestDispatcher dispatcher =
