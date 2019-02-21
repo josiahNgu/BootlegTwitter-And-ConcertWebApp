@@ -36,7 +36,7 @@
 					<c:forEach var="order" items="${orderResult}">
 						<tr>
 							<td>${order.orderNumber}</td>
-							<td>${order.orderTotal}</td>
+							<td>$${order.orderTotal}</td>
 							<td>${order.orderDate}</td>
 							<td>
 							<form action="ManageOrder">
