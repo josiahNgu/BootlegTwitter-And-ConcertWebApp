@@ -45,6 +45,12 @@ public class OrdersDB {
        	double balance = (double) result.getItemTotalPrice() + Double.parseDouble(card.getBalance());
        	System.out.println("card balance: "+balance);
        	db.updateCreditCardBalance(cardNumber, Double.toString(balance));
+       	
+       	//update seat number
+       	String performanceId = Integer.toString(result.getPerformanceId());
+       	String updateNumber = Integer.toString(result.getQuantity());
+       	db.addSeat(updateNumber, performanceId);
+       	
        	db.closeConnection();
        	
        	return result;

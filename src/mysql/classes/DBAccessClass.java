@@ -57,7 +57,7 @@ public class DBAccessClass {
 	public Orders cancelOrder (int orderItemId) {
 		String update = "update orderitems set isCancelled = 1 where Id = " + orderItemId;
 		
-		String SQL = "select orders.Id, orders.TotalCost, orders.OrderDate, orders.BillingAddress, orders.CreditCardNumber, orderitems.Quantity, performance.StartTime, concert.MovieName, venue.VenueName, TicketVenuePrices.TicketPrice, orderitems.Id as orderItemId from orders" + 
+		String SQL = "select orders.Id, orders.TotalCost, orders.OrderDate, orders.BillingAddress, orders.CreditCardNumber, orderitems.Quantity, performance.StartTime, performance.Id as performanceId, concert.MovieName, venue.VenueName, TicketVenuePrices.TicketPrice, orderitems.Id as orderItemId from orders" + 
 				"	join orderitems on orders.Id = orderitems.OrderId" + 
 				"	join performance on orderitems.PerformanceID = performance.Id" + 
 				"   join concert on performance.concertID = concert.Id" + 
@@ -83,7 +83,8 @@ public class DBAccessClass {
 				int ticketPrice = rs.getInt("TicketPrice");
 				int itemTotal = quantity * ticketPrice;
 				result = new Orders(rs.getInt("Id"),rs.getInt("TotalCost"),rs.getString("OrderDate"),rs.getString("BillingAddress"),
-						quantity,ticketPrice,rs.getString("MovieName"),rs.getString("VenueName"),rs.getString("StartTime"),itemTotal,rs.getInt("orderItemId"),rs.getString("CreditCardNumber"));
+						quantity,ticketPrice,rs.getString("MovieName"),rs.getString("VenueName"),rs.getString("StartTime"),itemTotal,
+						rs.getInt("orderItemId"),rs.getString("CreditCardNumber"),rs.getInt("performanceId"));
 				
 			}
 			
@@ -637,6 +638,20 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 	}
+	
+	public void addSeat(String updateNumber,String performanceId) {
+		String sql = "update performance set SeatLeft = SeatLeft + ? where performance.Id = ?";
+		try {
+			PreparedStatement prepareStmt = conn.prepareStatement(sql);
+			prepareStmt.setString(1, updateNumber);
+			prepareStmt.setString(2, performanceId);
+			prepareStmt.executeUpdate();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public String seatLeft(String performanceId) {
 		String sql = "select SeatLeft from performance where performance.Id =?";
 		String seatLeft ="0";
