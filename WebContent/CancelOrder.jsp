@@ -18,7 +18,7 @@
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link">${userBean.userName}</a></li>
 				<li class="nav-item"><a class="nav-link" href="ViewOrders">View Orders</a>
-				<li class="nav-item"><a class="nav-link" href="Login.jsp">Logout</a></li>
+				<li class="nav-item"><form action=Logout method="post"><input type="submit" class="btn btn-secondary" value="logout" /></form></li>
 			</ul>
 		</nav>
 	</div>
@@ -38,10 +38,10 @@
 							${cancelOrderInfo.venueName}<br /> Showtime: ${cancelOrderInfo.showTime}<br />
 						<div class="btn-toolbar row">
 							<form action="CancelOrder">
-								<button type="submit" class="btn btn-dark" value=${cancelOrderInfo.orderItemId} name="orderItemId">Cancel</button>
+								<button type="submit" class="btn btn-danger" value=${cancelOrderInfo.orderItemId} name="orderItemId">Confirm Cancellation</button>
 							</form>	
 							&nbsp; 
-							<a class="btn btn-dark"
+							<a class="btn btn-success"
 								href="CustomerHomepage.jsp">Discard Cancellation</a>
 						</div>
 						<br />

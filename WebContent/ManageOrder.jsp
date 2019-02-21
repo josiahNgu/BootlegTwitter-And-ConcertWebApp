@@ -19,7 +19,7 @@
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link">${userBean.userName}</a></li>
 				<li class="nav-item"><a class="nav-link" href="ViewOrders">View Orders</a></li>
-				<li class="nav-item"><a class="nav-link" href="Login.jsp">Logout</a></li>
+				<li class="nav-item"><form action=Logout method="post"><input type="submit" class="btn btn-secondary" value="logout" /></form></li>
 			</ul>
 		</nav>
 	</div>
@@ -48,8 +48,9 @@
 							<td>${order.venueName}</td>
 							<td>${order.showTime}</td>
 							<td>
-							<form action="ManageOrder">
-								<button type="submit" class="btn btn-dark" value=${order.orderNumber} name="orderNumber">View</button>
+							<form action="ConcertSearchResult">
+								<input type="hidden" name="venueName" value="${order.venueName}">
+								<button type="submit" name="detailButton" value="${order.movieName}" class="btn btn-dark">View</button>
 							</form>	
 							<br />
 							<form action="CancelOrderInfo">

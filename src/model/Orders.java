@@ -13,6 +13,7 @@ public class Orders {
 	private int itemTotalPrice;
 	private int orderItemId;
 	private String creditCardNumber;
+	private int performanceId;
 	
 	/*
 	 * required data: 
@@ -47,7 +48,7 @@ public class Orders {
 
 	public Orders(int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity,
 			int ticketPrice, String movieName, String venueName, String showTime, int itemTotalPrice, int orderItemId,
-			String creditCardNumber) {
+			String creditCardNumber, int performanceId) {
 		super();
 		this.orderNumber = orderNumber;
 		this.orderTotal = orderTotal;
@@ -61,6 +62,7 @@ public class Orders {
 		this.itemTotalPrice = itemTotalPrice;
 		this.orderItemId = orderItemId;
 		this.creditCardNumber = creditCardNumber;
+		this.performanceId = performanceId;
 	}
 
 	public Orders() {
@@ -153,4 +155,11 @@ public class Orders {
 		this.creditCardNumber = creditCardNumber;
 	}
 
+	public int getPerformanceId() {
+		return performanceId;
+	}
+
+	public void setPerformanceId(int performanceId) {
+		this.performanceId = performanceId;
+	}
 }
