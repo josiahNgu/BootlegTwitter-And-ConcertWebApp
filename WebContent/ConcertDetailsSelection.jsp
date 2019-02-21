@@ -11,6 +11,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 	<link href="/styles/styles.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="/CSE464/styles.css" type="text/css">
 	
 </head>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
