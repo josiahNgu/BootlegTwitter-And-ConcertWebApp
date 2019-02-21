@@ -15,6 +15,12 @@ from performance inner join concert on performance.concertID = concert.ID inner 
 on performance.venueID = venue.id inner join TicketVenuePrices on TicketVenuePrices.performanceID=performance.ID
 where concert.MovieName = "black Cab";
 
+-- add new column in orderitems --
+
+alter table orderitems add column isCancelled TINYINT(1) after Quantity;
+alter table orderitems alter column isCancelled set default 0;
+
+
 -- insert into venue --
 insert into venue (venueName,Address,City,State,PostalCode)values("Lied Center", "301 N 12th St","Lincoln","NE","68508"); 
 insert into venue (venueName,Address,City,State,PostalCode)values("Pinnacle Bank Arena", "400 Pinnacle Arena Dr","Lincoln","NE","68508"); 
