@@ -1,3 +1,1 @@
-========================
-=CSE464-concert website=
-========================
+CSE464-concert website
