@@ -42,6 +42,7 @@ public class DeleteItemShoppingCart extends HttpServlet {
 		}
 		if(subtotal == 0 ) {
 			session.removeAttribute("seatNumberError");
+			session.removeAttribute("seatNumberAlertColor");
 		}
 		session.setAttribute("subtotal", subtotal);
 		session.setAttribute("shoppingList", currentList);

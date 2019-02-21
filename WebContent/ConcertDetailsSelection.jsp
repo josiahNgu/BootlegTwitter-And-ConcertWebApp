@@ -40,7 +40,7 @@ color:lightgray;
 .stars-10:after { width: 20%; }
 .stars-20:after { width: 40%; }
 .stars-30:after { width: 50%; }
-.stars-40:after { width: 60%; }
+.stars-40:after { width: 80%; }
 .stars-50:after { width: 100%; }
 </style>
 
@@ -107,7 +107,7 @@ color:lightgray;
 
 		<div class="col-lg-12  ">
 		<div class="d-flex flex-column align-items-center justify-content-center">
-			<span class="stars-container ${overallRating}" style="padding-top:2vh;">★★★★★</span>
+			<span class="stars-container stars-${overallRating}0" style="padding-top:2vh;">★★★★★</span>
 			<a href="CustomerReview.jsp"> <input type="button"
 				class="btn btn-dark" value="Add comment" />
 			</a>

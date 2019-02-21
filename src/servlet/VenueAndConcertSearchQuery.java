@@ -36,7 +36,6 @@ public class VenueAndConcertSearchQuery extends HttpServlet {
 		HttpSession session = request.getSession();
 		String search = request.getParameter("search");
 		String venue = request.getParameter("venue");
-		System.out.print(venue);
 		ConcertsDB show = new ConcertsDB();
 		ArrayList<Shows> showResult = show.searchResult(search,venue);
 		session.setAttribute("showResult", showResult);

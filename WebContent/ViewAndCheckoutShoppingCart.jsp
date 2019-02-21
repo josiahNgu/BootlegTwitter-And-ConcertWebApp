@@ -63,7 +63,7 @@
 			<div class="row justify-content-end" style="padding: 5vh 0vh;">
 				<h6>Subtotal:&#36;${subtotal}</h6>
 			</div>
-			<div class="alert alert-danger">
+			<div class="alert ${seatNumberAlertColor}">
 			 <c:forEach var="error"
 				items="${seatNumberError}" varStatus="loop">
 				${error} <br>

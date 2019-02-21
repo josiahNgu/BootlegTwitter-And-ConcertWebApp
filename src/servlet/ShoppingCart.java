@@ -36,6 +36,7 @@ public class ShoppingCart extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		session.removeAttribute("seatNumberError");
+		session.removeAttribute("seatNumberAlertColor");
 		ArrayList<Shows> currentList = (ArrayList<Shows>) session.getAttribute("shoppingList");
 		TransactionDB transaction = new TransactionDB();
 		ArrayList<String> error =new ArrayList<String>();
@@ -50,13 +51,14 @@ public class ShoppingCart extends HttpServlet {
 		}
 		if(hasError) {
 			session.setAttribute("seatNumberError", error);
+			session.setAttribute("seatNumberAlertColor","alert-danger");
 			String address = "ViewAndCheckoutShoppingCart.jsp";
 			RequestDispatcher dispatcher =
 					request.getRequestDispatcher(address);
 			dispatcher.forward(request, response);
 		}else {
 			String address = "CustomerTransaction.jsp";
-			session.setAttribute("seatNumberError", error);
+//			session.setAttribute("seatNumberError", error);
 			RequestDispatcher dispatcher =
 					request.getRequestDispatcher(address);
 			dispatcher.forward(request, response);
