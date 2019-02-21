@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Concert Detail</title>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
@@ -43,11 +42,6 @@ color:lightgray;
 .stars-30:after { width: 50%; }
 .stars-40:after { width: 60%; }
 .stars-50:after { width: 100%; }
-.stars-60:after { width: 60%; }
-.stars-70:after { width: 70%; }
-.stars-80:after { width: 80%; }
-.stars-90:after { width: 90%; }
-.stars-100:after { width: 100%;}
 </style>
 
 <body>
