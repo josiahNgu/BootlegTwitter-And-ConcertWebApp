@@ -7,8 +7,21 @@
 <title>Concert Detail</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+ -->
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ 
+<script>
+function updateCart(){
+	var numOfTickets = $("#numOfTickets").val();
+	$.post("UpdateShoppingCart", {numOfTickets:numOfTickets}, function(data,status) {
+			  if(data == 1) {	
+				  document.getElementById("status").innerHTML= "Item added to Cart";
+				  $('#status').addClass('alert-success');
+	  	}	
+	});
+	}
+</script>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 </head>
 <style type="text/css">
@@ -60,6 +73,8 @@ color:lightgray;
 		</nav>
 	</div>
 	<div class="container">
+		<!-- alert whether if add to cart is successful -->
+		<div class="alert" id="status"><h2></h2></div>
 		<div style="padding-bottom: 3vh;"></div>
 		<div class="row border border-danger rounded-top rounded-bottom"
 			style="padding: 5vh;">
@@ -75,25 +90,28 @@ color:lightgray;
 						There is only ${detailResult.seatLeft} seats left. Purchase a
 						ticket at &dollar;${detailResult.ppSeat} per ticket now!</p>
 					<div class="align-self-center">
-						<form action=UpdateShoppingCart method="post">
-							<select class="w-25" name="numOfTickets">
+					
+						<!-- <form action=UpdateShoppingCart method="post"> -->
+							<select class="w-25" id="numOfTickets">
 								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
 								<option value="4">4</option>
 								<option value="5">5</option>
-							</select> <input type="hidden" name="ticketPrice"
+							</select> <input type="hidden" id="ticketPrice"
 								value="${detailResult.ppSeat}">
-							<button type="submit" class="btn btn-danger w-50">Add To
-								Cart</button>
-						</form>
+							<input type="button" value="Add to Cart" onClick = "updateCart()" class="btn btn-danger w-50">
+						<!-- </form> -->
 					</div>
 				</div>
 			</div>
 		</div>
-		<div style="padding-top: 5vh">
+		<div class="d-flex justify-content-between" style="padding-top: 5vh">
 			<a href="ConcertSearchResult.jsp"> <input type="button"
 				class="btn btn-dark" value="Back" />
+			</a>
+			<a href="ViewAndCheckoutShoppingCart.jsp"> <input type="button"
+				class="btn btn-dark" value="Checkout" />
 			</a>
 		</div>
 	</div>

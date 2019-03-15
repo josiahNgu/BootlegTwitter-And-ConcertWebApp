@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -34,6 +35,8 @@ public class UpdateShoppingCart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String numTickets = request.getParameter("numOfTickets");
+		System.out.println("number of tickets : "+numTickets);
+		int transactionStatus = 1;
 		Shows selectedShow = (Shows) session.getAttribute("detailResult");
 		int orderCost = Integer.parseInt(numTickets) * Integer.parseInt(selectedShow.getPpSeat());
 		Shows addShow = new Shows(selectedShow.getStartTime(),selectedShow.getEndTime(),selectedShow.getMovieName(),selectedShow.getVenue()
@@ -50,11 +53,9 @@ public class UpdateShoppingCart extends HttpServlet {
 			subtotal += shoppingList.get(i).getOrderCost();
 		}
 		session.setAttribute("subtotal", subtotal);
-		String address = "ViewAndCheckoutShoppingCart.jsp";
-		RequestDispatcher dispatcher =
-				request.getRequestDispatcher(address);
-		dispatcher.forward(request, response);
-		
+		PrintWriter out = response.getWriter(); 
+		out.println(transactionStatus);
+				
 	}
 
 	/**
