@@ -1,6 +1,5 @@
 package mysql.classes;
 
-import java.util.ArrayList;
 
 import model.CreditCards;
 
@@ -24,6 +23,7 @@ public class TransactionDB {
 		db.insertToOrderItems(orderNumber, performanceId, quantity);
 		db.closeConnection();
 	}
+	// return the remaining Fund on the card
 	public String creditCardsValid(String cardNumber,int subtotal) {
 		CreditCards cards = new CreditCards();
 		Double remainingFund = 0.0;
@@ -36,6 +36,7 @@ public class TransactionDB {
 		}
 		return remainingFund.toString();
 	}
+	// update the balance on card
 	public void updateBalance(String cardNumber,String balance) {
 		DBAccessClass db = new DBAccessClass();
 		db.connectMeIn();

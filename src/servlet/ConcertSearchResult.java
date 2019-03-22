@@ -38,14 +38,16 @@ public class ConcertSearchResult extends HttpServlet {
 		HttpSession session = request.getSession();
 		String movieName = request.getParameter("detailButton");
 		String venueName = request.getParameter("venueName");
+		session.setAttribute("movieName", movieName);
+		System.out.println("selected movie session: " + session.getAttribute("movieName"));
 		ConcertsDB detailSearch = new ConcertsDB();
 		ReviewDB getComment = new ReviewDB();
 		Shows details = detailSearch.detailResult(movieName,venueName);
-		//add comment section
-		ArrayList<Review> allComment = getComment.getReview(movieName);
+		ArrayList<Review> allComment = getComment.getReview(session.getAttribute("movieName").toString());
 		int rating =0;
-		int overallRating =0;
+		int overallRating =1;
 		for(int i = 0 ;i<allComment.size();i++) {
+			if(allComment.get(i).getRating() != null)
 			 rating += Integer.parseInt(allComment.get(i).getRating());			
 		}
 		overallRating = (rating/allComment.size());

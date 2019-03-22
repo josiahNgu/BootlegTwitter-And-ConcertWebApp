@@ -491,6 +491,8 @@ public class DBAccessClass {
 		}
 
 	}
+	
+	//insert new creditcard to database
 	public void creditCards(CreditCards newCard) {
 		String sql = "insert into creditcards (CardHolderName,CreditCardNumber,Balance,CardType,UserId,CVV,ExpirationDate)values"
 				+ "(?,?,?,?,?,?,?)";
@@ -525,7 +527,7 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 	}
-
+	//get credit card Balance
 	public CreditCards creditCardDetails(String cardNumber) {
 		String sql ="select CreditCardNumber,Balance from creditcards where CreditCardNumber=?";	
 		CreditCards cards = new CreditCards();

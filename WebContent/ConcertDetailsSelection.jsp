@@ -18,9 +18,30 @@ function updateCart(){
 			  if(data == 1) {	
 				  document.getElementById("status").innerHTML= "Item added to Cart";
 				  $('#status').addClass('alert-success');
-	  	}	
+	  			}	
 	});
-	}
+}
+$(document).ready(function(){
+    $("#addCommentButton").click(function(){
+        $("#commentForm").toggle();
+    });
+});
+
+function newComment(){
+	var comment = $("#comment").val();
+	var rating = $("#rating").val();
+	$.post("CustomerReview", {comment:comment , rating:rating}, function(data,status) {
+		if(data==1){
+			 document.getElementById("status").innerHTML= "Your comment was submitted succesfully! Thank you for your response.";
+			 $('#status').addClass('alert-success');
+		}
+		if(data == 0){
+			 document.getElementById("status").innerHTML= "Your comment was not submited. Comment length exceeded the max length of 255 characters. Please try again later.";
+			 $('#status').addClass('alert-danger');
+		}
+	});
+}
+
 </script>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 </head>
@@ -90,8 +111,6 @@ color:lightgray;
 						There is only ${detailResult.seatLeft} seats left. Purchase a
 						ticket at &dollar;${detailResult.ppSeat} per ticket now!</p>
 					<div class="align-self-center">
-					
-						<!-- <form action=UpdateShoppingCart method="post"> -->
 							<select class="w-25" id="numOfTickets">
 								<option value="1">1</option>
 								<option value="2">2</option>
@@ -101,7 +120,6 @@ color:lightgray;
 							</select> <input type="hidden" id="ticketPrice"
 								value="${detailResult.ppSeat}">
 							<input type="button" value="Add to Cart" onClick = "updateCart()" class="btn btn-danger w-50">
-						<!-- </form> -->
 					</div>
 				</div>
 			</div>
@@ -115,21 +133,37 @@ color:lightgray;
 			</a>
 		</div>
 	</div>
-	<div class="commentSection">
+	<div id="commentSection"class="commentSection">
 		<hr>
-
-		<!-- 		<div class="row" style="padding: 5vh;">
-			<div class="star-ratings-sprite">
-				<span style="width: 80%" class="star-ratings-sprite-rating"></span>
-			</div> -->
-
 		<div class="col-lg-12  ">
 		<div class="d-flex flex-column align-items-center justify-content-center">
 			<span class="stars-container stars-${overallRating}0" style="padding-top:2vh;">★★★★★</span>
-			<a href="CustomerReview.jsp"> <input type="button"
-				class="btn btn-dark" value="Add comment" />
-			</a>
+			<input type="button" class="btn btn-dark" value="Add comment" id="addCommentButton"/>
+			
+			<!-- Add New Comment Form -->
+			<div id="commentForm" style="display:none">
+			<div class="form-group">
+					<label>Comment</label> <br>
+					<textarea style="border: 2px solid;" rows="2"
+						id="comment"></textarea>
+				</div>
+				<div class="form-group">
+					<label>Rating</label> <select class="w-50 form-control "
+						style="border: 2px solid ;" id="rating">
+						<option value="5">5</option>
+						<option value="4">4</option>
+						<option value="3">3</option>
+						<option value="2">2</option>
+						<option value="1">1</option>
+					</select>
+				</div>
+			<button type="submit" onClick="newComment()" class="btn btn-success"
+					style="margin-top: 10px;">Submit</button>
 			</div>
+			
+			
+			</div>
+			<div id="allComments">
 			<c:forEach var="comments" items="${comments}">
 				<div>
 					<div class="col-lg-6">
@@ -142,6 +176,7 @@ color:lightgray;
 					</div>
 				</div>
 			</c:forEach>
+			</div>
 		</div>
 	</div>
 </body>

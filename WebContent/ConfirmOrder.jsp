@@ -4,19 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Transcation</title>
-<link rel="stylesheet" href="styles/styles.css">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+<title>ConfirmOrder</title>
 <!-- import Bootstrap  -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" >
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
 <script>
 function confirmFunction(){
 	var firstName = $("#firstName").val();
@@ -30,18 +27,51 @@ function confirmFunction(){
 	var shippingAddress = $("#shippingAddress").val();
 	var userId =  $("#userId").val();
 	var subtotal =$("#subtotal").val();
+
 	$.post("../Bank/BankServlet", {firstName:firstName,lastName:lastName,cardType:cardType,cardNumber:cardNumber,
 		expiryMonth:expiryMonth,expiryYear:expiryYear,cvc:cvc,billingAddress:billingAddress,shippingAddress:shippingAddress,
 		userId:userId,subtotal:subtotal}, function(data,status) {
-/* 		if(data == 1){
-			
-		} */
+ 		if(data == 1){
+ 			 $('#alert').addClass('alert-success');
+ 			 $('#alert').removeClass('alert-danger');
+ 			document.getElementById("alert").innerHTML= "Your order was placed succesfully!";
+ 			$("#printButton").removeClass('d-none');
+ 			$("#body").addClass('d-none');
+ 			placeOrder(billingAddress,cardNumber);
+		} 
+ 		if(data == 0){
+ 			 $('#alert').addClass('alert-danger');
+ 			document.getElementById("alert").innerHTML= "Transaction was not successful! Please try again later.";
+ 		} 
 	});
 	
 }
+
+function placeOrder(billingAddress,cardNumber){
+	$.post("PlaceOrder", {billingAddress:billingAddress,cardNumber:cardNumber});
+}
+
+function printFunction()
+{
+    var mywindow = window.open('', 'PRINT');
+
+    mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+    mywindow.document.write('</head><body >');
+    mywindow.document.write('<h1>' + document.title  + '</h1>');
+    mywindow.document.write(document.getElementById("shoppingList").innerHTML);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+
+    mywindow.print();
+    mywindow.close();
+
+    return true;
+}
+
 </script>
 </head>
-
 <body>
 	<div>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -54,12 +84,24 @@ function confirmFunction(){
 			</ul>
 		</nav>
 	</div>
-	<div class="container" style="padding: 5vh 0vh;">
+	
+	<!-- Display whether the transaction is successful -->
+	<div class="container">
+		<div id="alert" class="" role="alert">
+			<!-- Print Button -->
+		</div>
+		<button id="printButton" class="d-none btn btn-info" onClick="printFunction()">Print</button>
+	</div>
+	
+	<input type="hidden" id="shoppingListSession" value="${shoppingList}">
+	
+	
+	<div class="container" id="body" style="padding: 5vh 0vh;">
 		<h4 style="padding: 3vh 0px">Summary</h4>
 		<div class="row">
-			<div class="col-sm-8">
+			<div id="shoppingList" class="col-sm-8">
 					<c:forEach var="shoppingList" items="${shoppingList}">
-						<div class="row" style="padding: 3vh;">
+						<div class="row"  style="padding: 3vh;">
 							<div class="col-sm-4">
 								<h6>${shoppingList.movieName}</h6>
 							</div>
@@ -99,14 +141,14 @@ function confirmFunction(){
 						</div>
 						<div class="form-group" id="cardNumberField">
 							<label for="cardNumber">Card Number</label> 
-							<input type="number" class="form-control" id="cardNumber">
+							<input type="number" class="form-control" id="cardNumber" required>
 						</div>
 						<div class="form-group">
 							<label for="expirationDate">Expiration date</label>
 							<div class="row justify-content-center">
 								<div class="col-sm-6">
 									<select class="form-control" id="expiryMonth"
-										id="expiry-month">
+										id="expiry-month" required>
 										<option value="01">Jan (01)</option>
 										<option value="02">Feb (02)</option>
 										<option value="03">Mar (03)</option>
@@ -122,7 +164,7 @@ function confirmFunction(){
 									</select>
 								</div>
 								<div class="col-sm-6">
-									<select class="form-control" id="expiryYear">
+									<select class="form-control" id="expiryYear" required>
 										<option value="2019">2019</option>
 										<option value="2020">2020</option>
 										<option value="2021">2021</option>
@@ -134,18 +176,19 @@ function confirmFunction(){
 						</div>
 						<div class="form-group">
 							<label for="cvc">CVC Number</label> <input type="password"
-								class="form-control" id="cvc" placeholder="XXX">
+								class="form-control" id="cvc" placeholder="XXX" required>
 						</div>
 						<div class="form-group">
 							<label for="billingAddress">Billing Address</label> <input
-								type="text" class="form-control" id ="billingAddress" placeholder="Billing Address">
+								type="text" class="form-control" id ="billingAddress" placeholder="Billing Address" required>
 						</div>
 						<div class="form-group">
 							<label for="shippingAddress">Shipping Address</label> <input
-								type="text" class="form-control" id="shippingAddress" placeholder="shipping address">
+								type="text" class="form-control" id="shippingAddress" placeholder="shipping address" required>
 						</div>
-						<input type="hidden" id="userId" value=${userBean.userName} />
-						<input type="hidden" id="subtotal" value=${subtotal} />						
+						<input type="hidden" id="userId" value="${userBean.userId}" />
+						<input type="hidden" id="subtotal" value="${subtotal}" >
+						<input type="hidden" id="shoppingSession" value="${shoppingList}" >												
 						<button onClick="confirmFunction()" type="submit" class="btn btn-primary w-100" >Confirm</button>
 			</div>
 		</div>

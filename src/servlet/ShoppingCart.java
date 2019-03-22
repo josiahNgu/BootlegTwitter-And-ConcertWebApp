@@ -57,7 +57,7 @@ public class ShoppingCart extends HttpServlet {
 					request.getRequestDispatcher(address);
 			dispatcher.forward(request, response);
 		}else {
-			String address = "CustomerTransaction.jsp";
+			String address = "ConfirmOrder.jsp";
 //			session.setAttribute("seatNumberError", error);
 			RequestDispatcher dispatcher =
 					request.getRequestDispatcher(address);

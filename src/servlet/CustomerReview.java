@@ -1,8 +1,10 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Review;
 import model.Shows;
 import model.Users;
 import mysql.classes.ReviewDB;
@@ -45,34 +48,22 @@ public class CustomerReview extends HttpServlet {
 		int wordCount = comment.length();
 		Shows selectedShow = (Shows) session.getAttribute("detailResult");
 		Users currentUser = (Users) session.getAttribute("userBean");
-		String movieName = selectedShow.getMovieName();
-		String movieId = review.getMovieId(movieName);
+		String movieId = review.getMovieId(selectedShow.getMovieName());
 		String userId = Integer.toString(currentUser.getUserId());
-		String condition = "alert-danger";
-		String header ="Error Occured!";
-		String content = "Your comment was not submited. Comment length exceeded the max length of 255 characters. Please try again later.";
-		session.removeAttribute("reviewAlertColor");
-		session.removeAttribute("reviewAlertHeader");
-		session.removeAttribute("reviewAlertContent");
+		int transactionStatus = 0;
+		ArrayList<Review> allComment = null;
+		System.out.print(comment + "Rating: " + rating + "wordCount: " + wordCount + date + selectedShow.getMovieName() +"user id " + userId);
 		
-		
-		System.out.print(comment + wordCount + date + selectedShow.getMovieName() +"user id " + userId);
 		if(wordCount <= 255) {
-			condition = "alert-success";
-			header = "Success!";
-			content = "Your comment was submitted succesfully! Thank you for your response.";
+			transactionStatus = 1;
 			review.addReview(comment, userId, movieId, date, rating);
+			allComment = review.getReview(selectedShow.getMovieName());
 		}
-		
-		session.setAttribute("reviewAlertColor", condition);
-		session.setAttribute("reviewAlertHeader",header);
-		session.setAttribute("reviewAlertContent",content);
-
-		String address = "ReviewConfirmation.jsp";
-		RequestDispatcher dispatcher =
-				request.getRequestDispatcher(address);
-		dispatcher.forward(request, response);	
-	}
+		session.setAttribute("movieName", selectedShow.getMovieName());
+		session.setAttribute("comments", allComment);
+		PrintWriter out = response.getWriter(); 
+		out.println(transactionStatus);
+			}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
