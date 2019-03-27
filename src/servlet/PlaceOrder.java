@@ -38,7 +38,10 @@ public class PlaceOrder extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+		if(session == null) {
+			response.sendRedirect("Login.jsp");
+		}
 		String billingAddress = request.getParameter("billingAddress");
 		String cardNumber = request.getParameter("cardNumber");
 		Users currentUser = (Users) session.getAttribute("userBean");

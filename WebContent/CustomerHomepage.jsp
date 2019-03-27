@@ -21,7 +21,7 @@
 </head>
 
 <body>
-	<div>
+	<div style="background-color:#FFE6E8;">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link">${userBean.userName}</a></li>
@@ -46,9 +46,7 @@
 				<input type="submit" class="btn btn-dark" value="Search" />
 			</form>
 		</div>
-
-
-		<div id="carouselExampleIndicators" class="carousel slide"
+		<div id="carouselExampleIndicators" class="carousel slide" style="width:100%;height: 50vh !important;"
 			data-ride="carousel">
 			<ol class="carousel-indicators">
 				<li data-target="#carouselExampleIndicators" data-slide-to="0"
@@ -56,7 +54,7 @@
 				<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
 				<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
 			</ol>
-			<div class="container">
+			<div class="container h-100">
 				<div class="carousel-inner">
 					<div class="carousel-item active">
 						<img class="d-block w-100" src="pics/drake.jpg" alt="First slide">

@@ -29,3 +29,6 @@ input[type=number]::-webkit-outer-spin-button {
 .checked {
   color: yellow;
 }
+.backgroundColor{
+background-color:#FFE6E8;
+}

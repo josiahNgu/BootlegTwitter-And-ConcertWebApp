@@ -63,7 +63,7 @@ public class CustomerReview extends HttpServlet {
 		session.setAttribute("comments", allComment);
 		PrintWriter out = response.getWriter(); 
 		out.println(transactionStatus);
-			}
+		}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

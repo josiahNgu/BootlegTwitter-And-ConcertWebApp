@@ -10,7 +10,7 @@
 <!-- import Bootstrap  -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script> 
-<body style="background-color:#ffffff;">
+<body style="background-color:#F1E4E8;">
 	<div class="container col-sm-3">
 		<div class="d-flex justify-content-center shadow p-3 mb-5 bg-white rounded ">
 			<form name="loginForm" action=Login method="post">

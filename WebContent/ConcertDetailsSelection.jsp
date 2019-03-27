@@ -34,6 +34,9 @@ function newComment(){
 		if(data==1){
 			 document.getElementById("status").innerHTML= "Your comment was submitted succesfully! Thank you for your response.";
 			 $('#status').addClass('alert-success');
+			 // dont work with eclipse browser
+			 location.reload();
+			
 		}
 		if(data == 0){
 			 document.getElementById("status").innerHTML= "Your comment was not submited. Comment length exceeded the max length of 255 characters. Please try again later.";

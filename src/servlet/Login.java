@@ -27,15 +27,19 @@ public class Login extends HttpServlet {
 		String password = request.getParameter("password");
 		boolean userExists = false;
 		boolean userPasswordMatches = false;
-		
+		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(900);
 		Users aUser = new Users();
 		
 		UsersDB aUserDB = new UsersDB();
 		
 		VenueDB venueDB = new VenueDB();
 		ArrayList<String> venue = venueDB.getVenue();
-
-
+		
+		
+		//set session for inactivity
+		session.setMaxInactiveInterval(10);
+		
 		userExists = aUserDB.validateUserByUsername(userName);
 		userPasswordMatches = aUserDB.validateUser(userName,password);
 		
@@ -43,7 +47,6 @@ public class Login extends HttpServlet {
 			//this now returns userId as well
 			aUser = aUserDB.getUser(userName);
 			
-			HttpSession session = request.getSession();
 		    session.setAttribute("userBean", aUser);
 		    // add venue to session
 			session.setAttribute("venue", venue);

@@ -9,7 +9,6 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 
 <head>
-<link rel="stylesheet" href="./style/styles.css">
 <meta charset="UTF-8">
 <title>View Shopping Cart</title>
 </head>
