@@ -38,7 +38,7 @@ public class CancelOrder extends HttpServlet {
 		
 		if(orderItemNum != null) {
 			int orderItemId = Integer.parseInt(orderItemNum);
-
+			
 			Orders result = aOrderDB.cancelOrder(orderItemId);
 			request.setAttribute("cancelOrder", result);
 			String address = "CancellationConfirmation.jsp";

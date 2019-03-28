@@ -1,5 +1,6 @@
 package mysql.classes;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,6 +13,7 @@ import model.Review;
 import model.CreditCards;
 import model.Shows;
 import model.Users;
+import mysql.classes.PasswordUtil;
 import model.Orders;
 
 
@@ -55,28 +57,31 @@ public class DBAccessClass {
 	}
 
 	public Orders cancelOrder (int orderItemId) {
-		String update = "update orderitems set isCancelled = 1 where Id = " + orderItemId;
+		String update = "update orderitems set isCancelled = 1 where Id = ?";
 
 		String SQL = "select orders.Id, orders.TotalCost, orders.OrderDate, orders.BillingAddress, orders.CreditCardNumber, orderitems.Quantity, performance.StartTime, performance.Id as performanceId, concert.MovieName, venue.VenueName, TicketVenuePrices.TicketPrice, orderitems.Id as orderItemId from orders" + 
 				"	join orderitems on orders.Id = orderitems.OrderId" + 
 				"	join performance on orderitems.PerformanceID = performance.Id" + 
 				"   join concert on performance.concertID = concert.Id" + 
 				"   join venue on performance.venueID = venue.Id" + 
-				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orderitems.Id =" + orderItemId;
+				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orderitems.Id = ?";
 
 
-		Statement stat;
 		Orders result = new Orders();
 
 
 		try {
-			stat = conn.createStatement();
-			//use execute update for update
-			stat.executeUpdate(update);
+
+			ps = conn.prepareStatement(update);	
+			ps.setInt(1, orderItemId);
+			ps.executeUpdate();
 			//int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity, int ticketprice
 			//String movieName, String venueName, String showTime, int itemTotalPrice
+			
+			ps = conn.prepareStatement(SQL);	
+			ps.setInt(1, orderItemId);
 
-			ResultSet rs = stat.executeQuery(SQL);
+			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()){
 				int quantity = rs.getInt("Quantity");
@@ -98,14 +103,15 @@ public class DBAccessClass {
 					"	join performance on orderitems.PerformanceID = performance.Id" + 
 					"   join concert on performance.concertID = concert.Id" + 
 					"   join venue on performance.venueID = venue.Id" + 
-					"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orders.Id ="+orderId;
+					"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orders.Id = ?";
 
 
 			if(orderId == 0) {
 				System.err.println("error getting orderId");
 			}
-
-			ResultSet rs2 = stat.executeQuery(SQL2);
+			ps = conn.prepareStatement(SQL2);
+			ps.setInt(1, orderId);
+			ResultSet rs2 = ps.executeQuery();
 
 			ArrayList<Orders> results = new ArrayList<Orders>();
 
@@ -129,11 +135,13 @@ public class DBAccessClass {
 			}
 
 			//update TotalCost for that order
-			String SQL3 = "update orders set TotalCost = "+totalCost+" where Id = " +orderId;
-
-			stat.executeUpdate(SQL3);
-
-			stat.close();
+			String SQL3 = "update orders set TotalCost = ? where Id = ?";
+			ps = conn.prepareStatement(SQL3);
+			ps.setInt(1, totalCost);
+			ps.setInt(2, orderId);
+			ps.executeUpdate();
+			
+			ps.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -149,13 +157,14 @@ public class DBAccessClass {
 				"	join performance on orderitems.PerformanceID = performance.Id" + 
 				"   join concert on performance.concertID = concert.Id" + 
 				"   join venue on performance.venueID = venue.Id" + 
-				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orderitems.Id =" + orderItemId;
-		Statement stat;
+				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orderitems.Id = ?";
 		Orders result = new Orders();
 
 		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
+			ps = conn.prepareStatement(SQL);	
+			ps.setInt(1, orderItemId);
+
+			ResultSet rs = ps.executeQuery();
 			//int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity, int ticketprice
 			//String movieName, String venueName, String showTime, int itemTotalPrice
 
@@ -168,7 +177,7 @@ public class DBAccessClass {
 
 			}
 
-			stat.close();
+			ps.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -188,14 +197,16 @@ public class DBAccessClass {
 				"	join performance on orderitems.PerformanceID = performance.Id" + 
 				"   join concert on performance.concertID = concert.Id" + 
 				"   join venue on performance.venueID = venue.Id" + 
-				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orders.Id ="+orderId;
+				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orders.Id = ?";
 		Statement stat;
 
 		ArrayList<Orders> results = new ArrayList<Orders>();
 
 		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
+			ps = conn.prepareStatement(SQL);	
+			ps.setInt(1, orderId);
+
+			ResultSet rs = ps.executeQuery();
 			//int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity, int ticketprice
 			//String movieName, String venueName, String showTime, int itemTotalPrice
 
@@ -210,8 +221,7 @@ public class DBAccessClass {
 					results.add(anOrder);
 				}
 			}
-
-			stat.close();
+			ps.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -222,13 +232,14 @@ public class DBAccessClass {
 	}
 
 	public ArrayList<Orders> getOrders(int userId) {
-		String SQL = "SELECT * from orders where CustomerId = "+userId;
-		Statement stat;
+		String SQL = "SELECT * from orders where CustomerId = ?";
 
 		ArrayList<Orders> results = new ArrayList<Orders>();
 		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
+			ps = conn.prepareStatement(SQL);	
+			ps.setInt(1, userId);
+
+			ResultSet rs = ps.executeQuery();
 			//int orderNumber, int orderTotal, String orderDate, String billingAddress, int quantity
 
 			while (rs.next()){
@@ -236,7 +247,7 @@ public class DBAccessClass {
 				results.add(anOrder);
 			}
 
-			stat.close();
+			ps.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -380,33 +391,13 @@ public class DBAccessClass {
 		return details;
 	}
 
-	public void displayAllUsers() {
-		String SQL = "SELECT * from users";
-		Statement stat;
-		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
-
-			while (rs.next()){
-				System.out.println(rs.getString(1) + " " + rs.getString(2) +  " " + rs.getString(3)
-				+ " " + rs.getString(4) + " " + rs.getString(5));
-			}
-
-			stat.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public Users returnUserByUsername(String aUserName) {
 		String SQL = "SELECT * from users";
-		Statement stat;
-
+		PreparedStatement ps = null;
 		Users aUser = new Users();
 		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
+			ps = conn.prepareStatement(SQL);
+			ResultSet rs = ps.executeQuery(SQL);
 
 			while (rs.next()){
 				if(aUserName.equals( rs.getString("Username") )) {
@@ -415,8 +406,8 @@ public class DBAccessClass {
 					aUser.setPassword(rs.getString("Password"));
 				} 
 			}
+			ps.close();
 
-			stat.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -426,21 +417,24 @@ public class DBAccessClass {
 	}
 	public boolean validateUser(String username,String password) {
 		boolean passwordMatches = false;
-		String SQL = "SELECT * from users where Username =\"" + username + "\"";
-		Statement stat;
+		String SQL = "SELECT * from users where Username =?";
 		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
+			ps = conn.prepareStatement(SQL);	
+			ps.setString(1, username);
+			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()){	
-				if(password.equals( rs.getString("Password") )) {
+				String salt = rs.getString("Salt");
+				String saltedPassword = PasswordUtil.hashPassword(password+salt);
+				if(saltedPassword.equals( rs.getString("Password") )) {
 					passwordMatches = true;
 				}    
 			}
 
-			stat.close();
-
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -472,20 +466,29 @@ public class DBAccessClass {
 
 	public void addSingleUser(Users aUser) {
 		try {
-			stmt = conn.createStatement();
 			String sql;
 
 			String userName = aUser.getUserName();
 			String password = aUser.getPassword();
+			
+			String salt = PasswordUtil.getSalt();
 
+			String saltedPassword = PasswordUtil.hashPassword(password+salt);
 
-			sql = "INSERT INTO users (Username, Password)" +
-					"VALUES ('" + userName +
-					"', '" + password + "')";
-			stmt.executeUpdate(sql);
+			sql = "INSERT INTO users (Username, Password, Salt) values (?,?,?)";
+			
+			PreparedStatement prepareStmt = conn.prepareStatement(sql);
+			prepareStmt.setString(1, userName);
+			prepareStmt.setString(2, saltedPassword);
+			prepareStmt.setString(3, salt);
+
+			prepareStmt.executeUpdate();
 
 
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -42,6 +42,7 @@ public class OrdersDB {
        	//update card balance here
        	String cardNumber = result.getCreditCardNumber();
        	CreditCards card =db.creditCardDetails(cardNumber);
+
        	double balance = (double) result.getItemTotalPrice() + Double.parseDouble(card.getBalance());
        	System.out.println("card balance: "+balance);
        	db.updateCreditCardBalance(cardNumber, Double.toString(balance));
