@@ -19,7 +19,7 @@
 			<div>
 				User Name <br> <input class="form-control" placeholder="Enter UserName" type=text name=userName required><br>
 				Password <br> <input class="form-control" placeholder="Enter Password" type=password name=password1 id=password
-				 required onkeyup="checkPass();return false;"><br> Confirm Password <br>
+				 required onblur="checkPass();return false;"><br> Confirm Password <br>
 
 				<input class="form-control" placeholder="Confirm Password" type=password name=password2 id=confirmPassword 
 				 required onkeyup="checkPass();return false;"><br>

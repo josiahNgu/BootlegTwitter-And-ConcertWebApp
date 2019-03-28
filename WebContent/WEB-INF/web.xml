@@ -17,6 +17,9 @@
 <param-name>defaultHtmlEscape</param-name>
 <param-value>true</param-value>
 </context-param>
+<session-config>
+        <session-timeout>60</session-timeout>
+</session-config>
   	<welcome-file-list>
 		<welcome-file>/Login.jsp</welcome-file>	
 	</welcome-file-list>
