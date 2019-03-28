@@ -66,9 +66,7 @@ public class DBAccessClass {
 				"   join venue on performance.venueID = venue.Id" + 
 				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orderitems.Id = ?";
 
-
 		Orders result = new Orders();
-
 
 		try {
 
@@ -198,7 +196,6 @@ public class DBAccessClass {
 				"   join concert on performance.concertID = concert.Id" + 
 				"   join venue on performance.venueID = venue.Id" + 
 				"   join TicketVenuePrices on performance.Id = TicketVenuePrices.performanceID where orders.Id = ?";
-		Statement stat;
 
 		ArrayList<Orders> results = new ArrayList<Orders>();
 
@@ -444,10 +441,10 @@ public class DBAccessClass {
 	public boolean findUserByUsername(String aUserName) {
 		boolean userExists = false;
 		String SQL = "SELECT * from users";
-		Statement stat;
 		try {
-			stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery(SQL);
+			PreparedStatement prepareStmt = conn.prepareStatement(SQL);
+
+			ResultSet rs = prepareStmt.executeQuery(SQL);
 
 			while (rs.next()){	
 				if(aUserName.equals( rs.getString("Username") )) {
@@ -455,7 +452,7 @@ public class DBAccessClass {
 				}    
 			}
 
-			stat.close();
+			prepareStmt.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
