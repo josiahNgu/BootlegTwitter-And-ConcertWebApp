@@ -38,12 +38,16 @@ public class ConcertSearchResult extends HttpServlet {
 		HttpSession session = request.getSession();
 		String movieName = request.getParameter("detailButton");
 		String venueName = request.getParameter("venueName");
-		session.setAttribute("movieName", movieName);
-		System.out.println("selected movie session: " + session.getAttribute("movieName"));
+		System.out.println("Concert Search Result servlet: selected movie session: " + movieName);
 		ConcertsDB detailSearch = new ConcertsDB();
 		ReviewDB getComment = new ReviewDB();
 		Shows details = detailSearch.detailResult(movieName,venueName);
-		ArrayList<Review> allComment = getComment.getReview(session.getAttribute("movieName").toString());
+		ArrayList<Review> allComment ;
+		if(movieName == null ) {
+			allComment = getComment.getReview(movieName);
+		}else {
+			allComment = getComment.getReview(movieName);
+		}
 		int rating =0;
 		int overallRating =1;
 		for(int i = 0 ;i<allComment.size();i++) {
@@ -57,7 +61,8 @@ public class ConcertSearchResult extends HttpServlet {
 		session.removeAttribute("comments");
 		session.setAttribute("detailResult", details);
 		session.setAttribute("comments", allComment);
-		
+		session.setAttribute("movieName", movieName);
+
 		String address = "ConcertDetailsSelection.jsp";
 		RequestDispatcher dispatcher =
 				request.getRequestDispatcher(address);

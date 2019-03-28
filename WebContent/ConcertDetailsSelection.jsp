@@ -171,9 +171,9 @@ color:lightgray;
 					<div class="col-lg-6">
 						<div class="col">
 							<span class="stars-container stars-${comments.rating}0" style="padding-top:2vh;">★★★★★</span>
-							<h4>${comments.userName}</h4>
+							<h4> <c:out value="${comments.userName}"  escapeXml="true"/></h4>
 							<p>${comments.date}</p>
-							<p>${comments.comment}</p>
+							<p><c:out value="${comments.comment}" escapeXml="true"/></p>
 						</div>
 					</div>
 				</div>

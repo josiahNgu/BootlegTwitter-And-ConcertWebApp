@@ -52,7 +52,7 @@ public class CustomerReview extends HttpServlet {
 		String userId = Integer.toString(currentUser.getUserId());
 		int transactionStatus = 0;
 		ArrayList<Review> allComment = null;
-		System.out.print(comment + "Rating: " + rating + "wordCount: " + wordCount + date + selectedShow.getMovieName() +"user id " + userId);
+		System.out.println (comment + "Rating: " + rating + "wordCount: " + wordCount + date + selectedShow.getMovieName() +"user id " + userId);
 		
 		if(wordCount <= 255) {
 			transactionStatus = 1;
