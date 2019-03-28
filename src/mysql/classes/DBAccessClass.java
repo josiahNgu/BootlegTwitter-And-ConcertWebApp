@@ -600,7 +600,6 @@ public class DBAccessClass {
 			e.printStackTrace();
 		}
 
-
 		return result;
 	}
 	//need to fix to catch if there is two same concerts but diff time or venue
