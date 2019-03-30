@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import model.Users;
 import mysql.classes.UsersDB;
 
@@ -19,6 +22,8 @@ import mysql.classes.UsersDB;
 @WebServlet("/Register")
 public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	static Logger log = Logger.getLogger(Login.class.getName());
+
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -32,26 +37,37 @@ public class Register extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
-		String userName = request.getParameter("userName");
-		String password = request.getParameter("password1");
+		ServletContext sc = this.getServletContext();
+		String propFilePath = sc.getRealPath("/WEB-INF/lib/log4j.properties");
+		PropertyConfigurator.configure(propFilePath);
 		
-		Users aUser = new Users(userName, password);
-		
-		UsersDB aUserDB = new UsersDB();
-		
-		boolean userExists = false;
-		
-		userExists = aUserDB.validateUserByUsername(userName);
-		
-		if(!userExists) {
-			aUserDB.registerUser(aUser);
-			response.sendRedirect("Login.jsp");
-		} else {
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('User already exist.');");
-			out.println("location='Register.jsp';");
-			out.println("</script>");
+		try {
+			PrintWriter out = response.getWriter();
+			String userName = request.getParameter("userName");
+			String password = request.getParameter("password1");
+			
+			Users aUser = new Users(userName, password);
+			
+			UsersDB aUserDB = new UsersDB();
+			
+			boolean userExists = false;
+			
+			userExists = aUserDB.validateUserByUsername(userName);
+			
+			if(!userExists) {
+				aUserDB.registerUser(aUser);
+				response.sendRedirect("Login.jsp");
+			} else {
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('User already exist.');");
+				out.println("location='Register.jsp';");
+				out.println("</script>");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error("This is a error message.",e);
+
 		}
 	}
 

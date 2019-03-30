@@ -1,5 +1,7 @@
 package mysql.classes;
 
+import java.io.File;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,11 +11,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import model.Review;
 import model.CreditCards;
 import model.Shows;
 import model.Users;
 import mysql.classes.PasswordUtil;
+import servlet.Login;
 import model.Orders;
 
 
@@ -26,7 +32,8 @@ public class DBAccessClass {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	final String DB_URL = "jdbc:mysql://cse.unl.edu:3306/jngu";
 
-
+	static Logger log 
+    = Logger.getLogger(Login.class.getName());
 
 	//  Database credentials
 	static final String USER = "jngu"; // Replace with your CSE_LOGIN
@@ -409,10 +416,14 @@ public class DBAccessClass {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return aUser;
 	}
+	
 	public boolean validateUser(String username,String password) {
+		
+		//path to the log4j properties file
+		PropertyConfigurator.configure("C:\\Users\\WhoAm\\git\\CSE464\\WebContent\\WEB-INF\\lib\\log4j.properties");
+		
 		boolean passwordMatches = false;
 		String SQL = "SELECT * from users where Username =?";
 		try {
@@ -427,10 +438,15 @@ public class DBAccessClass {
 					passwordMatches = true;
 				}    
 			}
+			
 
 		} catch (SQLException e) {
+			System.out.println("error information is written on the log file.");
+			log.error("This is a error message.",e);
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
+			System.out.println("error information is written on the log file.");
+			log.error("This is a error message.",e);
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
