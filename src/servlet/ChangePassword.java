@@ -49,7 +49,6 @@ public class ChangePassword extends HttpServlet {
 
 		userExists = aUserDB.validateUserByUsername(userName);
 		userPasswordMatches = aUserDB.validateUser(userName,oldPassword);
-
 		if(userExists && userPasswordMatches) {
 			// change the password
 			boolean status = aUserDB.changePassword(userName, password);
