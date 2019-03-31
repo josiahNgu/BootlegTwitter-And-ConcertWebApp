@@ -419,6 +419,37 @@ public class DBAccessClass {
 		return aUser;
 	}
 	
+
+	public boolean changePassword (String userName, String password) {
+		String sql = "update users set Password = ?, Salt = ? where Username = ?";
+		boolean success = false;
+		try {
+			String salt = PasswordUtil.getSalt();
+			String saltedPassword = PasswordUtil.hashPassword(password+salt);
+			
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, saltedPassword);
+			ps.setString(2, salt);
+			ps.setString(3, userName);
+			
+			ps.executeUpdate();
+			
+			success = true;
+			
+			ps.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return success;
+
+	}
+	
 	public boolean validateUser(String username,String password) {
 		
 		//path to the log4j properties file

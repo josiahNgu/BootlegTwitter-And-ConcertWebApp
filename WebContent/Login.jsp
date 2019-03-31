@@ -25,6 +25,7 @@
 				</div>
 				<div>
 					 New User?<a href="Register.jsp"> Register Here </a> <br>
+					 Change password <a href="ChangePassword.jsp"> Click Here</a> <br>
 				</div>
 			</form>
 		</div>

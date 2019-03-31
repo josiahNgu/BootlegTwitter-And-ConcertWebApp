@@ -32,6 +32,17 @@ public class UsersDB {
    	    return passwordMatches;
     }
     
+    public boolean changePassword(String aUserName, String password) {
+    	
+    	boolean status = false;
+   	    DBAccessClass db = new DBAccessClass();
+   	    db.connectMeIn();
+	    status = db.changePassword(aUserName,password);
+	    db.closeConnection();
+   	    
+    	return status;
+    }
+    
     
     public Users getUser(String aUserName) {   
 	   	DBAccessClass db = new DBAccessClass();
