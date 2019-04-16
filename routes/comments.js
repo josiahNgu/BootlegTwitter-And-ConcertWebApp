@@ -14,7 +14,8 @@ router.get("/", function(req, res) {
 });
 router.post("/", function(req, res) {
   const collection = db.get("comments");
-  const currentDate = new Date().toLocaleString;
+  const date = new Date();
+  const currentDate = date.toLocaleString();
   collection.insert(
     {
       // author: req.body.author,
