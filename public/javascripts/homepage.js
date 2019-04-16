@@ -26,3 +26,16 @@ app.controller("CommentCtrl", [
     });
   }
 ]);
+app.controller("addCommentCtrl", [
+  "$scope",
+  "$resource",
+  "$location",
+  function($scope, $resource, $location) {
+    $scope.save = function() {
+      const Comments = $resource("/api/comments");
+      Comments.save($scope.comment, function() {
+        $location.path("/");
+      });
+    };
+  }
+]);

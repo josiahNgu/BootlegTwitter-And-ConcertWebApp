@@ -22,6 +22,22 @@
       </div>
     </div>
     <div class="col-8">
+      <div ng-controller="addCommentCtrl">
+        <form>
+          <div class="form-group">
+            <textarea
+              class="form-control"
+              rows="3"
+              placeholder="Compose new Comment...."
+            ></textarea>
+          </div>
+          <div style="margin:20px;">
+            <button type="submit" class="btn btn-primary ">
+              Tweet
+            </button>
+          </div>
+        </form>
+      </div>
       <div class="border-top border-bottom" ng-repeat="comment in comments">
         <h6 class="font-weight-bold">@{{ comment.author }}</h6>
         <p>{{ comment.date }}</p>
