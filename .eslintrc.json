@@ -3,7 +3,7 @@
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": ["error"],
-    "generators": "never",
+    "func-names": 0,
     "no-console": 0
   }
 }

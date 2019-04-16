@@ -2,4 +2,11 @@
 
 ## bootlegTwitter
 
-- put /* eslint-disable func-names */ in the begining of file to ignore the eslint rule for no func name
+## Installation guide
+
+- run npm install in the directory
+
+## Instructions
+
+- use const instead of var
+- use /_ eslint-disable _/ if want to ignore all eslint in file or use var

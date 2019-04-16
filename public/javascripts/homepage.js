@@ -1,5 +1,3 @@
-/* eslint-disable func-names */
-
 // eslint-disable-next-line no-undef
 const app = angular.module("bootlegTwitter", ["ngResource", "ngRoute"]);
 
