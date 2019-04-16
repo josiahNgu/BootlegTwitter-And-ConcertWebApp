@@ -1,4 +1,35 @@
-<h1>Bootleg Twitter</h1>
-<ul>
-  <li ng-repeat="comment in comments">{{ comment.author }}</li>
-</ul>
+<nav class="navbar navbar-light bg-light sticky-top col-sm-12">
+  <a class="navbar-brand" href="#">BootLeg Twitter</a>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+      <div class=" row h-100 w-100 justify-content-center align-items-center">
+        <form>
+          <div class="form-group text-center">
+            <label>Log In As</label>
+          </div>
+          <div class="input-group-prepend form-group">
+            <div class="input-group-text">@</div>
+            <input type="name" />
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-danger w-100">
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="border-top border-bottom" ng-repeat="comment in comments">
+        <h6 class="font-weight-bold">@{{ comment.author }}</h6>
+        <p>{{ comment.date }}</p>
+        <p>{{ comment.content }}</p>
+        <div ng-repeat=" replies in comments.replies">
+          <p>{{ replies }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,7 +9,7 @@ app.config([
     $routeProvider
       .when("/", {
         templateUrl: "viewControllers/home.html",
-        controller: "HomeCtrl"
+        controller: "CommentCtrl"
       })
       .otherwise({
         redirectTo: "/"
@@ -17,7 +17,7 @@ app.config([
   }
 ]);
 
-app.controller("HomeCtrl", [
+app.controller("CommentCtrl", [
   "$scope",
   "$resource",
   function($scope, $resource) {

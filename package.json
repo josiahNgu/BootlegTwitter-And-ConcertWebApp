@@ -15,6 +15,7 @@
     "morgan": "~1.9.0"
   },
   "devDependencies": {
+    "angular-hot-loader": "^0.9.15",
     "eslint": "^5.3.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.1.0",
