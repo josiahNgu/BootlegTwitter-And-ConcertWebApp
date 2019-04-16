@@ -1,6 +1,4 @@
-# CSCE 464 ASSIGMENT 4
-
-## bootlegTwitter
+# CSCE 464 ASSIGMENT 4 - bootlegTwitter
 
 ## Installation guide
 

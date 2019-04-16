@@ -6,7 +6,7 @@ app.config([
   function($routeProvider) {
     $routeProvider
       .when("/", {
-        templateUrl: "viewControllers/home.html",
+        templateUrl: "partial/home.html",
         controller: "CommentCtrl"
       })
       .otherwise({
