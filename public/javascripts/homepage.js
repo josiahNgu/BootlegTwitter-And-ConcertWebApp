@@ -32,6 +32,7 @@ app.controller("addCommentCtrl", [
   "$location",
   function($scope, $resource, $location) {
     $scope.save = function() {
+      console.log("comment button clicked");
       const Comments = $resource("/api/comments");
       Comments.save($scope.comment, function() {
         $location.path("/");
