@@ -1,10 +1,11 @@
+/* eslint-disable  func-names */
+
 const express = require("express");
 
 const router = express.Router();
-/* eslint-disable func-names */
 
 /* GET home page. */
-router.get("/", function(req, res, next) {
+router.get("/", function(req, res) {
   res.render("index", { title: "Express" });
 });
 

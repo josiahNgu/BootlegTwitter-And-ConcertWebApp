@@ -1,7 +1,7 @@
 /* eslint-disable func-names */
 const express = require("express");
 
-const router = express.Router;
+const router = express.Router();
 const monk = require("monk");
 
 const db = monk("localhost:27017/bootlegTwitter");
