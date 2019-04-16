@@ -22,10 +22,11 @@
       </div>
     </div>
     <div class="col-8">
-      <div ng-controller="addCommentCtrl">
-        <form>
+      <div>
+        <form ng-submit="save()" ng-controller="addCommentCtrl">
           <div class="form-group">
             <textarea
+              ng-model="comment.content"
               class="form-control"
               rows="3"
               placeholder="Compose new Comment...."

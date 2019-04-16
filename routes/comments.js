@@ -5,9 +5,6 @@ const monk = require("monk");
 
 const db = monk("localhost:27017/bootlegTwitter");
 
-function getDate() {
-  return new Date().toLocaleString;
-}
 router.get("/", function(req, res) {
   const collection = db.get("comments");
   collection.find({}, function(err, comments) {
@@ -17,11 +14,13 @@ router.get("/", function(req, res) {
 });
 router.post("/", function(req, res) {
   const collection = db.get("comments");
+  const currentDate = new Date().toLocaleString;
   collection.insert(
     {
-      author: req.body.author,
+      // author: req.body.author,
+      author: "Placeholder for now",
       content: req.body.content,
-      date: getDate(),
+      date: currentDate,
       userMentions: req.body.userMentions
     },
     function(err, comment) {
