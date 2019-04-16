@@ -5,7 +5,6 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const http = require("http");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const comments = require("./routes/comments");
@@ -40,14 +39,4 @@ app.use(function(err, req, res) {
   res.status(err.status || 500);
   res.render("error");
 });
-
-// server = http.createServer((request, response) => {
-//   response.writeHead(200, { "Content-Type": "text/plain" });
-//   response.write("Hello world");
-//   response.end();
-// });
-// server.listen(3000, () => {
-//   console.log("Node server created at port 3000");
-// });
-
 module.exports = app;
