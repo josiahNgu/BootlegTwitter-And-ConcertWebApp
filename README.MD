@@ -2,4 +2,4 @@
 
 ## bootlegTwitter
 
-- put /_ eslint-disable func-names _/ in the begining of file to ignore the eslint rule for no func name
+- put /* eslint-disable func-names */ in the begining of file to ignore the eslint rule for no func name
