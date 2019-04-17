@@ -43,8 +43,6 @@ app.controller("addCommentCtrl", [
         console.log($scope.comment.author);
         $location.path("/");
       });
-      // eslint-disable-next-line no-restricted-globals, no-undef
-      location.reload();
     };
   }
 ]);
