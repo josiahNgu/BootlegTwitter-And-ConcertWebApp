@@ -19,7 +19,8 @@ router.post("/", function(req, res) {
   collection.insert(
     {
       // author: req.body.author,
-      author: "Placeholder for now",
+      // eslint-disable-next-line no-undef
+      author: req.body.author,
       content: req.body.content,
       date: currentDate,
       userMentions: req.body.userMentions

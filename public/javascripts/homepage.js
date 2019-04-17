@@ -7,6 +7,10 @@ app.config([
     $routeProvider
       .when("/", {
         templateUrl: "partial/home.html",
+        controller: "CommentCtrl"
+      })
+      .when("/add-comment", {
+        templateUrl: "partial/addComment.html",
         controller: "addCommentCtrl"
       })
       .otherwise({
@@ -26,6 +30,25 @@ app.controller("CommentCtrl", [
     });
   }
 ]);
+
+app.controller("addCommentCtrl", [
+  "$scope",
+  "$resource",
+  "$location",
+  function($scope, $resource, $location) {
+    $scope.save = function() {
+      console.log("comment button clicked");
+      const Comments = $resource("/api/comments");
+      Comments.save($scope.comment, function() {
+        console.log($scope.comment.author);
+        $location.path("/");
+      });
+      // eslint-disable-next-line no-restricted-globals, no-undef
+      location.reload();
+    };
+  }
+]);
+
 app.controller("loginCtrl", [
   "$scope",
   "$resource",
@@ -33,30 +56,8 @@ app.controller("loginCtrl", [
   function($scope, $resource, $location) {
     $scope.save = function() {
       console.log("login button clicked");
-      console.log($scope.userName);
-    };
-  }
-]);
-
-app.controller("addCommentCtrl", [
-  "$scope",
-  "$resource",
-  "$location",
-  function($scope, $resource, $location) {
-    const Comments = $resource("/api/comments");
-    Comments.query(function(comments) {
-      console.log(comments);
-      $scope.comments = comments;
-    });
-    $scope.save = function() {
-      console.log("comment button clicked");
-      if ($scope.comment.content) {
-        Comments.save($scope.comment, function() {
-          console.log($scope.comment.content);
-          console.log($scope.comment.author);
-          $location.path("/");
-        });
-      }
+      // eslint-disable-next-line no-undef
+      $scope.username = $scope.userName;
     };
   }
 ]);

@@ -1,14 +1,15 @@
+<link rel="stylesheet" type="text/css" href="../stylesheets/style.css" />
 <nav class="navbar navbar-light bg-light sticky-top col-sm-12">
   <a class="navbar-brand" href="#">BootLeg Twitter</a>
 </nav>
 <div class="container-fluid">
   <div class="row">
     <div class="col-4 ">
-      <div class=" row justify-content-center align-items-center">
-        <form ng-submit="save()" ng-controller="loginCtrl">
-          <div class="form-group text-center">
-            <label>Log In As</label>
-          </div>
+      <div
+        class=" row justify-content-center align-items-center"
+        ng-controller="loginCtrl"
+      >
+        <form ng-submit="save()">
           <div class="input-group-prepend form-group">
             <div class="input-group-text">@</div>
             <input type="name" name="userNameTag" ng-model="userName" />
@@ -19,35 +20,37 @@
             </button>
           </div>
         </form>
+        <div
+          class="form-group text-center font-weight-bold alert alert-primary"
+          style="margin:5vh;font-size: 20px;"
+        >
+          <label>Logged In As</label> <br />
+          <label>@{{ username }}</label>
+        </div>
+        <a href="/#/add-comment">Tweet</a>
       </div>
     </div>
 
-    <div class="col-8">
-      <div ng-controller="addCommentCtrl">
-        <form ng-submit="save()">
-          <div class="form-group">
-            <input type="hidden" name="userNameTag" ng-model="comment.author" />
-            <textarea
-              ng-model="comment.content"
-              class="form-control"
-              rows="3"
-              placeholder="Compose new Comment...."
-            ></textarea>
-          </div>
-          <div class="text-center" style="margin:20px;">
-            <button type="submit" class="btn btn-primary w-50">
-              Tweet
-            </button>
-          </div>
-        </form>
-        <div class="border-top border-bottom" ng-repeat="comment in comments">
-          <!-- add delete post glypcon -->
-          <h6 class="font-weight-bold">@{{ comment.author }}</h6>
+    <div class="col-8" ng-controller="CommentCtrl">
+      <div class="border-top border-bottom" ng-repeat="comment in comments">
+        <!-- add delete post glypcon -->
+        <div class="row">
+          <h6 class="font-weight-bold col-sm-8">@{{ comment.author }}</h6>
           <p>{{ comment.date }}</p>
-          <p>{{ comment.content }}</p>
-          <div ng-repeat=" replies in comments.replies">
-            <p>{{ replies }}</p>
-          </div>
+        </div>
+        <p>{{ comment.content }}</p>
+        <p>{{ comment._id }}</p>
+        <div class="row">
+          <button class="genericButton col-sm-1" value="{{ comment._id }}">
+            Delete
+          </button>
+          <button class="genericButton col-sm-1">Reply</button>
+          <button class="genericButton">
+            <span class="glyphicon glyphicon-print">❤</span>
+          </button>
+        </div>
+        <div ng-repeat=" replies in comments.replies">
+          <p>{{ replies }}</p>
         </div>
       </div>
     </div>

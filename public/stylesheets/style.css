@@ -4,5 +4,28 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+.genericButton {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+[id="toggle-heart"] {
+  position: absolute;
+  left: -100vw;
+}
+[for="toggle-heart"] {
+  color: #aab8c2;
+}
+
+[id="toggle-heart"]:checked + label {
+  color: #e2264d;
+}
+[for="toggle-heart"] {
+  font-size: 2em;
+  cursor: pointer;
 }
