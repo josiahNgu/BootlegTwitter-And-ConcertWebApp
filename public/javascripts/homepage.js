@@ -7,7 +7,7 @@ app.config([
     $routeProvider
       .when("/", {
         templateUrl: "partial/home.html",
-        controller: "CommentCtrl"
+        controller: "loginCtrl"
       })
       .when("/add-comment", {
         templateUrl: "partial/addComment.html",
@@ -51,11 +51,17 @@ app.controller("loginCtrl", [
   "$scope",
   "$resource",
   "$location",
-  function($scope, $resource, $location) {
+  "$routeParams",
+  function($scope, $resource) {
     $scope.save = function() {
       console.log("login button clicked");
       // eslint-disable-next-line no-undef
       $scope.username = $scope.userName;
+      const Comments = $resource("/comments/:username");
+      Comments.query(function(comments) {
+        console.log(comments);
+        $scope.comments = comments;
+      });
     };
   }
 ]);

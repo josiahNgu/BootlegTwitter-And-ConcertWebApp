@@ -4,13 +4,20 @@ const router = express.Router();
 const monk = require("monk");
 
 const db = monk("localhost:27017/bootlegTwitter");
-
-router.get("/", function(req, res) {
-  const collection = db.get("comments");
-  collection.find({}, function(err, comments) {
+// this route expect username params after /
+router.get("/:username", function(req, res) {
+  const User = db.get("users");
+  console.log(`log in function: ${req.params.username}`);
+  User.findOne({ username: req.params.username }, function(err, user) {
     if (err) throw err;
-    res.json(comments);
+    console.log(user);
+    res.json(user);
   });
+  // const collection = db.get("comments");
+  // collection.find({ author: req.params.username }, function(err, comments) {
+  //   if (err) throw err;
+  //   res.json(comments);
+  // });
 });
 router.post("/", function(req, res) {
   const collection = db.get("comments");
@@ -18,8 +25,6 @@ router.post("/", function(req, res) {
   const currentDate = date.toLocaleString();
   collection.insert(
     {
-      // author: req.body.author,
-      // eslint-disable-next-line no-undef
       author: req.body.author,
       content: req.body.content,
       date: currentDate,
