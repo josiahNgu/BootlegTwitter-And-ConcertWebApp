@@ -14,6 +14,7 @@
               name="userNameTag"
               ng-model="userName"
               placeholder="josiah"
+              required
             />
           </div>
           <div class="form-group">
@@ -39,30 +40,31 @@
           <a class="btn  btn-dark w-50  rounded-pill" href="/#!add-comment"
             >Notification</a
           >
+          <a href="/api/comments/josiah">test</a>
         </div>
       </div>
+    </div>
 
-      <div class="col-8">
-        <div class="border-top border-bottom" ng-repeat="comment in comments">
-          <!-- add delete post glypcon -->
-          <div class="row">
-            <h6 class="font-weight-bold col-sm-8">@{{ comment.author }}</h6>
-            <p>{{ comment.date }}</p>
-          </div>
-          <p>{{ comment.content }}</p>
-          <p>{{ comment._id }}</p>
-          <div class="row">
-            <button class="genericButton col-sm-1" value="{{ comment._id }}">
-              Delete
-            </button>
-            <button class="genericButton col-sm-1">Reply</button>
-            <button class="genericButton">
-              <span class="glyphicon glyphicon-print">❤</span>
-            </button>
-          </div>
-          <div ng-repeat=" replies in comments.replies">
-            <p>{{ replies }}</p>
-          </div>
+    <div class="col-8">
+      <div class="border-top border-bottom" ng-repeat="comment in comments">
+        <!-- add delete post glypcon -->
+        <div class="row">
+          <h6 class="font-weight-bold col-sm-8">@{{ comment.author }}</h6>
+          <p>{{ comment.date }}</p>
+        </div>
+        <p>{{ comment.content }}</p>
+        <p>{{ comment._id }}</p>
+        <div class="row">
+          <button class="genericButton col-sm-1" value="{{ comment._id }}">
+            Delete
+          </button>
+          <button class="genericButton col-sm-1">Reply</button>
+          <button class="genericButton">
+            <span class="glyphicon glyphicon-print">❤</span>
+          </button>
+        </div>
+        <div ng-repeat=" replies in comments.replies">
+          <p>{{ replies }}</p>
         </div>
       </div>
     </div>

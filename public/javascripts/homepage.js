@@ -57,7 +57,8 @@ app.controller("loginCtrl", [
       console.log("login button clicked");
       // eslint-disable-next-line no-undef
       $scope.username = $scope.userName;
-      const Comments = $resource("/comments/:username");
+      const Comments = $resource(`/api/comments/${$scope.username}`);
+      console.log(Comments);
       Comments.query(function(comments) {
         console.log(comments);
         $scope.comments = comments;

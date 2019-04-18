@@ -6,12 +6,12 @@ const monk = require("monk");
 const db = monk("localhost:27017/bootlegTwitter");
 // this route expect username params after /
 router.get("/:username", function(req, res) {
-  const User = db.get("users");
+  const Comment = db.get("comments");
   console.log(`log in function: ${req.params.username}`);
-  User.findOne({ username: req.params.username }, function(err, user) {
+  Comment.find({ author: req.params.username }, function(err, comments) {
     if (err) throw err;
-    console.log(user);
-    res.json(user);
+    console.log(comments.author);
+    res.json(comments);
   });
   // const collection = db.get("comments");
   // collection.find({ author: req.params.username }, function(err, comments) {
