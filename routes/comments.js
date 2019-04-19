@@ -1,24 +1,36 @@
 const express = require("express");
+const objectid = require("mongodb").ObjectID;
 
 const router = express.Router();
 const monk = require("monk");
 
 const db = monk("localhost:27017/bootlegTwitter");
 // this route expect username params after /
-router.get("/:username", function(req, res) {
+router.get("/user/:username", function(req, res) {
   const Comment = db.get("comments");
-  console.log(`log in function: ${req.params.username}`);
+  console.log(`log in function in comments.js: ${req.params.username}`);
   Comment.find({ author: req.params.username }, function(err, comments) {
     if (err) throw err;
     console.log(comments.author);
     res.json(comments);
   });
-  // const collection = db.get("comments");
-  // collection.find({ author: req.params.username }, function(err, comments) {
-  //   if (err) throw err;
-  //   res.json(comments);
-  // });
 });
+
+router.get("/:id", function(req, res) {
+  const collection = db.get("comments");
+  collection.findOne({ _id: objectid(req.params.id) }, function(err, comment) {
+    if (err) throw err;
+    res.json(comment);
+  });
+});
+router.delete("/:id", function(req, res) {
+  const collection = db.get("comments");
+  collection.remove({ _id: objectid(req.params.id) }, function(err, comment) {
+    if (err) throw err;
+    res.json(comment);
+  });
+});
+
 router.post("/", function(req, res) {
   const collection = db.get("comments");
   const date = new Date();

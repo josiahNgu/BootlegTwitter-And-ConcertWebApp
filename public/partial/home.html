@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css" />
-<nav class="navbar navbar-light bg-light sticky-top col-sm-12">
+<nav class="navbar navbar-light bg-light fixed-top col-sm-12">
   <a class="navbar-brand" href="#">BootLeg Twitter</a>
 </nav>
 <div class="container-fluid" ng-controller="loginCtrl">
@@ -45,6 +45,16 @@
     </div>
 
     <div class="col-8">
+      <div
+        class="card text-center col-sm-3"
+        style="margin:5vh;"
+        *ngFor="let user of users"
+      >
+        <div class="card-body">
+          <h5 class="card-title">username</h5>
+          <a href="#" class="btn btn-primary">Follow</a>
+        </div>
+      </div>
       <div class="border-top border-bottom" ng-repeat="comment in comments">
         <!-- add delete post glypcon -->
         <div class="row">
@@ -54,9 +64,13 @@
         <p>{{ comment.content }}</p>
         <p>{{ comment._id }}</p>
         <div class="row">
-          <button class="genericButton col-sm-1" value="{{ comment._id }}">
+          <a
+            class="genericButton col-sm-1"
+            value="{{ comment._id }}"
+            href="/#!delete-comment/{{ comment._id }}"
+          >
             Delete
-          </button>
+          </a>
           <button class="genericButton col-sm-1">Reply</button>
           <button class="genericButton">
             <span class="glyphicon glyphicon-print">❤</span>

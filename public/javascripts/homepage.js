@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-undef
 const app = angular.module("bootlegTwitter", ["ngResource", "ngRoute"]);
-
 app.config([
   "$routeProvider",
   function($routeProvider) {
@@ -13,21 +12,13 @@ app.config([
         templateUrl: "partial/addComment.html",
         controller: "addCommentCtrl"
       })
+      .when("/delete-comment/:id", {
+        templateUrl: "partial/deleteComment.html",
+        controller: "deleteMovieCtrl"
+      })
       .otherwise({
         redirectTo: "/"
       });
-  }
-]);
-
-app.controller("CommentCtrl", [
-  "$scope",
-  "$resource",
-  function($scope, $resource) {
-    const Comments = $resource("/api/comments");
-    Comments.query(function(comments) {
-      console.log(comments);
-      $scope.comments = comments;
-    });
   }
 ]);
 
@@ -54,14 +45,33 @@ app.controller("loginCtrl", [
   "$routeParams",
   function($scope, $resource) {
     $scope.save = function() {
+      // eslint-disable-next-line no-const-assign
       console.log("login button clicked");
       // eslint-disable-next-line no-undef
       $scope.username = $scope.userName;
-      const Comments = $resource(`/api/comments/${$scope.username}`);
+      const Comments = $resource(`/api/comments/user/${$scope.userName}`);
       console.log(Comments);
       Comments.query(function(comments) {
         console.log(comments);
         $scope.comments = comments;
+      });
+    };
+  }
+]);
+
+app.controller("deleteMovieCtrl", [
+  "$scope",
+  "$resource",
+  "$location",
+  "$routeParams",
+  function($scope, $resource, $location, $routeParams) {
+    const Comment = $resource("/api/comments/:id");
+    Comment.get({ id: $routeParams.id }, function(comment) {
+      $scope.comment = comment;
+    });
+    $scope.delete = function() {
+      Comment.delete({ id: $routeParams.id }, function(comment) {
+        $location.path("/");
       });
     };
   }
