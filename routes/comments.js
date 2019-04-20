@@ -8,15 +8,27 @@ const db = monk("localhost:27017/bootlegTwitter");
 // this route expect username params after /
 router.get("/user/:username", function(req, res) {
   const Comment = db.get("comments");
-  Comment.find(
-    { author: req.params.username },
+  const Users = db.get("users");
+  
+  var usersFollowed = [];
+  Users.findOne(
     {
-      sort: { date: -1 }
+      username: req.params.username
     },
-    function(err, comments) {
-      if (err) throw err;
-      console.log(comments.author);
-      res.json(comments);
+    function(err,users){
+      usersFollowed = users.following;
+      usersFollowed.push(req.params.username);
+      console.log(usersFollowed);
+      Comment.find(
+        { author: { $in: usersFollowed } },
+        {
+          sort: { date: -1 }
+        },
+        function(err, comments) {
+          if (err) throw err;
+          res.json(comments);
+        }
+      );
     }
   );
 });
