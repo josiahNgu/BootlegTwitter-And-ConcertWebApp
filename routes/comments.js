@@ -9,13 +9,13 @@ const db = monk("localhost:27017/bootlegTwitter");
 router.get("/user/:username", function(req, res) {
   const Comment = db.get("comments");
   const Users = db.get("users");
-  
-  var usersFollowed = [];
+
+  let usersFollowed = [];
   Users.findOne(
     {
       username: req.params.username
     },
-    function(err,users){
+    function(err, users) {
       usersFollowed = users.following;
       usersFollowed.push(req.params.username);
       console.log(usersFollowed);

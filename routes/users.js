@@ -12,15 +12,6 @@ router.get("/", function(req, res) {
     res.json(users);
   });
 });
-router.get("/:username", function(req, res) {
-  const collection = db.get("users");
-  collection.find({ username: req.params.username }, function(err, users) {
-    if (err) throw err;
-    if (users === undefined) {
-      return false;
-    }
-  });
-});
 
 router.post("/", function(req) {
   const collection = db.get("users");
