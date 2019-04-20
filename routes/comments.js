@@ -41,6 +41,7 @@ router.post("/", function(req, res) {
       author: req.body.author,
       content: req.body.content,
       date: currentDate,
+      favorited: 0,
       userMentions: req.body.mention
     },
     function(err, comment) {
@@ -59,6 +60,24 @@ router.put("/update/:id", function(req, res) {
     {
       $push: {
         replies: req.body.reply
+      }
+    },
+    function(err, updatedComment) {
+      if (err) throw err;
+      res.json(updatedComment);
+    }
+  );
+});
+router.put("/updateFavoriteNumber", function(req, res) {
+  console.log("update a comment");
+  const collection = db.get("comments");
+  collection.update(
+    {
+      _id: req.body.postId
+    },
+    {
+      $inc: {
+        favorited: 1
       }
     },
     function(err, updatedComment) {

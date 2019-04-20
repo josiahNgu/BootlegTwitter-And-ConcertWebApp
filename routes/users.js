@@ -31,7 +31,23 @@ router.put("/updateUserFavorite", function(req) {
     },
     {
       $push: {
-        favorites: req.body.postId
+        favorited: req.body.postId
+      }
+    },
+    function(err) {
+      if (err) throw err;
+    }
+  );
+});
+router.put("/updateFollowing", function(req) {
+  const collection = db.get("users");
+  collection.update(
+    {
+      username: req.body.username
+    },
+    {
+      $push: {
+        following: req.body.followingName
       }
     },
     function(err) {
