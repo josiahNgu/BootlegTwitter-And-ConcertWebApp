@@ -6,7 +6,7 @@ const monk = require("monk");
 
 const db = monk("localhost:27017/bootlegTwitter");
 // this route expect username params after /
-router.get("/user/:username", function(req, res) {
+router.get("/user/:username", function (req, res) {
   const Comment = db.get("comments");
   const Users = db.get("users");
 
@@ -15,16 +15,19 @@ router.get("/user/:username", function(req, res) {
     {
       username: req.params.username
     },
-    function(err, users) {
+    function (err, users) {
+      if (err) throw err;
       usersFollowed = users.following;
       usersFollowed.push(req.params.username);
       console.log(usersFollowed);
       Comment.find(
-        { author: { $in: usersFollowed } },
+        {
+          $or: [{ author: { $in: usersFollowed } }, { userMentions: `@${req.params.username}` }]
+        },
         {
           sort: { date: -1 }
         },
-        function(err, comments) {
+        function (err, comments) {
           if (err) throw err;
           res.json(comments);
         }
@@ -33,17 +36,17 @@ router.get("/user/:username", function(req, res) {
   );
 });
 
-router.get("/:id", function(req, res) {
+router.get("/:id", function (req, res) {
   const collection = db.get("comments");
-  collection.findOne({ _id: objectid(req.params.id) }, function(err, comment) {
+  collection.findOne({ _id: objectid(req.params.id) }, function (err, comment) {
     if (err) throw err;
     res.json(comment);
   });
 });
-router.get("/userNotifications/:id", function(req, res) {
+router.get("/userNotifications/:id", function (req, res) {
   const collection = db.get("comments");
   const findThis = `@${req.params.id}`;
-  collection.find({ userMentions: findThis }, { sort: { date: -1 } }, function(
+  collection.find({ userMentions: findThis }, { sort: { date: -1 } }, function (
     err,
     comment
   ) {
@@ -51,15 +54,15 @@ router.get("/userNotifications/:id", function(req, res) {
     res.json(comment);
   });
 });
-router.delete("/:id", function(req, res) {
+router.delete("/:id", function (req, res) {
   const collection = db.get("comments");
-  collection.remove({ _id: objectid(req.params.id) }, function(err, comment) {
+  collection.remove({ _id: objectid(req.params.id) }, function (err, comment) {
     if (err) throw err;
     res.json(comment);
   });
 });
 
-router.post("/", function(req, res) {
+router.post("/", function (req, res) {
   const collection = db.get("comments");
   const date = new Date();
   console.log(`router.post: ${req.body}`);
@@ -72,13 +75,13 @@ router.post("/", function(req, res) {
       favorited: 0,
       userMentions: req.body.mention
     },
-    function(err, comment) {
+    function (err, comment) {
       if (err) throw err;
       res.json(comment);
     }
   );
 });
-router.put("/update/:id", function(req, res) {
+router.put("/update/:id", function (req, res) {
   console.log("update a comment");
   const collection = db.get("comments");
   collection.update(
@@ -90,13 +93,13 @@ router.put("/update/:id", function(req, res) {
         replies: req.body.reply
       }
     },
-    function(err, updatedComment) {
+    function (err, updatedComment) {
       if (err) throw err;
       res.json(updatedComment);
     }
   );
 });
-router.put("/updateFavoriteNumber", function(req, res) {
+router.put("/updateFavoriteNumber", function (req, res) {
   console.log("update a comment");
   const collection = db.get("comments");
   collection.update(
@@ -108,7 +111,7 @@ router.put("/updateFavoriteNumber", function(req, res) {
         favorited: 1
       }
     },
-    function(err, updatedComment) {
+    function (err, updatedComment) {
       if (err) throw err;
       res.json(updatedComment);
     }
