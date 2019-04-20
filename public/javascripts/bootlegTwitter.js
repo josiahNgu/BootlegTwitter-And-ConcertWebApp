@@ -192,6 +192,7 @@ app.controller("addToFavoriteCtrl", [
       // eslint-disable-next-line no-undef
       const username = sessionStorage.getItem("username");
       console.log(`${username} favorited: ${postId}`);
+      $scope.comment.favorited++;
 
       const User = $resource(
         "/api/users/updateUserFavorite",
