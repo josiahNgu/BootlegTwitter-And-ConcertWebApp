@@ -23,5 +23,19 @@ router.get("/:username", function(req, res) {
     res.json(users);
   });
 });
+router.put("/updateUser/:username", function(req) {
+  const collection = db.get("users");
+  collection.update(
+    {
+      username: req.params.username
+    },
+    {
+      following: req.body.following
+    },
+    function(err) {
+      if (err) throw err;
+    }
+  );
+});
 
 module.exports = router;

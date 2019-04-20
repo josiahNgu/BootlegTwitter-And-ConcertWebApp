@@ -29,7 +29,7 @@
               <img class="card-img-top img-thumbnail" src="../images/youngLonzo.jpg">
               <h5 class="card-title">{{ user.username }}</h5>
               <button  class="btn btn-primary" ng-click="viewUser(user.username)" >View Profile</button>
-              <button  class="btn btn-primary" ng-click="toggle = !toggle;">
+              <button  class="btn btn-primary" ng-click="toggle = !toggle;followUser(user.username)">
                   <span ng-hide="toggle">Follow</span>
                   <span ng-show="toggle">Following</span>
               </button>
@@ -59,12 +59,16 @@
               <span class="glyphicon glyphicon-print">❤</span>
             </button>
           </div>
-          <div ng-show="hideForm">   
-            <input class="form-group my-3  w-75" ></input>
-            <a >Submit</a>
+          <div>
+          <div ng-repeat="reply in comments.replies" >
+            <p>{{ reply }}</p>
           </div>
-          <div ng-repeat=" replies in comments.replies">
-            <p>{{ replies }}</p>
+          <div ng-show="hideForm" >  
+            <form ng-submit="addComment(comment._id,userComment)">
+              <input class="form-group my-3  w-75"  ng-model="userComment"></input> <br>
+              <button class="genericButton">Submit</button>
+            </form>
+            </div>
           </div>
         </div>
       </div>

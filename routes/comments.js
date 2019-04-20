@@ -48,5 +48,22 @@ router.post("/", function(req, res) {
     }
   );
 });
-
+router.put("/update/:id", function(req, res) {
+  console.log("update a comment");
+  const collection = db.get("comments");
+  collection.update(
+    {
+      _id: req.params.id
+    },
+    {
+      $push: {
+        replies: req.body.reply
+      }
+    },
+    function(err, updatedComment) {
+      if (err) throw err;
+      res.json(updatedComment);
+    }
+  );
+});
 module.exports = router;

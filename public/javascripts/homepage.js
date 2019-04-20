@@ -78,7 +78,7 @@ app.controller("homeCtrl", [
   "$resource",
   "$location",
   "$routeParams",
-  function($scope, $resource) {
+  function($scope, $resource, $routeParams) {
     // eslint-disable-next-line no-undef
     const userName = sessionStorage.getItem("username");
     console.log(userName);
@@ -90,9 +90,22 @@ app.controller("homeCtrl", [
     });
     const Comments = $resource(`/api/comments/user/${userName}`);
     Comments.query(function(comments) {
-      console.log(comments);
       $scope.comments = comments;
+      console.log(comments);
+      console.log(comments.replies);
     });
+    $scope.addComment = function(commentId, userComment) {
+      console.log(`addComment : ${commentId}`);
+      console.log(userComment);
+      const Collection = $resource(
+        `/api/comments/update/:id`,
+        { id: "@id" },
+        {
+          update: { method: "PUT" }
+        }
+      );
+      Collection.update({ id: commentId, reply: userComment });
+    };
   }
 ]);
 app.controller("deleteCommentCtrl", [
@@ -125,5 +138,9 @@ app.controller("followUserCtrl", [
         // $scope.comments = comments;
       });
     };
+    // $scope.followUser = function(username) {
+    //   const User = $resource(`/api/users/updateUser/${username}`);
+    //   User.
+    // };
   }
 ]);
