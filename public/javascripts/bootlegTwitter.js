@@ -3,7 +3,7 @@
 const app = angular.module("bootlegTwitter", ["ngResource", "ngRoute"]);
 app.config([
   "$routeProvider",
-  function($routeProvider) {
+  function ($routeProvider) {
     $routeProvider
       .when("/", {
         templateUrl: "partial/login.html",
@@ -43,13 +43,13 @@ app.controller("addCommentCtrl", [
   "$scope",
   "$resource",
   "$location",
-  function($scope, $resource, $location) {
+  function ($scope, $resource, $location) {
     const regex = /@[a-z]*/gi;
     // eslint-disable-next-line no-undef
     console.log(`session value: ${sessionStorage.getItem("username")}`);
     // eslint-disable-next-line no-undef
     $scope.username = sessionStorage.getItem("username");
-    $scope.save = function() {
+    $scope.save = function () {
       console.log($scope.comment);
       const mentionedUser = $scope.comment.content.match(regex);
       console.log(`typeof ${mentionedUser} ${mentionedUser}`);
@@ -60,7 +60,7 @@ app.controller("addCommentCtrl", [
           content: $scope.comment.content,
           mention: mentionedUser
         },
-        function() {
+        function () {
           $location.path("/home");
         }
       );
@@ -73,8 +73,8 @@ app.controller("loginCtrl", [
   "$resource",
   "$location",
   "$routeParams",
-  function($scope, $resource) {
-    $scope.save = function() {
+  function ($scope, $resource) {
+    $scope.save = function () {
       console.log("login button clicked");
       // eslint-disable-next-line no-undef
       sessionStorage.clear();
@@ -84,7 +84,7 @@ app.controller("loginCtrl", [
       console.log(sessionStorage.getItem("username"));
       const userExist = $resource(`/api/users/${$scope.userName}`);
       console.log(`finduser ${userExist}`);
-      userExist.query(function(users) {
+      userExist.query(function (users) {
         // eslint-disable-next-line no-undef
         if (users === undefined) {
           console.log("empty");
@@ -98,15 +98,15 @@ app.controller("registerUserCtrl", [
   "$resource",
   "$location",
   "$routeParams",
-  function($scope, $resource, $location) {
-    $scope.save = function() {
+  function ($scope, $resource, $location) {
+    $scope.save = function () {
       console.log("register button clicked");
       const Users = $resource("/api/users");
       Users.save(
         {
           username: $scope.username
         },
-        function() {
+        function () {
           $location.path("/");
         }
       );
@@ -117,26 +117,39 @@ app.controller("homeCtrl", [
   "$scope",
   "$resource",
   "$routeParams",
-  function($scope, $resource) {
+  function ($scope, $resource) {
     // eslint-disable-next-line no-undef
     const userName = sessionStorage.getItem("username");
     const Comments = $resource(`/api/comments/user/${userName}`);
     $scope.comments = {};
     const Users = $resource("/api/users");
-    Users.query(function(users) {
+    Users.query(function (users) {
       console.log(users);
       // eslint-disable-next-line no-plusplus
       $scope.users = users;
     });
-    $scope.goHome = function() {
+    $scope.goHome = function () {
       const username = sessionStorage.getItem("username");
       const UserProfile = $resource(`/api/comments/user/${username}`);
-      UserProfile.query(function(comments) {
+      UserProfile.query(function (comments) {
         $scope.comments.properties = comments;
         console.log(comments);
       });
     };
-    Comments.query(function(comments) {
+
+    // returns true if the logged in user is the poster
+    $scope.isPoster = function (author) {
+      const userName = sessionStorage.getItem("username");
+      if (author === userName) {
+        return true;
+      }
+      else {
+        return false;
+      }
+
+    };
+
+    Comments.query(function (comments) {
       $scope.comments.properties = comments;
       console.log(comments);
       console.log(userName);
@@ -149,13 +162,13 @@ app.controller("deleteCommentCtrl", [
   "$resource",
   "$location",
   "$routeParams",
-  function($scope, $resource, $location, $routeParams) {
+  function ($scope, $resource, $location, $routeParams) {
     const Comment = $resource("/api/comments/:id");
-    Comment.get({ id: $routeParams.id }, function(comment) {
+    Comment.get({ id: $routeParams.id }, function (comment) {
       $scope.comment = comment;
     });
-    $scope.delete = function() {
-      Comment.delete({ id: $routeParams.id }, function() {
+    $scope.delete = function () {
+      Comment.delete({ id: $routeParams.id }, function () {
         $location.path("/home");
       });
     };
@@ -165,8 +178,8 @@ app.controller("addReplyController", [
   "$scope",
   "$resource",
   "$route",
-  function($scope, $resource, $route) {
-    $scope.addComment = function(commentId, userComment) {
+  function ($scope, $resource, $route) {
+    $scope.addComment = function (commentId, userComment) {
       console.log(`addComment : ${commentId}`);
       console.log(userComment);
       const Collection = $resource(
@@ -176,7 +189,7 @@ app.controller("addReplyController", [
           update: { method: "PUT" }
         }
       );
-      Collection.update({ id: commentId, reply: userComment }, function() {
+      Collection.update({ id: commentId, reply: userComment }, function () {
         $route.reload();
       });
     };
@@ -187,8 +200,8 @@ app.controller("addToFavoriteCtrl", [
   "$resource",
   "$location",
   "$routeParams",
-  function($scope, $resource, $location) {
-    $scope.save = function(postId) {
+  function ($scope, $resource, $location) {
+    $scope.save = function (postId) {
       // eslint-disable-next-line no-undef
       const username = sessionStorage.getItem("username");
       console.log(`${username} favorited: ${postId}`);
@@ -209,7 +222,7 @@ app.controller("addToFavoriteCtrl", [
         }
       );
       Comment.update({ postId });
-      User.update({ postId, username }, function() {
+      User.update({ postId, username }, function () {
         $location.path("/home");
       });
     };
@@ -220,16 +233,16 @@ app.controller("viewProfileCtrl", [
   "$resource",
   "$location",
   "$routeParams",
-  function($scope, $resource) {
+  function ($scope, $resource) {
     $scope.username = sessionStorage.getItem("username");
-    $scope.viewUser = function(username) {
+    $scope.viewUser = function (username) {
       const UserProfile = $resource(`/api/comments/user/${username}`);
-      UserProfile.query(function(comments) {
+      UserProfile.query(function (comments) {
         $scope.comments.properties = comments;
         console.log(comments);
       });
     };
-    $scope.followUser = function(followingName) {
+    $scope.followUser = function (followingName) {
       const username = sessionStorage.getItem("username");
       const User = $resource(
         "/api/users/updateFollowing",
@@ -247,11 +260,11 @@ app.controller("notificationCtrl", [
   "$resource",
   "$location",
   "$routeParams",
-  function($scope, $resource) {
+  function ($scope, $resource) {
     const username = sessionStorage.getItem("username");
     $scope.username = username;
     const Comments = $resource(`/api/comments/userNotifications/${username}`);
-    Comments.query(function(comments) {
+    Comments.query(function (comments) {
       $scope.comments = comments;
       console.log(comments);
     });
