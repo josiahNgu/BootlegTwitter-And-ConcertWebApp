@@ -73,7 +73,7 @@ app.controller("loginCtrl", [
   "$resource",
   "$location",
   "$routeParams",
-  function($scope, $resource) {
+  function($scope) {
     $scope.save = function() {
       console.log("login button clicked");
       // eslint-disable-next-line no-undef
@@ -82,14 +82,6 @@ app.controller("loginCtrl", [
       sessionStorage.setItem("username", $scope.userName);
       // eslint-disable-next-line no-undef
       console.log(sessionStorage.getItem("username"));
-      const userExist = $resource(`/api/users/${$scope.userName}`);
-      console.log(`finduser ${userExist}`);
-      userExist.query(function(users) {
-        // eslint-disable-next-line no-undef
-        if (users === undefined) {
-          console.log("empty");
-        }
-      });
     };
   }
 ]);
@@ -192,6 +184,7 @@ app.controller("addToFavoriteCtrl", [
       // eslint-disable-next-line no-undef
       const username = sessionStorage.getItem("username");
       console.log(`${username} favorited: ${postId}`);
+      // eslint-disable-next-line no-plusplus
       $scope.comment.favorited++;
 
       const User = $resource(
