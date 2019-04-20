@@ -51,7 +51,7 @@ app.controller("addCommentCtrl", [
       const Comments = $resource("/api/comments");
       Comments.save(
         {
-          author: $scope.comment.author,
+          author: $scope.username,
           content: $scope.comment.content,
           mention: mentionedUser
         },
