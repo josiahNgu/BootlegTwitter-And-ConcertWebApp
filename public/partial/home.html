@@ -13,6 +13,9 @@
       <br />
       <h5 class="font-weight-bold">@{{ username }}</h5>
       <br />
+      <a class="btn  btn-outline-primary w-50  rounded-pill" ng-click="goHome()"
+        >Home</a
+      >
       <a
         class="btn  btn-outline-primary w-50 rounded-pill"
         href="/#!add-comment"
@@ -21,12 +24,12 @@
       >
       <a
         class="btn  btn-outline-primary w-50  rounded-pill"
-        href="/#!add-comment"
+        href="/#!view-notfications/{{ username }}"
         >Notification</a
       >
     </div>
     <div class="col-8">
-      <div class="row card-group">
+      <div class="row card-group" ng-controller="viewProfileCtrl">
         <div
           class="card text-center border-primary col-sm-4"
           style="margin-bottom:20px;"
@@ -55,7 +58,7 @@
           </div>
         </div>
       </div>
-      <div ng-repeat="comment in comments">
+      <div ng-repeat="comment in comments.properties">
         <!-- add delete post glypcon -->
         <div class="row">
           <h6 class="font-weight-bold col-sm-8">{{ comment.author }}</h6>
@@ -69,7 +72,7 @@
             value="{{ comment._id }}"
             href="/#!delete-comment/{{ comment._id }}"
           >
-            <i class="far fa-trash-alt"></i>
+            <i class="far fa-trash-alt"> </i>
           </a>
           <!-- comment -->
           <a class="genericButton col-sm-1" ng-click="hideForm = !hideForm">

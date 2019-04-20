@@ -14,13 +14,21 @@ router.get("/", function(req, res) {
 });
 router.get("/:username", function(req, res) {
   const collection = db.get("users");
-  console.log("empty");
   collection.find({ username: req.params.username }, function(err, users) {
     if (err) throw err;
-    if (users.length === 0) {
-      console.log("empty");
+    if (users === undefined) {
+      return false;
     }
-    res.json(users);
+  });
+});
+
+router.post("/", function(req) {
+  const collection = db.get("users");
+  console.log(`router.post: ${req.body}`);
+  collection.insert({
+    username: req.body.username,
+    following: [],
+    favorited: []
   });
 });
 router.put("/updateUserFavorite", function(req) {
