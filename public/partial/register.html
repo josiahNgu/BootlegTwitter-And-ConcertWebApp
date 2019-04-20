@@ -1,9 +1,27 @@
-<div class="container col-sm-8" ng-controller="registerUserCtrl">
+<link rel="stylesheet" type="text/css" href="../stylesheets/style.css" />
+
+<nav class="navbar navbar-light bg-light fixed-top col-sm-12">
+  <a class="navbar-brand" href="#">
+    <img
+      src="../images/twitter.svg"
+      width="30"
+      height="30"
+      class="d-inline-block align-top"
+      alt=""
+    />
+    BootLeg Twitter</a
+  >
+</nav>
+<div
+  class="container col-sm-8"
+  style="background:white;min-height:100vh"
+  ng-controller="registerUserCtrl"
+>
   <form ng-submit="save()">
     <div class="form-group">
       <input
         ng-model="username"
-        class="form-control"
+        class="form-control w-50 offset-3"
         placeholder="username"
         type="text"
       />
