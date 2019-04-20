@@ -10,7 +10,7 @@ router.get("/user/:username", function (req, res) {
   const Comment = db.get("comments");
   const Users = db.get("users");
 
-  var usersFollowed = [];
+  let usersFollowed = [];
   Users.findOne(
     {
       username: req.params.username
