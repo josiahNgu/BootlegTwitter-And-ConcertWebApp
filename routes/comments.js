@@ -34,13 +34,14 @@ router.delete("/:id", function(req, res) {
 router.post("/", function(req, res) {
   const collection = db.get("comments");
   const date = new Date();
+  console.log(`router.post: ${req.body}`);
   const currentDate = date.toLocaleString();
   collection.insert(
     {
       author: req.body.author,
       content: req.body.content,
       date: currentDate,
-      userMentions: req.body.userMentions
+      userMentions: req.body.mention
     },
     function(err, comment) {
       if (err) throw err;

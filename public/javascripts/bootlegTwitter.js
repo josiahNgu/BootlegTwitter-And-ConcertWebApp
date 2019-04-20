@@ -12,6 +12,14 @@ app.config([
         templateUrl: "partial/home.html",
         controller: "homeCtrl"
       })
+      .when("/add-reply", {
+        templateUrl: "partial/home.html",
+        controller: "homeCtrl"
+      })
+      .when("/view-profile", {
+        templateUrl: "partial/home.html",
+        controller: "followUserCtrl"
+      })
       .when("/add-comment", {
         templateUrl: "partial/addComment.html",
         controller: "addCommentCtrl"
@@ -35,17 +43,26 @@ app.controller("addCommentCtrl", [
   "$resource",
   "$location",
   function($scope, $resource, $location) {
+    const regex = /@[a-z]*/gi;
     // eslint-disable-next-line no-undef
-    console.log(`session value ${sessionStorage.getItem("username")}`);
+    console.log(`session value: ${sessionStorage.getItem("username")}`);
     // eslint-disable-next-line no-undef
     // $scope.author = sessionStorage.getItem("username");
     $scope.save = function() {
-      console.log("comment button clicked");
-      // eslint-disable-next-line no-undef
+      console.log($scope.comment);
+      const mentionedUser = $scope.comment.content.match(regex);
+      console.log(`typeof ${mentionedUser} ${mentionedUser}`);
       const Comments = $resource("/api/comments");
-      Comments.save($scope.comment, function() {
-        $location.path("/home");
-      });
+      Comments.save(
+        {
+          author: $scope.comment.author,
+          content: $scope.comment.content,
+          mention: mentionedUser
+        },
+        function() {
+          $location.path("/home");
+        }
+      );
     };
   }
 ]);
@@ -76,9 +93,8 @@ app.controller("loginCtrl", [
 app.controller("homeCtrl", [
   "$scope",
   "$resource",
-  "$location",
   "$routeParams",
-  function($scope, $resource, $routeParams) {
+  function($scope, $resource) {
     // eslint-disable-next-line no-undef
     const userName = sessionStorage.getItem("username");
     console.log(userName);
@@ -92,20 +108,7 @@ app.controller("homeCtrl", [
     Comments.query(function(comments) {
       $scope.comments = comments;
       console.log(comments);
-      console.log(comments.replies);
     });
-    $scope.addComment = function(commentId, userComment) {
-      console.log(`addComment : ${commentId}`);
-      console.log(userComment);
-      const Collection = $resource(
-        `/api/comments/update/:id`,
-        { id: "@id" },
-        {
-          update: { method: "PUT" }
-        }
-      );
-      Collection.update({ id: commentId, reply: userComment });
-    };
   }
 ]);
 app.controller("deleteCommentCtrl", [
@@ -125,17 +128,38 @@ app.controller("deleteCommentCtrl", [
     };
   }
 ]);
+app.controller("addReplyController", [
+  "$scope",
+  "$resource",
+  "$route",
+  function($scope, $resource, $route) {
+    $scope.addComment = function(commentId, userComment) {
+      console.log(`addComment : ${commentId}`);
+      console.log(userComment);
+      const Collection = $resource(
+        `/api/comments/update/:id`,
+        { id: "@id" },
+        {
+          update: { method: "PUT" }
+        }
+      );
+      Collection.update({ id: commentId, reply: userComment }, function() {
+        $route.reload();
+      });
+    };
+  }
+]);
 app.controller("followUserCtrl", [
   "$scope",
   "$resource",
   "$location",
   "$routeParams",
-  function($scope, $resource, $location, $routeParams) {
+  function($scope, $resource) {
     $scope.viewUser = function(username) {
       const Comments = $resource(`/api/comments/user/${username}`);
       Comments.query(function(comments) {
         console.log(comments);
-        // $scope.comments = comments;
+        $scope.comments = comments;
       });
     };
     // $scope.followUser = function(username) {

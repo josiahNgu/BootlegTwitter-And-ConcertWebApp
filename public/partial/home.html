@@ -2,76 +2,102 @@
 <nav class="navbar navbar-light bg-light fixed-top col-sm-12">
   <a class="navbar-brand" href="#">BootLeg Twitter</a>
 </nav>
-<div class="container-fluid" ng-controller="loginCtrl">
-  <div class="row">
+<div
+  class="container"
+  style="background:white;min-height:100vh"
+  ng-init="loginCtrl"
+>
+  <div class="row ">
     <div class="col-4  text-center justify-content-center align-items-center">
-      <img class="card-img-top userPicture" src="../images/youngLonzo.jpg">
-      <br>
+      <img class="card-img-top userPicture" src="../images/youngLonzo.jpg" />
+      <br />
       <label>@{{ username }}</label>
-        <a
-          class="btn  btn-primary w-50 rounded-pill"
-          href="/#!add-comment"
-          style="margin:20px;"
-          >Post</a
-        >
-        <a class="btn  btn-dark w-50  rounded-pill" href="/#!add-comment"
-          >Notification</a
-        >
+      <a
+        class="btn  btn-primary w-50 rounded-pill"
+        href="/#!add-comment"
+        style="margin:20px;"
+        >Post</a
+      >
+      <a class="btn  btn-dark w-50  rounded-pill" href="/#!add-comment"
+        >Notification</a
+      >
     </div>
     <div class="col-8">
-        <div class="row card-group" ng-controller="followUserCtrl">
-          <div
-            class="card bg-dark text-center text-white col-sm-4"
-            style="margin:20px;"
-            ng-repeat="user in users"
-          >
-            <div class="card-body">
-              <img class="card-img-top img-thumbnail" src="../images/youngLonzo.jpg">
-              <h5 class="card-title">{{ user.username }}</h5>
-              <button  class="btn btn-primary" ng-click="viewUser(user.username)" >View Profile</button>
-              <button  class="btn btn-primary" ng-click="toggle = !toggle;followUser(user.username)">
-                  <span ng-hide="toggle">Follow</span>
-                  <span ng-show="toggle">Following</span>
+      <div class="row card-group" ng-controller="followUserCtrl">
+        <div
+          class="card text-center  border-danger col-sm-4"
+          style="margin-bottom:20px;"
+          ng-repeat="user in users"
+        >
+          <div class="card-body">
+            <img
+              class="card-img-top img-thumbnail"
+              src="../images/youngLonzo.jpg"
+            />
+            <h5 class="card-title">{{ user.username }}</h5>
+            <div class="col ">
+              <a
+                class="btn w-100 padding btn-outline-danger"
+                ng-click="viewUser(user.username)"
+                href="/#!view-profile"
+                >View Profile</a
+              >
+              <button
+                class="btn padding w-100 btn-outline-danger"
+                ng-click="toggle = !toggle;followUser(user.username)"
+              >
+                <span ng-hide="toggle">Follow</span>
+                <span ng-show="toggle">Following</span>
               </button>
             </div>
           </div>
         </div>
-        <div class="border-top border-bottom" ng-repeat="comment in comments">
-          <!-- add delete post glypcon -->
-          <div class="row">
-            <h6 class="font-weight-bold col-sm-8">@{{ comment.author }}</h6>
-            <p>{{ comment.date }}</p>
-          </div>
-          <p>{{ comment.content }}</p>
-          <p>{{ comment._id }}</p>
-          <div class="row">
-            <a
-              class="genericButton col-sm-2"
-              value="{{ comment._id }}"
-              href="/#!delete-comment/{{ comment._id }}"
-            >
-              Delete
-            </a>
-            <a class="genericButton col-sm-2" ng-click="hideForm = !hideForm"
-              >Reply</a
-            >
-            <button class="genericButton col-sm-2">
-              <span class="glyphicon glyphicon-print">❤</span>
-            </button>
-          </div>
-          <div>
-          <div ng-repeat="reply in comments.replies" >
-            <p>{{ reply }}</p>
-          </div>
-          <div ng-show="hideForm" >  
-            <form ng-submit="addComment(comment._id,userComment)">
-              <input class="form-group my-3  w-75"  ng-model="userComment"></input> <br>
-              <button class="genericButton">Submit</button>
-            </form>
+      </div>
+      <div ng-repeat="comment in comments">
+        <!-- add delete post glypcon -->
+        <div class="row">
+          <h6 class="font-weight-bold col-sm-8">{{ comment.author }}</h6>
+          <p>{{ comment.date }}</p>
+        </div>
+        <p>{{ comment.content }}</p>
+        <div class="row">
+          <a
+            class="genericButton col-sm-1"
+            value="{{ comment._id }}"
+            href="/#!delete-comment/{{ comment._id }}"
+          >
+            <i class="far fa-trash-alt"></i>
+          </a>
+          <a class="genericButton col-sm-1" ng-click="hideForm = !hideForm">
+            <i class="far fa-comment"></i
+          ></a>
+
+          <button class="genericButton col-sm-1">
+            <i class="far fa-heart" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div>
+          <div ng-show="hideForm" ng-controller="addReplyController">
+            <div class="" ng-repeat="reply in comment.replies track by $index">
+              <p class="replySection w-75">{{ reply }}</p>
+            </div>
+            <div class="">
+              <input
+                class="form-group my-3 form-control w-75"
+                ng-model="userComment"
+                placeholder="comment..."
+              />
+              <a
+                href="/#!home"
+                ng-click="addComment(comment._id,userComment)"
+                class="btn btn-primary btn-sm"
+                >Add Comment</a
+              >
             </div>
           </div>
         </div>
+        <hr />
       </div>
+    </div>
   </div>
-  
 </div>
