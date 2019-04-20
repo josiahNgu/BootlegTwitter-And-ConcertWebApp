@@ -18,7 +18,7 @@ app.config([
         controller: "registerUserCtrl"
       })
       .when("/view-notfications/:id", {
-        templateUrl: "partial/home.html"
+        templateUrl: "partial/notification.html"
       })
       .when("/add-comment", {
         templateUrl: "partial/addComment.html",
