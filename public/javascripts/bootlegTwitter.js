@@ -18,7 +18,8 @@ app.config([
         controller: "registerUserCtrl"
       })
       .when("/view-notfications/:id", {
-        templateUrl: "partial/notification.html"
+        templateUrl: "partial/notification.html",
+        controller: "notificationCtrl"
       })
       .when("/add-comment", {
         templateUrl: "partial/addComment.html",
@@ -237,5 +238,22 @@ app.controller("viewProfileCtrl", [
       );
       User.update({ username, followingName });
     };
+  }
+]);
+app.controller("notificationCtrl", [
+  "$scope",
+  "$resource",
+  "$location",
+  "$routeParams",
+  function($scope, $resource) {
+    const username = sessionStorage.getItem("username");
+    $scope.username = username;
+    const Comments = $resource(`/api/comments/userNotifications/${username}`);
+    Comments.query(function(comments) {
+      $scope.comments = comments;
+      console.log(comments);
+      console.log(userName);
+      $scope.username = userName;
+    });
   }
 ]);

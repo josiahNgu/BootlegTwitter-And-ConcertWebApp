@@ -19,5 +19,61 @@
         >Post</a
       >
     </div>
+    <div class="col-8">
+      <div ng-repeat="comment in comments">
+        <!-- add delete post glypcon -->
+        <div class="row">
+          <h6 class="font-weight-bold col-sm-8">{{ comment.author }}</h6>
+          <p>{{ comment.date }}</p>
+        </div>
+        <p>{{ comment.content }}</p>
+        <div class="row">
+          <!-- delete -->
+          <a
+            class="genericButton col-sm-1"
+            value="{{ comment._id }}"
+            href="/#!delete-comment/{{ comment._id }}"
+          >
+            <i class="far fa-trash-alt"> </i>
+          </a>
+          <!-- comment -->
+          <a class="genericButton col-sm-1" ng-click="hideForm = !hideForm">
+            <i class="far fa-comment"></i
+          ></a>
+          <!-- favorite -->
+          <button
+            class="genericButton col-sm-1"
+            ng-controller="addToFavoriteCtrl"
+          >
+            {{ comment.favorited }}
+            <i
+              class="far fa-heart"
+              aria-hidden="true"
+              ng-click="save(comment._id)"
+            ></i>
+          </button>
+        </div>
+        <div>
+          <div ng-show="hideForm" ng-controller="addReplyController">
+            <div class="" ng-repeat="reply in comment.replies track by $index">
+              <p class="replySection w-75">{{ reply }}</p>
+            </div>
+            <div class="">
+              <input
+                class="form-group my-3 form-control w-75"
+                ng-model="userComment"
+                placeholder="comment..."
+              />
+              <a
+                href="/#!home"
+                ng-click="addComment(comment._id,userComment)"
+                class="btn btn-primary btn-sm"
+                >Add Comment</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
