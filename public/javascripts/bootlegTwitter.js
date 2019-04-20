@@ -252,8 +252,6 @@ app.controller("notificationCtrl", [
     Comments.query(function(comments) {
       $scope.comments = comments;
       console.log(comments);
-      console.log(userName);
-      $scope.username = userName;
     });
   }
 ]);
