@@ -23,14 +23,16 @@ router.get("/:username", function(req, res) {
     res.json(users);
   });
 });
-router.put("/updateUser/:username", function(req) {
+router.put("/updateUserFavorite", function(req) {
   const collection = db.get("users");
   collection.update(
     {
-      username: req.params.username
+      username: req.body.username
     },
     {
-      following: req.body.following
+      $push: {
+        favorites: req.body.postId
+      }
     },
     function(err) {
       if (err) throw err;

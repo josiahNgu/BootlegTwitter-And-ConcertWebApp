@@ -149,6 +149,30 @@ app.controller("addReplyController", [
     };
   }
 ]);
+app.controller("addToFavoriteCtrl", [
+  "$scope",
+  "$resource",
+  "$location",
+  "$routeParams",
+  function($scope, $resource, $location, $routeParams) {
+    $scope.save = function(postId) {
+      // eslint-disable-next-line no-undef
+      const username = sessionStorage.getItem("username");
+      console.log(`${username} favorited: ${postId}`);
+
+      const User = $resource(
+        "/api/users/updateUserFavorite",
+        { id: "@id" },
+        {
+          update: { method: "PUT" }
+        }
+      );
+      User.update({ postId, username }, function() {
+        $location.path("/home");
+      });
+    };
+  }
+]);
 app.controller("followUserCtrl", [
   "$scope",
   "$resource",
