@@ -2,18 +2,14 @@
 <nav class="navbar navbar-light bg-light fixed-top col-sm-12">
   <a class="navbar-brand" href="#">BootLeg Twitter</a>
 </nav>
-<div
-  class="container"
-  style="background:white;min-height:100vh"
-  ng-init="loginCtrl"
->
+<div class=" container" style="background:white;min-height:100vh">
   <div class="row ">
     <div class="col-4  text-center justify-content-center align-items-center">
       <img class="card-img-top userPicture" src="../images/youngLonzo.jpg" />
       <br />
       <h5 class="font-weight-bold">@{{ username }}</h5>
       <br />
-      <a class="btn  btn-outline-primary w-50  rounded-pill" ng-click="goHome()"
+      <a class="btn  btn-outline-primary w-50  rounded-pill" href="/#!home"
         >Home</a
       >
       <a
@@ -22,43 +18,9 @@
         style="margin:20px;"
         >Post</a
       >
-      <a
-        class="btn  btn-outline-primary w-50  rounded-pill"
-        href="/#!view-notfications/{{ username }}"
-        >Notification</a
-      >
     </div>
     <div class="col-8">
-      <div class="row card-group" ng-controller="viewProfileCtrl">
-        <div
-          class="card text-center border-primary col-sm-4"
-          style="margin-bottom:20px;"
-          ng-repeat="user in users"
-        >
-          <div class="card-body">
-            <img
-              class="card-img-top  img-thumbnail"
-              src="../images/youngLonzo.jpg"
-            />
-            <h5 class="card-title">{{ user.username }}</h5>
-            <div class="col ">
-              <a
-                class="btn w-100 padding rounded-pill btn-outline-primary"
-                ng-click="viewUser(user.username)"
-                >View Profile</a
-              >
-              <button
-                class="btn padding w-100 rounded-pill btn-outline-primary"
-                ng-click="toggle = !toggle;followUser(user.username)"
-              >
-                <span ng-hide="toggle">Follow</span>
-                <span ng-show="toggle">Following</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div ng-repeat="comment in comments.properties">
+      <div ng-repeat="comment in comments">
         <!-- add delete post glypcon -->
         <div class="row">
           <h6 class="font-weight-bold col-sm-8">{{ comment.author }}</h6>
@@ -111,7 +73,6 @@
             </div>
           </div>
         </div>
-        <hr />
       </div>
     </div>
   </div>

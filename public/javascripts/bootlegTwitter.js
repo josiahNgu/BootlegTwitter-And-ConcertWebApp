@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // eslint-disable-next-line no-undef
 const app = angular.module("bootlegTwitter", ["ngResource", "ngRoute"]);
 app.config([
@@ -12,9 +13,13 @@ app.config([
         templateUrl: "partial/home.html",
         controller: "homeCtrl"
       })
-      .when("/view-profile", {
-        templateUrl: "partial/home.html",
-        controller: "viewProfileCtrl"
+      .when("/register", {
+        templateUrl: "partial/register.html",
+        controller: "registerUserCtrl"
+      })
+      .when("/view-notfications/:id", {
+        templateUrl: "partial/notification.html",
+        controller: "notificationCtrl"
       })
       .when("/add-comment", {
         templateUrl: "partial/addComment.html",
@@ -29,7 +34,7 @@ app.config([
         controller: "EditCommentCtrl"
       })
       .otherwise({
-        redirectTo: "/login"
+        redirectTo: "/"
       });
   }
 ]);
@@ -77,12 +82,34 @@ app.controller("loginCtrl", [
       sessionStorage.setItem("username", $scope.userName);
       // eslint-disable-next-line no-undef
       console.log(sessionStorage.getItem("username"));
-      // const userExist = $resource(`/api/users/${$scope.userName}`);
-      // userExist.query(function(users) {
-      //   if (users === undefined) {
-      //     console.log("empty");
-      //   }
-      // });
+      const userExist = $resource(`/api/users/${$scope.userName}`);
+      console.log(`finduser ${userExist}`);
+      userExist.query(function(users) {
+        // eslint-disable-next-line no-undef
+        if (users === undefined) {
+          console.log("empty");
+        }
+      });
+    };
+  }
+]);
+app.controller("registerUserCtrl", [
+  "$scope",
+  "$resource",
+  "$location",
+  "$routeParams",
+  function($scope, $resource, $location) {
+    $scope.save = function() {
+      console.log("register button clicked");
+      const Users = $resource("/api/users");
+      Users.save(
+        {
+          username: $scope.username
+        },
+        function() {
+          $location.path("/");
+        }
+      );
     };
   }
 ]);
@@ -94,36 +121,27 @@ app.controller("homeCtrl", [
     // eslint-disable-next-line no-undef
     const userName = sessionStorage.getItem("username");
     const Comments = $resource(`/api/comments/user/${userName}`);
+    $scope.comments = {};
     const Users = $resource("/api/users");
-
     Users.query(function(users) {
       console.log(users);
+      // eslint-disable-next-line no-plusplus
       $scope.users = users;
     });
+    $scope.goHome = function() {
+      const username = sessionStorage.getItem("username");
+      const UserProfile = $resource(`/api/comments/user/${username}`);
+      UserProfile.query(function(comments) {
+        $scope.comments.properties = comments;
+        console.log(comments);
+      });
+    };
     Comments.query(function(comments) {
-      $scope.comments = comments;
+      $scope.comments.properties = comments;
       console.log(comments);
       console.log(userName);
       $scope.username = userName;
     });
-    $scope.viewUser = function(username) {
-      const UserProfile = $resource(`/api/comments/user/${username}`);
-      UserProfile.query(function(comments) {
-        $scope.comments = comments;
-        console.log(comments);
-      });
-    };
-    $scope.followUser = function(followingName) {
-      const username = sessionStorage.getItem("username");
-      const User = $resource(
-        "/api/users/updateFollowing",
-        { id: "@id" },
-        {
-          update: { method: "PUT" }
-        }
-      );
-      User.update({ username, followingName });
-    };
   }
 ]);
 app.controller("deleteCommentCtrl", [
@@ -203,15 +221,37 @@ app.controller("viewProfileCtrl", [
   "$routeParams",
   function($scope, $resource) {
     $scope.viewUser = function(username) {
-      const Comments = $resource(`/api/comments/user/jalenRose`);
-      Comments.query(function(comments) {
+      const UserProfile = $resource(`/api/comments/user/${username}`);
+      UserProfile.query(function(comments) {
+        $scope.comments.properties = comments;
         console.log(comments);
-        $scope.comments = comments;
       });
     };
-    // $scope.followUser = function(username) {
-    //   const User = $resource(`/api/users/updateUser/${username}`);
-    //   User.
-    // };
+    $scope.followUser = function(followingName) {
+      const username = sessionStorage.getItem("username");
+      const User = $resource(
+        "/api/users/updateFollowing",
+        { id: "@id" },
+        {
+          update: { method: "PUT" }
+        }
+      );
+      User.update({ username, followingName });
+    };
+  }
+]);
+app.controller("notificationCtrl", [
+  "$scope",
+  "$resource",
+  "$location",
+  "$routeParams",
+  function($scope, $resource) {
+    const username = sessionStorage.getItem("username");
+    $scope.username = username;
+    const Comments = $resource(`/api/comments/userNotifications/${username}`);
+    Comments.query(function(comments) {
+      $scope.comments = comments;
+      console.log(comments);
+    });
   }
 ]);

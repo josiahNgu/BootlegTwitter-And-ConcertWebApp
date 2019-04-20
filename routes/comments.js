@@ -23,6 +23,14 @@ router.get("/:id", function(req, res) {
     res.json(comment);
   });
 });
+router.get("/userNotifications/:id", function(req, res) {
+  const collection = db.get("comments");
+  const findThis = `@${req.params.id}`;
+  collection.find({ userMentions: findThis }, function(err, comment) {
+    if (err) throw err;
+    res.json(comment);
+  });
+});
 router.delete("/:id", function(req, res) {
   const collection = db.get("comments");
   collection.remove({ _id: objectid(req.params.id) }, function(err, comment) {
