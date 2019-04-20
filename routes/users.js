@@ -7,10 +7,14 @@ const db = monk("localhost:27017/bootlegTwitter");
 /* GET users listing. */
 router.get("/", function(req, res) {
   const collection = db.get("users");
-  collection.find({}, { limit: 3 }, function(err, users) {
-    if (err) throw err;
-    res.json(users);
-  });
+  collection.aggregate(
+    [{ $sample: { size: 3 } }],
+    [{ author: { $not: "josiah" } }],
+    function(err, users) {
+      if (err) throw err;
+      res.json(users);
+    }
+  );
 });
 
 router.post("/", function(req) {

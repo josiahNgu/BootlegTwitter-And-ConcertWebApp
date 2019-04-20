@@ -10,7 +10,9 @@
 >
   <div class="row ">
     <div class="col-4  text-center justify-content-center align-items-center">
-      <img class="card-img-top userPicture" src="../images/youngLonzo.jpg" />
+      <object data="../images/lavar.jpg" class="userPicture" type="image/png/">
+        <img class=" userPicture" src="../images/youngLonzo.jpg" />
+      </object>
       <br />
       <h5 class="font-weight-bold">@{{ username }}</h5>
       <br />
@@ -36,11 +38,13 @@
           style="margin-bottom:20px;"
           ng-repeat="user in users"
         >
-          <div class="card-body">
+          <div class="card-img-top cardPictureSize">
             <img
-              class="card-img-top  img-thumbnail"
-              src="../images/youngLonzo.jpg"
+              class="card-img-top justify-content-center img-thumbnail"
+              src="../images/defaultUserImage.png"
             />
+          </div>
+          <div class="card-body">
             <h5 class="card-title">{{ user.username }}</h5>
             <div class="col ">
               <a

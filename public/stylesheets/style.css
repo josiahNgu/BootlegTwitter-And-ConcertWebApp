@@ -39,6 +39,11 @@ a {
 .userPicture {
   height: 200px;
   width: 200px;
+  border-radius: 25px;
+}
+.cardPictureSize {
+  height: 150px;
+  width: 150px;
 }
 .replySection {
   background: #f2f3f5;
@@ -48,6 +53,5 @@ a {
 }
 
 .padding {
-  padding: 10px;
   margin: 10px;
 }
