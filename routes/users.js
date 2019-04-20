@@ -7,7 +7,7 @@ const db = monk("localhost:27017/bootlegTwitter");
 /* GET users listing. */
 router.get("/", function(req, res) {
   const collection = db.get("users");
-  collection.find({}, function(err, users) {
+  collection.find({}, { limit: 3 }, function(err, users) {
     if (err) throw err;
     res.json(users);
   });
