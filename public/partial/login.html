@@ -7,31 +7,34 @@
     class=" vertical-center text-center  justify-content-center align-items-center"
   >
     <form>
-      <div class="input-group-prepend w-100 form-group">
-        <div class="input-group-text">@</div>
-        <input
-          type="name"
-          name="userNameTag"
-          ng-model="userName"
-          value="josiah"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <a
-          ng-click="save()"
-          class="btn  btn-outline-primary w-50 rounded-pill"
-          href="/#!home"
-          style="margin:20px;"
-          >Login</a
-        >
-        <a
-          ng-click="save()"
-          class="btn  btn-outline-danger w-50 rounded-pill"
-          href="/#!register"
-          style="margin:20px;"
-          >Register</a
-        >
+      <div class="">
+        <div class="input-group-prepend  form-group">
+          <div class="input-group-text w-50">@</div>
+          <input
+            type="name"
+            class="w-100"
+            name="userNameTag"
+            ng-model="userName"
+            value="josiah"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <a
+            ng-click="save()"
+            class="btn  btn-outline-primary w-100 rounded-pill"
+            href="/#!home"
+            style="margin:20px;"
+            >Login</a
+          >
+          <a
+            ng-click="save()"
+            class="btn  btn-outline-danger w-100 rounded-pill"
+            href="/#!register"
+            style="margin:20px;"
+            >Register</a
+          >
+        </div>
       </div>
     </form>
   </div>

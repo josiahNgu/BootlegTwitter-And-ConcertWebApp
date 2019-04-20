@@ -1,8 +1,13 @@
+<link rel="stylesheet" type="text/css" href="../stylesheets/style.css" />
 <nav class="navbar navbar-light bg-light fixed-top col-sm-12">
   <a class="navbar-brand" href="/#!home">BootLeg Twitter</a>
   <div class="my-auto"><a href="#">Sign Out</a></div>
 </nav>
-<div class="container col-sm-8" ng-controller="addCommentCtrl">
+<div
+  class="container col-sm-8"
+  style="background:white;min-height:100vh"
+  ng-controller="addCommentCtrl"
+>
   <form ng-submit="save()">
     <div class="form-group">
       <textarea

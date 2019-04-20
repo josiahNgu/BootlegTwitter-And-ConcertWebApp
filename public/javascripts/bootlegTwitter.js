@@ -221,6 +221,7 @@ app.controller("viewProfileCtrl", [
   "$location",
   "$routeParams",
   function($scope, $resource) {
+    $scope.username = sessionStorage.getItem("username");
     $scope.viewUser = function(username) {
       const UserProfile = $resource(`/api/comments/user/${username}`);
       UserProfile.query(function(comments) {
