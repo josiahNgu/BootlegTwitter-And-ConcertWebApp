@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="../stylesheets/style.css" />
 <nav class="navbar navbar-light bg-light fixed-top col-sm-12">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="#!home">
     <img
       src="../images/twitter.svg"
       width="30"
@@ -10,7 +10,7 @@
     />
     Bird Bird 鸟</a
   >
-  <div class="my-auto"><a href="#">Sign Out</a></div>
+  <div class="my-auto"><a href="/#">Sign Out</a></div>
 </nav>
 <div
   class="container"
@@ -106,17 +106,14 @@
             ></i>
           </button>
           <!-- edit post -->
-          <button
+          <a
             class="genericButton col-sm-1"
             ng-if="isPoster(comment.author)"
-            ng-controller="editPost"
+            value="{{ comment._id }}"
+            href="/#!edit-post/{{ comment._id }}"
           >
-            <i
-              class="far fa-edit"
-              aria-hidden="true"
-              ng-click="save(comment._id)"
-            ></i>
-          </button>
+            <i class="far fa-edit"></i>
+          </a>
         </div>
         <div>
           <div ng-show="hideForm" ng-controller="addReplyController">

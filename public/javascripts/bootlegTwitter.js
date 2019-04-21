@@ -29,9 +29,9 @@ app.config([
         templateUrl: "partial/deleteComment.html",
         controller: "deleteCommentCtrl"
       })
-      .when("/edit-comment", {
-        templateUrl: "partial/deleteComment.html",
-        controller: "EditCommentCtrl"
+      .when("/edit-post/:id", {
+        templateUrl: "partial/addComment.html",
+        controller: "EditPostCtrl"
       })
       .otherwise({
         redirectTo: "/"
@@ -196,10 +196,10 @@ app.controller("addToFavoriteCtrl", [
   "$location",
   "$routeParams",
   function($scope, $resource, $location) {
-    $scope.save = function(postId) {
+    $scope.save = function(postID) {
       // eslint-disable-next-line no-undef
       const username = sessionStorage.getItem("username");
-      console.log(`${username} favorited: ${postId}`);
+      console.log(`${username} favorited: ${postID}`);
       // eslint-disable-next-line no-plusplus
       $scope.comment.favorited++;
 
@@ -217,8 +217,8 @@ app.controller("addToFavoriteCtrl", [
           update: { method: "PUT" }
         }
       );
-      Comment.update({ postId });
-      User.update({ postId, username }, function() {
+      Comment.update({ postId: postID });
+      User.update({ postId: postID, username }, function() {
         $location.path("/home");
       });
     };
@@ -264,5 +264,34 @@ app.controller("notificationCtrl", [
       $scope.comments = comments;
       console.log(comments);
     });
+  }
+]);
+app.controller("EditPostCtrl", [
+  "$scope",
+  "$resource",
+  "$location",
+  "$routeParams",
+  function($scope, $resource, $location, $routeParams) {
+    const regex = /@[a-z]*/gi;
+    const Comments = $resource(
+      "/api/comments/:id",
+      { id: "@_id" },
+      {
+        update: { method: "PUT" }
+      }
+    );
+
+    Comments.get({ id: $routeParams.id }, function(comment) {
+      $scope.comment = comment;
+    });
+
+    $scope.save = function() {
+      const mentionedUser = $scope.comment.content.match(regex);
+      console.log(mentionedUser);
+      $scope.comment.mention = mentionedUser;
+      Comments.update($scope.comment, function() {
+        $location.path("/home");
+      });
+    };
   }
 ]);

@@ -5,6 +5,24 @@ const router = express.Router();
 const monk = require("monk");
 
 const db = monk("localhost:27017/bootlegTwitter");
+
+router.put("/updateFavoriteNumber", function(req) {
+  console.log("update a comment");
+  const collection = db.get("comments");
+  collection.update(
+    {
+      _id: req.body.postId
+    },
+    {
+      $inc: {
+        favorited: 1
+      }
+    },
+    function(err) {
+      if (err) throw err;
+    }
+  );
+});
 // this route expect username params after /
 router.get("/user/:username", function(req, res) {
   const Comment = db.get("comments");
@@ -35,6 +53,27 @@ router.get("/user/:username", function(req, res) {
           res.json(comments);
         }
       );
+    }
+  );
+});
+router.put("/:id", function(req, res) {
+  const collection = db.get("comments");
+  const date = new Date();
+  const currentDate = date.toLocaleString();
+  collection.update(
+    {
+      _id: req.params.id
+    },
+    {
+      author: req.body.author,
+      content: req.body.content,
+      date: currentDate,
+      userMentions: req.body.mention
+    },
+    function(err, comment) {
+      if (err) throw err;
+
+      res.json(comment);
     }
   );
 });
@@ -114,22 +153,5 @@ router.put("/update/:id", function(req, res) {
     }
   );
 });
-router.put("/updateFavoriteNumber", function(req, res) {
-  console.log("update a comment");
-  const collection = db.get("comments");
-  collection.update(
-    {
-      _id: req.body.postId
-    },
-    {
-      $inc: {
-        favorited: 1
-      }
-    },
-    function(err, updatedComment) {
-      if (err) throw err;
-      res.json(updatedComment);
-    }
-  );
-});
+
 module.exports = router;
