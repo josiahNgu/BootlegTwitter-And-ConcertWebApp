@@ -104,6 +104,18 @@
               ng-click="save(comment._id)"
             ></i>
           </button>
+          <!-- edit post -->
+          <button
+            class="genericButton col-sm-1"
+            ng-if="isPoster(comment.author)"
+            ng-controller="editPost"
+          >
+            <i
+              class="far fa-edit"
+              aria-hidden="true"
+              ng-click="save(comment._id)"
+            ></i>
+          </button>
         </div>
         <div>
           <div ng-show="hideForm" ng-controller="addReplyController">
