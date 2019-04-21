@@ -130,15 +130,13 @@ app.controller("homeCtrl", [
     };
 
     // returns true if the logged in user is the poster
-    $scope.isPoster = function (author) {
+    $scope.isPoster = function(author) {
       const userName = sessionStorage.getItem("username");
       if (author === userName) {
         return true;
       }
-      
-        return false;
-      
 
+      return false;
     };
 
     Comments.query(function(comments) {
