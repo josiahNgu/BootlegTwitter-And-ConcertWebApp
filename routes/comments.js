@@ -38,7 +38,19 @@ router.get("/user/:username", function(req, res) {
     }
   );
 });
-
+router.get("/profile/:id", function(req, res) {
+  const collection = db.get("comments");
+  collection.find(
+    { author: req.params.id },
+    {
+      sort: { date: -1 }
+    },
+    function(err, comment) {
+      if (err) throw err;
+      res.json(comment);
+    }
+  );
+});
 router.get("/:id", function(req, res) {
   const collection = db.get("comments");
   collection.findOne({ _id: objectid(req.params.id) }, function(err, comment) {

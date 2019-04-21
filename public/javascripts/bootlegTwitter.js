@@ -146,10 +146,15 @@ app.controller("deleteCommentCtrl", [
     Comment.get({ id: $routeParams.id }, function(comment) {
       $scope.comment = comment;
     });
-    $scope.delete = function() {
-      Comment.delete({ id: $routeParams.id }, function() {
-        $location.path("/home");
-      });
+    $scope.delete = function(author) {
+      if (sessionStorage.getItem("username") === author) {
+        Comment.delete({ id: $routeParams.id }, function() {
+          $location.path("/home");
+        });
+      } else {
+        console.log("not authorized");
+        $scope.alertCondition = true;
+      }
     };
   }
 ]);
@@ -216,7 +221,7 @@ app.controller("viewProfileCtrl", [
   function($scope, $resource) {
     $scope.username = sessionStorage.getItem("username");
     $scope.viewUser = function(username) {
-      const UserProfile = $resource(`/api/comments/user/${username}`);
+      const UserProfile = $resource(`/api/comments/profile/${username}`);
       UserProfile.query(function(comments) {
         $scope.comments.properties = comments;
         console.log(comments);
