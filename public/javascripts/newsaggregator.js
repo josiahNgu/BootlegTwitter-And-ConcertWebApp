@@ -264,6 +264,10 @@ app.controller("notificationCtrl", [
       $scope.comments = comments;
       console.log(comments);
     });
+    const Replies = $resource(`/api/comments/post/reply/${username}`);
+    Replies.query(function(replies) {
+      $scope.postReplies = replies;
+    });
   }
 ]);
 app.controller("EditPostCtrl", [

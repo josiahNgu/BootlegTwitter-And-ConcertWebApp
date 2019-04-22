@@ -108,6 +108,16 @@ router.get("/userNotifications/:id", function(req, res) {
     res.json(comment);
   });
 });
+router.get("/post/reply/:id", function(req, res) {
+  const collection = db.get("comments");
+  collection.find({ author: req.params.id }, { sort: { date: -1 } }, function(
+    err,
+    comment
+  ) {
+    if (err) throw err;
+    res.json(comment);
+  });
+});
 router.delete("/:id", function(req, res) {
   const collection = db.get("comments");
   collection.remove({ _id: objectid(req.params.id) }, function(err, comment) {

@@ -17,7 +17,7 @@
   class=" container"
   style="background:white;min-height:100vh;padding-top: 4vh"
 >
-  <div class="row ">
+  <div class="row">
     <div class="col-4  text-center justify-content-center align-items-center">
       <img class="card-img-top userPicture" src="../images/youngLonzo.jpg" />
       <br />
@@ -33,7 +33,10 @@
         >Post</a
       >
     </div>
-    <div class="col-8">
+    <div class="col-sm-8">
+      <div ng-repeat="reply in postReplies | filter:{replies: ''}">
+        <p>{{ reply.replies.toString() }} was added to one of your post</p>
+      </div>
       <div ng-repeat="comment in comments">
         <!-- add delete post glypcon -->
         <div class="row">
