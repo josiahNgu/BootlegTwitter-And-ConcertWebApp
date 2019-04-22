@@ -136,7 +136,6 @@ router.post("/", function(req, res) {
   );
 });
 router.put("/update/:id", function(req, res) {
-  console.log("update a comment");
   const collection = db.get("comments");
   collection.update(
     {
