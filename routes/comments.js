@@ -35,24 +35,26 @@ router.get("/user/:username", function(req, res) {
     },
     function(err, users) {
       if (err) throw err;
-      usersFollowed = users.following;
-      usersFollowed.push(req.params.username);
-      console.log(usersFollowed);
-      Comment.find(
-        {
-          $or: [
-            { author: { $in: usersFollowed } },
-            { userMentions: `@${req.params.username}` }
-          ]
-        },
-        {
-          sort: { date: -1 }
-        },
-        function(err, comments) {
-          if (err) throw err;
-          res.json(comments);
-        }
-      );
+      if(users != null){
+        usersFollowed = users.following;
+        usersFollowed.push(req.params.username);
+        console.log(usersFollowed);
+        Comment.find(
+          {
+            $or: [
+              { author: { $in: usersFollowed } },
+              { userMentions: `@${req.params.username}` }
+            ]
+          },
+          {
+            sort: { date: -1 }
+          },
+          function(err, comments) {
+            if (err) throw err;
+            res.json(comments);
+          }
+        );
+      }
     }
   );
 });
