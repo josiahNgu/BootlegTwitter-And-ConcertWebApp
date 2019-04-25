@@ -27,4 +27,4 @@ the AngularJS to display the content on web browsers.
 ## Authors
 
 * **Josiah Ngu** - [view profile](https://github.com/josiahNgu)
-* **Thiam Kiat Sim** - [view profile] (https://github.com/kitkatsim)
+* **Thiam Kiat Sim** - [view profile](https://github.com/kitkatsim)
