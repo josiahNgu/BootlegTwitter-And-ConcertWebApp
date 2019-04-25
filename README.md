@@ -13,5 +13,3 @@ JSP pages for the presentation and JAVA servlets for the business logic
 ```````
  JSP
  Servlet 
-
-``````
