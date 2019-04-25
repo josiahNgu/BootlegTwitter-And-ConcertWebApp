@@ -1,9 +1,9 @@
 # CSCE 464 ASSIGMENT 4 - bootlegTwitter
 
-This assignment is intended to familiarize students with the web application development using
+- This assignment is intended to familiarize students with the web application development using
 the MEAN stack that comprises of four web development tools: MongoDB, Express, AngularJS
 and Node.js
-The goal is to create a social media web application (e.g., Twitter). This web application must be
+- The goal is to create a social media web application (e.g., Twitter). This web application must be
 implemented as a Single Page Application (SPA). The backend of the web application should be
 developed using Node.js, Express and MongoDB. The frontend of the web application must use
 the AngularJS to display the content on web browsers.
@@ -27,4 +27,4 @@ the AngularJS to display the content on web browsers.
 ## Authors
 
 * **Josiah Ngu** -[github](https://github.com/josiahNgu)
-* **Josiah Ngu** -[github](https://github.com/kitkatsim)
+* **Thiam Kiat Sim** -[github](https://github.com/kitkatsim)
