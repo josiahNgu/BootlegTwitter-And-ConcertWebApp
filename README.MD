@@ -9,17 +9,12 @@ developed using Node.js, Express and MongoDB. The frontend of the web applicatio
 the AngularJS to display the content on web browsers.
 
 ## Built with 
-*[AngularJS](https://angularjs.org/) The front end webframework 
-*[Javascript](https://angularjs.org/) The webframework used
-*[Boostrap](https://getbootstrap.com/) front end component to help style the webpage alongside css
-*[NodeJS](https://nodejs.org/en/) BackEnd language used. Especially, with expressJS framework
-*[Javascript](https://angularjs.org/) The webframework used
-*[Prettier + ESLINT + Airbnb](https://github.com/prettier/prettier-eslint) Format code to conform to standard
-
-
-
-
-
+* [AngularJS](https://angularjs.org/) The front end webframework 
+* [Javascript](https://angularjs.org/) The webframework used
+* [Boostrap](https://getbootstrap.com/) front end component to help style the webpage alongside css
+* [NodeJS](https://nodejs.org/en/) BackEnd language used. Especially, with expressJS framework
+* [Javascript](https://angularjs.org/) The webframework used
+* [Prettier + ESLINT + Airbnb](https://github.com/prettier/prettier-eslint) Format code to conform to standard
 
 ## Installation guide
 
@@ -27,4 +22,9 @@ the AngularJS to display the content on web browsers.
 
 ## Instructions
 
-- use npm start or  nodemon
+- use npm start or nodemon and got to https://localhost:3000/ on a browser
+
+## Authors
+
+* **Josiah Ngu** -[github](https://github.com/josiahNgu)
+* **Josiah Ngu** -[github](https://github.com/kitkatsim)
