@@ -37,7 +37,7 @@ public class DBAccessClass {
 
 	//  Database credentials
 	static final String USER = "jngu"; // Replace with your CSE_LOGIN
-	static final String PASS = "bZ4:9y";   // Replace with your CSE MySQL_PASSWORD
+	static final String PASS = "";   // Replace with your CSE MySQL_PASSWORD
 
 	public void connectMeIn() {
 		try{
